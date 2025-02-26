@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { FaCartArrowDown } from "react-icons/fa";
 import { Context } from "../context/Context";
-import SalesChart from "../charts/SalesChart";
+// import SalesChart from "../charts/SalesChart";
 const Home = () => {
   const { isCollapsed,user } = useContext(Context);
   return (
