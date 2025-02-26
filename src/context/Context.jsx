@@ -27,9 +27,10 @@ const ContextProvider = (props) => {
 
   // GET SALE DATA
   const [saleData, setSaleData] = useState([]);
+  const [collectionData, setCollectionData] = useState([]);
   const [loader, setLoader] = useState(true);
+
   const getSale = async () => {
-    setLoader(true);
     try {
       const { data } = await axios.get(
         `https://zbl.zaffarsons.com/zbl/Sales?sdate=01-FEB-25&edate=25-FEB-25&company=1&branch=`
@@ -40,9 +41,21 @@ const ContextProvider = (props) => {
       console.error(error);
     }
   };
+  const getCollection = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/Collection?sdate=01-FEB-25&edate=25-FEB-25&company=1&branch=`
+      );
+      setCollectionData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     getSale();
+    getCollection();
   }, []);
 
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -53,7 +66,8 @@ const ContextProvider = (props) => {
     user,
     getUser,
     saleData,
-    loader
+    loader,
+    collectionData
   };
 
   return (

@@ -8,13 +8,13 @@ const Sidebar = () => {
   const { isCollapsed } = useContext(Context);
 
   const menuItems = [
-    { name: "Home", icon: "🏠",link: "/" },
+    { name: "Home", icon: "🏠", link: "/" },
     {
-      name: "User Management",
+      name: "Dashboard",
       icon: "👤",
       subItems: [
         { name: "Sale", icon: "🧑", link: "/cashsale" },
-        { name: "Roles", icon: "🔑" },
+        { name: "Collection", icon: "🔑", link: "/collection" },
         { name: "Sales Commission Agents", icon: "💼" },
       ],
     },
@@ -76,7 +76,10 @@ const Sidebar = () => {
             >
               <span className="text-xl">{item.icon}</span>
               {!isCollapsed && (
-                <Link to={item.link} className="ml-3 text-sm flex justify-between items-center w-full">
+                <Link
+                  to={item.link}
+                  className="ml-3 text-sm flex justify-between items-center w-full"
+                >
                   <span>{item.name}</span>
                   {item.subItems && (
                     <span className="text-xs">
@@ -117,7 +120,8 @@ const Sidebar = () => {
                 }`}
               >
                 {item.subItems.map((subItem) => (
-                  <Link to={subItem.link}
+                  <Link
+                    to={subItem.link}
                     key={subItem.name}
                     className="flex items-center p-2 rounded-lg text-sm w-full pl-4 hover:bg-[#141522] transition-colors duration-1000"
                   >
