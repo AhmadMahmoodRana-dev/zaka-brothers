@@ -27,14 +27,14 @@ const Sidebar = () => {
         { name: "Brands", icon: "🏷️" },
       ],
     },
-    { name: "Manufacturing", icon: "🏭" },
-    { name: "Purchases", icon: "🛒" },
-    { name: "Sell", icon: "💰" },
-    { name: "Stock Transfers", icon: "🚚" },
-    { name: "Expenses", icon: "📉" },
-    { name: "Payment Accounts", icon: "💳" },
-    { name: "Ageing Balance Report", icon: "📊" },
-    { name: "Reports", icon: "📄" },
+    // { name: "Manufacturing", icon: "🏭" },
+    // { name: "Purchases", icon: "🛒" },
+    // { name: "Sell", icon: "💰" },
+    // { name: "Stock Transfers", icon: "🚚" },
+    // { name: "Expenses", icon: "📉" },
+    // { name: "Payment Accounts", icon: "💳" },
+    // { name: "Ageing Balance Report", icon: "📊" },
+    // { name: "Reports", icon: "📄" },
   ];
 
   const toggleSubmenu = (menuName) => {

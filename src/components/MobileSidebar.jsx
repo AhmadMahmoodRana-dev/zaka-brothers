@@ -1,19 +1,20 @@
 import { useContext, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { Context } from "../context/Context";
+import { Link } from "react-router-dom";
 
 const MobileSidebar = () => {
   const [openSubmenu, setOpenSubmenu] = useState(null);
   const { isCollapsed } = useContext(Context);
 
   const menuItems = [
-    { name: "Home", icon: "🏠" },
+    { name: "Home", icon: "🏠", link: "/" },
     {
-      name: "User Management",
+      name: "Dashboard",
       icon: "👤",
       subItems: [
-        { name: "Users", icon: "🧑" },
-        { name: "Roles", icon: "🔑" },
+        { name: "Sale", icon: "🧑", link: "/cashsale" },
+        { name: "Collection", icon: "🔑", link: "/collection" },
         { name: "Sales Commission Agents", icon: "💼" },
       ],
     },
@@ -26,15 +27,16 @@ const MobileSidebar = () => {
         { name: "Brands", icon: "🏷️" },
       ],
     },
-    { name: "Manufacturing", icon: "🏭" },
-    { name: "Purchases", icon: "🛒" },
-    { name: "Sell", icon: "💰" },
-    { name: "Stock Transfers", icon: "🚚" },
-    { name: "Expenses", icon: "📉" },
-    { name: "Payment Accounts", icon: "💳" },
-    { name: "Ageing Balance Report", icon: "📊" },
-    { name: "Reports", icon: "📄" },
+    // { name: "Manufacturing", icon: "🏭" },
+    // { name: "Purchases", icon: "🛒" },
+    // { name: "Sell", icon: "💰" },
+    // { name: "Stock Transfers", icon: "🚚" },
+    // { name: "Expenses", icon: "📉" },
+    // { name: "Payment Accounts", icon: "💳" },
+    // { name: "Ageing Balance Report", icon: "📊" },
+    // { name: "Reports", icon: "📄" },
   ];
+
 
   const toggleSubmenu = (menuName) => {
     setOpenSubmenu(openSubmenu === menuName ? null : menuName);
@@ -70,7 +72,7 @@ const MobileSidebar = () => {
             >
               <span className="text-xl">{item.icon}</span>
               {!isCollapsed && (
-                <div className="ml-3 text-sm flex justify-between items-center w-full">
+                <Link to={item.link} className="ml-3 text-sm flex justify-between items-center w-full">
                   <span>{item.name}</span>
                   {item.subItems && (
                     <span className="text-xs">
@@ -82,7 +84,7 @@ const MobileSidebar = () => {
                       />
                     </span>
                   )}
-                </div>
+                </Link>
               )}
             </button>
             {/* Floating Tooltip when Sidebar is Collapsed */}
@@ -91,14 +93,14 @@ const MobileSidebar = () => {
                 <div className="px-4 py-2 font-bold">{item.name}</div>
                 {item.subItems &&
                   item.subItems.map((subItem) => (
-                    <a
+                    <Link to={subItem.link}
                       key={subItem.name}
                       href="#"
                       className="flex items-center px-4 py-2 hover:bg-[#141522] transition-colors duration-200"
                     >
                       <span className="mr-2 text-lg">{subItem.icon}</span>
                       {subItem.name}
-                    </a>
+                    </Link>
                   ))}
               </div>
             )}
@@ -111,13 +113,13 @@ const MobileSidebar = () => {
                 }`}
               >
                 {item.subItems.map((subItem) => (
-                  <button
+                  <Link to={subItem.link}
                     key={subItem.name}
                     className="flex items-center p-2 rounded-lg text-sm w-full pl-4 hover:bg-[#141522] transition-colors duration-200"
                   >
                     <span className="mr-2 text-lg">{subItem.icon}</span>
                     {subItem.name}
-                  </button>
+                  </Link>
                 ))}
               </div>
             )}

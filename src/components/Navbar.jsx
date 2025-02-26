@@ -7,7 +7,8 @@ import { BsCash } from "react-icons/bs";
 import { FaBell } from "react-icons/fa";
 import { Context } from "../context/Context";
 const Navbar = () => {
-  const { isCollapsed, setIsCollapsed } = useContext(Context);
+  const { isCollapsed, setIsCollapsed,user } = useContext(Context);
+  
   return (
     <div className="w-full h-[60px] border-b border-b-gray-500 navbar flex justify-between items-center">
       <button
@@ -35,7 +36,7 @@ const Navbar = () => {
         </button>
         <h1 className="text-white font-semibold">16-02-2025</h1>
         <FaBell color="white" />
-        <h1 className="text-white font-semibold">Ali Raza</h1>
+        <h1 className="text-white font-semibold">{user?.user?.user}</h1>
       </div>
     </div>
   );

@@ -57,7 +57,7 @@ const MainCard = ({
               </p>
             )}
           </div>
-          <div className="raise flex flex-col justify-center items-center">
+          <div className="raise max-w-[40px] min-w-[40px] flex flex-col justify-center items-center">
             {loader ? (
               <Loader />
             ) : (
@@ -96,7 +96,7 @@ const MainCard = ({
               </p>
             )}
           </div>
-          <div className="raise flex flex-col justify-center items-center">
+          <div className="raise  max-w-[40px] min-w-[40px] flex flex-col justify-center items-center">
             {loader ? (
               <Loader />
             ) : (

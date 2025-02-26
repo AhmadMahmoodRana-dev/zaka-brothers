@@ -3,12 +3,12 @@ import { FaCartArrowDown } from "react-icons/fa";
 import { Context } from "../context/Context";
 import SalesChart from "../charts/SalesChart";
 const Home = () => {
-  const { isCollapsed } = useContext(Context);
+  const { isCollapsed,user } = useContext(Context);
   return (
     <div className="w-full bg-[#141b2e] h-[92vh]">
       <div className="top-section pb-10 min-h-[92vh] h-auto w-full  px-4">
         <h1 className="text-white font-semibold text-2xl pt-3">
-          Welcome Ali !
+          Welcome {user?.user?.user} !
         </h1>
         <div className="filter_container grid grid-cols-3 gap-8 mt-8">
           <select className="bg-gray-800 py-2 outline-none rounded-md text-gray-400 px-2">
