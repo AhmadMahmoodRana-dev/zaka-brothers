@@ -45,14 +45,14 @@ const MainCard = ({
       <main className="w-[60%] h-full flex flex-col gap-4">
         {/* Current Month vs Last Month */}
         <div className="flex justify-around">
-          <div className="leading-none w-[60%] min-h-[50px]">
-            <h1 className="xl:text-sm text-[.7rem] font-normal pb-1">
+          <div className="leading-none w-[60%] min-h-[50px] flex flex-col items-center justify-center">
+            <h1 className="xl:text-sm  text-[.7rem] font-semibold pb-1">
               {first}
             </h1>
             {loader ? (
               <Loader />
             ) : (
-              <p className="font-bold text-[1.3rem] text-right">
+              <p className="font-bold text-[1.3rem]">
                 {formatNumber(currentMonth)}
               </p>
             )}
@@ -84,14 +84,14 @@ const MainCard = ({
 
         {/* Today's Sale vs Last Day Sale */}
         <div className="flex justify-around mt-3">
-          <div className="leading-none w-[60%] min-h-[50px]">
-            <h1 className="xl:text-sm text-[.7rem] font-normal pb-1">
+          <div className="leading-none w-[60%] min-h-[50px] flex flex-col items-center justify-center">
+            <h1 className="xl:text-sm text-[.7rem] font-semibold pb-1">
               {third}
             </h1>
             {loader ? (
               <Loader />
             ) : (
-              <p className="font-bold text-[1.3rem] text-right">
+              <p className="font-bold text-[1.3rem]">
                 {formatNumber(todaySale)}
               </p>
             )}
@@ -125,26 +125,26 @@ const MainCard = ({
       {/* Last Month & Last Day Sale */}
       <main className="w-[40%] h-full flex flex-col gap-4">
         <div className="flex justify-around min-h-[53px]">
-          <div className="leading-none min-w-[90%]">
-            <h1 className="xl:text-sm text-[.7rem] font-normal pb-1">
+          <div className="leading-none min-w-[90%] flex flex-col items-center justify-center">
+            <h1 className="xl:text-sm text-[.7rem] font-semibold pb-1">
               {second}
             </h1>
             {loader ? (
               <Loader />
             ) : (
-              <p className="font-bold text-[1.3rem] text-right">
+              <p className="font-bold text-[1.3rem]">
                 {formatNumber(lastMonth)}
               </p>
             )}
           </div>
         </div>
         <div className="flex gap-2 items-center justify-center mt-2">
-          <div className="leading-none min-w-[90%] min-h-[50px]">
-            <h1 className="xl:text-sm text-[.7rem] font-normal pb-1">{four}</h1>
+          <div className="leading-none min-w-[90%] min-h-[50px] flex flex-col items-center justify-center">
+            <h1 className="xl:text-sm text-[.7rem] font-semibold pb-1">{four}</h1>
             {loader ? (
               <Loader />
             ) : (
-              <p className="font-bold text-[1.3rem] text-right">
+              <p className="font-bold text-[1.3rem]">
                 {formatNumber(LastDaySale)}
               </p>
             )}
