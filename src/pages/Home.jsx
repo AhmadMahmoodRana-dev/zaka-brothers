@@ -3,10 +3,10 @@ import { FaCartArrowDown } from "react-icons/fa";
 import { Context } from "../context/Context";
 // import SalesChart from "../charts/SalesChart";
 const Home = () => {
-  const { isCollapsed,user } = useContext(Context);
+  const { isCollapsed,user,theme } = useContext(Context);
   return (
-    <div className="w-full bg-[#141b2e] h-[92vh]">
-      <div className="top-section pb-10 min-h-[92vh] h-auto w-full  px-4">
+    <div className={`w-full ${theme == "dark" ? "bg-[#141b2e]" : "bg-white border-l border-gray-200"}  h-[92.2vh]`}>
+      <div className={`${theme == "dark" ? "top-section" : "bg-white"} pb-10 min-h-[92vh] h-auto w-full  px-4`}>
         <h1 className="text-white font-semibold text-2xl pt-3">
           Welcome {user?.user?.user} !
         </h1>

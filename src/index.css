@@ -6,9 +6,6 @@
   background: linear-gradient(to right, #e23b58, #5b437a, #1f3c63);
 }
 
-/* .container{
-
-} */
 .tilt-box-wrap {
   position: relative;
   transition: all 0.6s ease-out;
@@ -58,6 +55,14 @@
   /* padding: 20px; */
   box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2); /* Add depth */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card1 {
+  color: #ffffff; /* White text for dark backgrounds */
+    line-height: 1.5;
+  background-color: transparent;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+
 }
 
 .card:hover {

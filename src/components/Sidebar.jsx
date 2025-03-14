@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [openSubmenu, setOpenSubmenu] = useState(null);
-  const { isCollapsed } = useContext(Context);
+  const { isCollapsed, theme } = useContext(Context);
 
   const menuItems = [
     { name: "Home", icon: "🏠", link: "/" },
@@ -27,14 +27,6 @@ const Sidebar = () => {
         { name: "Brands", icon: "🏷️" },
       ],
     },
-    // { name: "Manufacturing", icon: "🏭" },
-    // { name: "Purchases", icon: "🛒" },
-    // { name: "Sell", icon: "💰" },
-    // { name: "Stock Transfers", icon: "🚚" },
-    // { name: "Expenses", icon: "📉" },
-    // { name: "Payment Accounts", icon: "💳" },
-    // { name: "Ageing Balance Report", icon: "📊" },
-    // { name: "Reports", icon: "📄" },
   ];
 
   const toggleSubmenu = (menuName) => {
@@ -43,12 +35,18 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`min-h-screen h-auto bg-[#1d1f33] text-white transition-all duration-300 relative ${
+      className={`min-h-screen h-auto ${
+        theme == "dark" ? "bg-[#1d1f33] text-white" : "bg-white text-[#7d8a96] font-semibold"
+      }   transition-all duration-300 relative ${
         isCollapsed ? "w-16" : "w-[300px]"
       }`}
     >
       {/* Sidebar Header */}
-      <div className="flex items-center justify-between h-[60px] bg-[#f5365c] px-4">
+      <div
+        className={`flex items-center justify-between h-[60px] ${
+          theme == "dark" ? "bg-[#1d1f33] text-white" : "bg-white text-black border-b border-gray-300"
+        } px-4`}
+      >
         {!isCollapsed && (
           <h1 className="text-xl font-bold flex justify-center items-center gap-8">
             ZAKA BROTHERS{" "}
@@ -66,8 +64,8 @@ const Sidebar = () => {
               onClick={() =>
                 !isCollapsed && item.subItems && toggleSubmenu(item.name)
               }
-              className={`flex items-center px-4 py-3 w-full transition-all ${
-                isCollapsed ? "justify-center" : "hover:bg-[#141522]"
+              className={`flex items-center px-4 py-3 w-full transition-all ${theme == "dark" ? "hover:bg-[#141522]" : "hover:bg-[#f6f7f8]"} ${
+                isCollapsed ? "justify-center" : ""
               } ${
                 openSubmenu === item.name
                   ? "bg-[#141522] border-l-2 border-l-red-500 text-white"
@@ -115,7 +113,7 @@ const Sidebar = () => {
             {/* Expanded Submenu when Sidebar is Open */}
             {!isCollapsed && item.subItems && (
               <div
-                className={`overflow-hidden bg-[#141522] transition-[max-height] duration-1000 ease-in-out ${
+                className={`overflow-hidden ${theme == "dark" ? "bg-[#141522]" : ""}  transition-[max-height] duration-1000 ease-in-out ${
                   openSubmenu === item.name ? "max-h-[500px]" : "max-h-0"
                 }`}
               >
@@ -123,7 +121,7 @@ const Sidebar = () => {
                   <Link
                     to={subItem.link}
                     key={subItem.name}
-                    className="flex items-center p-2 rounded-lg text-sm w-full pl-4 hover:bg-[#141522] transition-colors duration-1000"
+                    className={`flex items-center p-2 rounded-lg text-sm w-full pl-4 ${theme == "dark" ? "hover:bg-[#141522]" : "hover:bg-[#f7f6f8]" }  transition-colors duration-100`}
                   >
                     <span className="mr-2 text-lg">{subItem.icon}</span>
                     {subItem.name}

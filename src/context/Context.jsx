@@ -3,10 +3,26 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const Context = createContext();
+
+// Get initial theme from localStorage or prefer user's system theme
+const getInitialTheme = () => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme) return savedTheme;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+};
 const ContextProvider = (props) => {
   const [user, setUser] = useState(() =>
     JSON.parse(localStorage.getItem("userData"))
   );
+  const [theme, setTheme] = useState(getInitialTheme);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => {
+      const newTheme = prevTheme === "light" ? "dark" : "light";
+      localStorage.setItem("theme", newTheme);
+      return newTheme;
+    });
+  };
 
   const userLogout = () => {
     const handleStorageChange = () => {
@@ -67,7 +83,9 @@ const ContextProvider = (props) => {
     getUser,
     saleData,
     loader,
-    collectionData
+    collectionData,
+    theme,
+    toggleTheme
   };
 
   return (

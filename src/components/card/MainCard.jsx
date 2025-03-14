@@ -13,7 +13,7 @@ const MainCard = ({
   third,
   four,
 }) => {
-  const { loader } = useContext(Context);
+  const { loader,theme } = useContext(Context);
 
   // State for percentage calculations
   const [percentage, setPercentage] = useState(0);
@@ -41,18 +41,18 @@ const MainCard = ({
   const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num);
 
   return (
-    <div className="w-[30%] card max-h-[190px] py-5 h-[170px] flex flex-wrap min-w-[305px]">
+    <div className={`w-[30%] ${theme == "dark" ? "card" : "card1"} max-h-[190px] py-5 h-[170px] flex flex-wrap min-w-[305px]`}>
       <main className="w-[60%] h-full flex flex-col gap-4">
         {/* Current Month vs Last Month */}
         <div className="flex justify-around">
           <div className="leading-none w-[60%] min-h-[50px] flex flex-col items-center justify-center">
-            <h1 className="xl:text-sm  text-[.7rem] font-semibold pb-1">
+            <h1 className={`xl:text-sm  text-[.7rem] pb-1 ${theme == "dark" ? "font-semibold" : "text-black font-medium"}`}>
               {first}
             </h1>
             {loader ? (
               <Loader />
             ) : (
-              <p className="font-bold text-[1.3rem]">
+              <p className={`font-bold text-[1.3rem] ${theme == "dark" ? "" : "text-black"}`}>
                 {formatNumber(currentMonth)}
               </p>
             )}
@@ -71,7 +71,7 @@ const MainCard = ({
                     <FaArrowTrendDown className="text-[red]" />
                   </div>
                 )}
-                <p className="font-semibold text-sm">
+                <p className={` ${theme == "dark" ? "font-semibold" : "text-gray-400"} text-sm`}>
                   {percentage >= 0
                     ? `+${formatNumber(percentage)}`
                     : formatNumber(percentage)}
@@ -85,13 +85,13 @@ const MainCard = ({
         {/* Today's Sale vs Last Day Sale */}
         <div className="flex justify-around mt-3">
           <div className="leading-none w-[60%] min-h-[50px] flex flex-col items-center justify-center">
-            <h1 className="xl:text-sm text-[.7rem] font-semibold pb-1">
+            <h1 className={`xl:text-sm  text-[.7rem] pb-1 ${theme == "dark" ? "font-semibold" : "text-black font-medium"}`}>
               {third}
             </h1>
             {loader ? (
               <Loader />
             ) : (
-              <p className="font-bold text-[1.3rem]">
+              <p className={`font-bold text-[1.3rem] ${theme == "dark" ? "" : "text-black"}`}>
                 {formatNumber(todaySale)}
               </p>
             )}
@@ -110,7 +110,7 @@ const MainCard = ({
                     <FaArrowTrendDown className="text-[red]" />
                   </div>
                 )}
-                <p className="font-semibold text-sm">
+                <p className={` ${theme == "dark" ? "font-semibold" : "text-gray-400"} text-sm`}>
                   {percentage2 >= 0
                     ? `+${formatNumber(percentage2)}`
                     : formatNumber(percentage2)}
@@ -126,13 +126,13 @@ const MainCard = ({
       <main className="w-[40%] h-full flex flex-col gap-4">
         <div className="flex justify-around min-h-[53px]">
           <div className="leading-none min-w-[90%] flex flex-col items-center justify-center">
-            <h1 className="xl:text-sm text-[.7rem] font-semibold pb-1">
+            <h1 className={`xl:text-sm  text-[.7rem] pb-1 ${theme == "dark" ? "font-semibold" : "text-black font-medium"}`}>
               {second}
             </h1>
             {loader ? (
               <Loader />
             ) : (
-              <p className="font-bold text-[1.3rem]">
+              <p className={`font-bold text-[1.3rem] ${theme == "dark" ? "" : "text-black"}`}>
                 {formatNumber(lastMonth)}
               </p>
             )}
@@ -140,11 +140,11 @@ const MainCard = ({
         </div>
         <div className="flex gap-2 items-center justify-center mt-2">
           <div className="leading-none min-w-[90%] min-h-[50px] flex flex-col items-center justify-center">
-            <h1 className="xl:text-sm text-[.7rem] font-semibold pb-1">{four}</h1>
+            <h1 className={`xl:text-sm  text-[.7rem] pb-1 ${theme == "dark" ? "font-semibold" : "text-black font-medium"}`}>{four}</h1>
             {loader ? (
               <Loader />
             ) : (
-              <p className="font-bold text-[1.3rem]">
+              <p className={`font-bold text-[1.3rem] ${theme == "dark" ? "" : "text-black"}`}>
                 {formatNumber(LastDaySale)}
               </p>
             )}
