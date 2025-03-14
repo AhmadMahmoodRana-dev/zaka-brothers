@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import MainCard from "../components/card/MainCard";
 import { Context } from "../context/Context";
+import SalesTable from "../components/tables/SalesTable";
 
 const CashSale = () => {
   const { saleData } = useContext(Context);
   console.log(saleData[0]?.CASH_SALE, "currency");
   return (
-    <div className="w-full min-h-[92.2vh] h-auto flex justify-center  top-section border-white">
+    <div className="w-full min-h-[92.2vh] h-auto flex flex-col  items-center  top-section border-white">
       <div className="flex gap-5 w-full h-full justify-center items-center  flex-wrap mt-10 px-3">
         <MainCard
           first={"Cash Sales"}
@@ -38,6 +39,9 @@ const CashSale = () => {
           todaySale={saleData[0]?.LD_CREDIT}
           LastDaySale={saleData[0]?.LD_CREDIT_LAST}
         />
+      </div>
+      <div className="table w-[91.5%] mt-10">
+        <SalesTable />
       </div>
     </div>
   );
