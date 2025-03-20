@@ -3,22 +3,11 @@ import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
 import { Context } from "../../context/Context";
 import Loader from "../Loader";
 
-const MainCard = ({
-  currentMonth,
-  lastMonth,
-  LastDaySale,
-  todaySale,
-  first,
-  second,
-  third,
-  four,
-}) => {
+const MainCard = ({currentMonth,lastMonth,LastDaySale,todaySale,first,second,third,four}) => {
   const { loader,theme } = useContext(Context);
-
   // State for percentage calculations
   const [percentage, setPercentage] = useState(0);
   const [percentage2, setPercentage2] = useState(0);
-
   // Reusable function for percentage calculation
   const calculatePercentageChange = (current, previous) => {
     if (previous === 0) return current > 0 ? 100 : 0;
@@ -46,13 +35,13 @@ const MainCard = ({
         {/* Current Month vs Last Month */}
         <div className="flex justify-around">
           <div className="leading-none w-[60%] min-h-[50px] flex flex-col items-center justify-center">
-            <h1 className={`xl:text-sm  text-[.7rem] pb-1 ${theme == "dark" ? "font-semibold" : "text-black font-medium"}`}>
+            <h1 className={`xl:text-sm text-[.7rem] tracking-wider font-semibold pb-1 ${theme == "dark" ? "" : "text-[#1c252e]"}`}>
               {first}
             </h1>
             {loader ? (
               <Loader />
             ) : (
-              <p className={`font-bold text-[1.3rem] ${theme == "dark" ? "" : "text-black"}`}>
+              <p className={`font-bold text-[1.3rem] ${theme == "dark" ? "" : "text-[#1c252e]"}`}>
                 {formatNumber(currentMonth)}
               </p>
             )}
@@ -71,7 +60,7 @@ const MainCard = ({
                     <FaArrowTrendDown className="text-[red]" />
                   </div>
                 )}
-                <p className={` ${theme == "dark" ? "font-semibold" : "text-gray-400"} text-sm`}>
+                <p className={` ${theme == "dark" ? "font-semibold" : "text-[#637381]"} text-sm`}>
                   {percentage >= 0
                     ? `+${formatNumber(percentage)}`
                     : formatNumber(percentage)}
@@ -85,13 +74,13 @@ const MainCard = ({
         {/* Today's Sale vs Last Day Sale */}
         <div className="flex justify-around mt-3">
           <div className="leading-none w-[60%] min-h-[50px] flex flex-col items-center justify-center">
-            <h1 className={`xl:text-sm  text-[.7rem] pb-1 ${theme == "dark" ? "font-semibold" : "text-black font-medium"}`}>
+            <h1 className={`xl:text-sm text-[.7rem] tracking-wider font-semibold pb-1 ${theme == "dark" ? "" : "text-[#1c252e]"}`}>
               {third}
             </h1>
             {loader ? (
               <Loader />
             ) : (
-              <p className={`font-bold text-[1.3rem] ${theme == "dark" ? "" : "text-black"}`}>
+              <p className={`font-bold text-[1.3rem] ${theme == "dark" ? "" : "text-[#1c252e]"}`}>
                 {formatNumber(todaySale)}
               </p>
             )}
@@ -110,7 +99,7 @@ const MainCard = ({
                     <FaArrowTrendDown className="text-[red]" />
                   </div>
                 )}
-                <p className={` ${theme == "dark" ? "font-semibold" : "text-gray-400"} text-sm`}>
+                <p className={` ${theme == "dark" ? "font-semibold" : "text-[#637381]"} text-sm`}>
                   {percentage2 >= 0
                     ? `+${formatNumber(percentage2)}`
                     : formatNumber(percentage2)}
@@ -126,13 +115,13 @@ const MainCard = ({
       <main className="w-[40%] h-full flex flex-col gap-4">
         <div className="flex justify-around min-h-[53px]">
           <div className="leading-none min-w-[90%] flex flex-col items-center justify-center">
-            <h1 className={`xl:text-sm  text-[.7rem] pb-1 ${theme == "dark" ? "font-semibold" : "text-black font-medium"}`}>
+            <h1 className={`xl:text-sm text-[.7rem] tracking-wider font-semibold pb-1 ${theme == "dark" ? "" : "text-[#1c252e]"}`}>
               {second}
             </h1>
             {loader ? (
               <Loader />
             ) : (
-              <p className={`font-bold text-[1.3rem] ${theme == "dark" ? "" : "text-black"}`}>
+              <p className={`font-bold text-[1.3rem] ${theme == "dark" ? "" : "text-[#1c252e]"}`}>
                 {formatNumber(lastMonth)}
               </p>
             )}
@@ -140,11 +129,11 @@ const MainCard = ({
         </div>
         <div className="flex gap-2 items-center justify-center mt-2">
           <div className="leading-none min-w-[90%] min-h-[50px] flex flex-col items-center justify-center">
-            <h1 className={`xl:text-sm  text-[.7rem] pb-1 ${theme == "dark" ? "font-semibold" : "text-black font-medium"}`}>{four}</h1>
+            <h1 className={`xl:text-sm text-[.7rem] tracking-wider font-semibold pb-1 ${theme == "dark" ? "" : "text-[#1c252e]"}`}>{four}</h1>
             {loader ? (
               <Loader />
             ) : (
-              <p className={`font-bold text-[1.3rem] ${theme == "dark" ? "" : "text-black"}`}>
+              <p className={`font-bold text-[1.3rem] ${theme == "dark" ? "" : "text-[#1c252e]"}`}>
                 {formatNumber(LastDaySale)}
               </p>
             )}

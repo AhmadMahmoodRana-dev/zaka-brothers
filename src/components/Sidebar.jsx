@@ -36,7 +36,7 @@ const Sidebar = () => {
   return (
     <div
       className={`min-h-screen h-auto ${
-        theme == "dark" ? "bg-[#1d1f33] text-white" : "bg-white text-[#7d8a96] font-semibold"
+        theme == "dark" ? "bg-[#1d1f33] text-white" : "bg-white text-[#637381] font-semibold"
       }   transition-all duration-300 relative ${
         isCollapsed ? "w-16" : "w-[300px]"
       }`}
@@ -68,7 +68,7 @@ const Sidebar = () => {
                 isCollapsed ? "justify-center" : ""
               } ${
                 openSubmenu === item.name
-                  ? "bg-[#141522] border-l-2 border-l-red-500 text-white"
+                  ? `${theme == "dark" ? "bg-[#141522] border-l-2 border-l-red-500 text-white" : "bg-[#ebf8f4] text-[#13ad7a]" }`
                   : ""
               }`}
             >
@@ -94,14 +94,14 @@ const Sidebar = () => {
             </button>
             {/* Floating Tooltip when Sidebar is Collapsed */}
             {isCollapsed && (
-              <div className="absolute left-full z-10 top-0 bg-gray-800 text-white shadow-lg min-w-[200px] rounded-md py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-1000">
+              <div className={`absolute left-full z-10 top-0 ${ theme == "dark" ?  "bg-gray-800 text-white" : "border border-l-white border-gray-200 bg-white text-[#1c252e]"} shadow-lg min-w-[200px] rounded-md py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-1000`}>
                 <div className="px-4 py-2 font-bold">{item.name}</div>
                 {item.subItems &&
                   item.subItems.map((subItem) => (
                     <Link
                       to={subItem.link}
                       key={subItem.name}
-                      className="flex items-center px-4 py-2 hover:bg-[#141522] transition-colors duration-1000"
+                      className={`flex items-center px-4 py-2 ${theme == "dark" ? "hover:bg-[#141522]" : "hover:bg-[#efeeef]"}  transition-colors duration-1000`}
                     >
                       <span className="mr-2 text-lg">{subItem.icon}</span>
                       {subItem.name}

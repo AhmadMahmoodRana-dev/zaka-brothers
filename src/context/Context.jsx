@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const Context = createContext();
-
-// Get initial theme from localStorage or prefer user's system theme
 const getInitialTheme = () => {
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme) return savedTheme;
@@ -32,16 +30,19 @@ const ContextProvider = (props) => {
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
   };
-
+  
   const getUser = () => {
     setUser(JSON.parse(localStorage.getItem("userData")));
   };
-
+  
   useEffect(() => {
     userLogout();
   }, []);
-
+  
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  
   // GET SALE DATA
+
   const [saleData, setSaleData] = useState([]);
   const [collectionData, setCollectionData] = useState([]);
   const [loader, setLoader] = useState(true);
@@ -74,7 +75,6 @@ const ContextProvider = (props) => {
     getCollection();
   }, []);
 
-  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const contextValue = {
     isCollapsed,

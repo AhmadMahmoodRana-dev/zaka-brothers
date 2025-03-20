@@ -24,7 +24,7 @@ const Navbar = () => {
         <h1 className={`${theme == "dark" ? "text-white" : "text-gray-600" } font-semibold`}>{user?.user?.user}</h1>
         <button 
           onClick={toggleTheme}
-          className="p-1 rounded-full bg-gray-200 dark:bg-gray-700"
+          className={`p-2 rounded-full ${theme == "dark" ? "bg-gray-700" : "hover:bg-[#ededed]"} `}
           aria-label="Toggle theme"
         >
           {theme === "dark" ? "🌙" : "☀️"}
