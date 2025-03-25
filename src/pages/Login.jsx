@@ -1,11 +1,10 @@
-
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../context/Context";
 import axios from "axios";
 import validationSchema from "../schema/Login.schema";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import LoginImage from "../assets/Login.png"
+import LoginImage from "../assets/Login.png";
 
 const Login = () => {
   const { getUser } = useContext(Context);
@@ -25,7 +24,7 @@ const Login = () => {
           password: values.password,
         }
       );
-
+      console.log("Success");
       if (data.success) {
         localStorage.setItem("userData", JSON.stringify(data));
         getUser();
@@ -37,12 +36,18 @@ const Login = () => {
   };
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center bg-[#ededed]">
-      <div className="w-[40%] h-[50%] shadow-2xl flex rounded-2xl">
+      <div className="w-[40%] min-w-[320px] h-[50%] shadow-2xl flex rounded-2xl">
         <div className="w-[40%] h-full bg-white">
-          <img className="w-[100%] h-[100%] mx-auto mb-12" src={LoginImage} alt="Login" />
+          <img
+            className="w-[100%] h-[100%] mx-auto mb-12"
+            src={LoginImage}
+            alt="Login"
+          />
         </div>
         <div className="form bg-white w-[60%] h-full px-4 flex flex-col justify-center">
-        <h1 className="text-black font-bold mb-5 xl:text-3xl md:text-xl text-lg italic text-center">Login Your Account</h1>
+          <h1 className="text-black font-bold mb-5 xl:text-3xl md:text-xl text-lg italic text-center">
+            Login Your Account
+          </h1>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -86,7 +91,7 @@ const Login = () => {
                     <div className="text-sm">
                       <a
                         href="#"
-                        className="font-semibold text-indigo-600 hover:text-indigo-500"
+                        className="font-semibold text-indigo-600 hover:text-indigo-500 lg:text-[1vw] text-[7px]"
                       >
                         Forgot password?
                       </a>

@@ -15,7 +15,6 @@ const Sidebar = () => {
       subItems: [
         { name: "Sale", icon: "🧑", link: "/cashsale" },
         { name: "Collection", icon: "🔑", link: "/collection" },
-        { name: "Sales Commission Agents", icon: "💼" },
       ],
     },
     {
