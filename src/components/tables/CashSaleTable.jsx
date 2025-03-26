@@ -9,70 +9,52 @@ const CashSaleTable = () => {
   const [companies, setCompanies] = useState([]);
 
   const formatDateForAPI = (dateString) => {
-    const months = [
-      "JAN",
-      "FEB",
-      "MAR",
-      "APR",
-      "MAY",
-      "JUN",
-      "JUL",
-      "AUG",
-      "SEP",
-      "OCT",
-      "NOV",
-      "DEC",
-    ];
+    const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
     const [year, month, day] = dateString.split("-");
     return `${day}-${months[parseInt(month, 10) - 1]}-${year}`;
   };
 
   const formatDateForInput = (dateString) => {
     const months = {
-      JAN: "01",
-      FEB: "02",
-      MAR: "03",
-      APR: "04",
-      MAY: "05",
-      JUN: "06",
-      JUL: "07",
-      AUG: "08",
-      SEP: "09",
-      OCT: "10",
-      NOV: "11",
-      DEC: "12",
+      JAN: "01", FEB: "02", MAR: "03", APR: "04", MAY: "05", JUN: "06",
+      JUL: "07", AUG: "08", SEP: "09", OCT: "10", NOV: "11", DEC: "12"
     };
     if (!dateString) return "";
     const [day, month, year] = dateString.split("-");
     return `${year}-${months[month]}-${day}`;
   };
 
+  const [filters, setFilters] = useState({
+    sdate: "01-MAR-2025",
+    edate: "31-MAR-2025",
+    company: "1",
+  });
+
   const getCollectionTableData = async () => {
     try {
-      const { data } = await axios.get(
-        "https://zbl.zaffarsons.com/zbl/sale_detail",
-        { params: filters }
-      );
+      const { data } = await axios.get("https://zbl.zaffarsons.com/zbl/sale_detail", { params: filters });
       setCollectionTableData(data);
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching collection data:", error);
     }
   };
 
-  const fetchCompanies = async () => {
+  const fetchDropdownData = async () => {
     try {
-      const { data } = await axios.get(
-        "https://zbl.zaffarsons.com/zbl/pre-define"
-      );
-      setCompanies(data?.company_list || []);
+      const { data } = await axios.get("https://zbl.zaffarsons.com/zbl/pre-define");
+      if (Array.isArray(data?.company_list)) {
+        setCompanies(data?.company_list);
+      } else {
+        console.error("Invalid company list format:", data?.company_list);
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching dropdown data:", error);
     }
   };
 
   useEffect(() => {
     getCollectionTableData();
-    fetchCompanies();
+    fetchDropdownData();
   }, []);
 
   const handleSubmit = (e) => {
