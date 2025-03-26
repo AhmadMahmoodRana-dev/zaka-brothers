@@ -7,7 +7,7 @@ import ProductWiseSaleTable from "../components/tables/ProductWiseSaleTable";
 const CashSale = () => {
   const { saleData,theme } = useContext(Context);
   return (
-    <div className={`w-full min-h-[92.2vh] h-auto flex flex-col  items-center ${theme == "dark" ? "top-section" : "bg-white"}  border-white`}>
+    <div className={`w-full min-h-[92.2vh] h-auto flex flex-col mb-10  items-center ${theme == "dark" ? "top-section" : "bg-white"}  border-white`}>
       <div className="flex gap-5 w-full h-full justify-center items-center  flex-wrap mt-10 px-3">
         <MainCard
           first={"Cash Sales"}

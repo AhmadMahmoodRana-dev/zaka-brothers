@@ -164,3 +164,4 @@ const CashSaleTable = () => {
 };
 
 export default CashSaleTable;
+
