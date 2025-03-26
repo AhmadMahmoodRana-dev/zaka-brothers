@@ -7,6 +7,8 @@ import Login from "./pages/login";
 import CashSale from "./pages/CashSale";
 import Collection from "./pages/Collection";
 import { Context } from "./context/Context";
+import Stock from "./pages/Stock";
+import Receiveable from "./pages/Receiveable";
 export default function App() {
   const { theme } = useContext(Context);
   const phoneNumber = "923015988221";
@@ -39,6 +41,8 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/cashsale" element={<CashSale />} />
           <Route path="/collection" element={<Collection />} />
+          <Route path="/stock" element={<Stock />} />
+          <Route path="/receiveable" element={<Receiveable />} />
         </Route>
       </Routes>
     </div>

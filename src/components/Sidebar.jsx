@@ -2,24 +2,29 @@ import { useContext, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { Context } from "../context/Context";
 import { Link } from "react-router-dom";
-
+import { FaHome } from "react-icons/fa";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { GiReceiveMoney } from "react-icons/gi";
 const Sidebar = () => {
   const [openSubmenu, setOpenSubmenu] = useState(null);
   const { isCollapsed, theme } = useContext(Context);
 
   const menuItems = [
-    { name: "Home", icon: "🏠", link: "/" },
+    { name: "Home", icon: <FaHome/>, link: "/" },
     {
       name: "Dashboard",
-      icon: "👤",
+      icon: <LuLayoutDashboard/>,
       subItems: [
-        { name: "Sale", icon: "🧑", link: "/cashsale" },
+        { name: "Sale", icon: "🔑", link: "/cashsale" },
         { name: "Collection", icon: "🔑", link: "/collection" },
+        { name: "Stock", icon: "🔑", link: "/stock" },
+        { name: "Receivable", icon: "🔑", link: "/receiveable" },
       ],
     },
     {
       name: "Products",
-      icon: "📦",
+      icon: <GiReceiveMoney/>
+      ,
       subItems: [
         { name: "Categories", icon: "📂" },
         { name: "Variations", icon: "🎨" },
