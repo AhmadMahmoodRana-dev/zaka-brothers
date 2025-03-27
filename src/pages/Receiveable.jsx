@@ -2,25 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Context } from "../context/Context";
 import ReceiveTable from "../components/tables/ReceiveTable";
-
-const formatDateForAPI = (dateString) => {
-  const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-  const [year, month, day] = dateString.split("-");
-  return `${day}-${months[parseInt(month, 10) - 1]}-${year}`;
-};
-
-const formatDateForInput = (dateString) => {
-  const months = { JAN: "01", FEB: "02", MAR: "03", APR: "04", MAY: "05", JUN: "06", JUL: "07", AUG: "08", SEP: "09", OCT: "10", NOV: "11", DEC: "12" };
-  if (!dateString) return "";
-  const [day, month, year] = dateString.split("-");
-  return `${year}-${months[month]}-${day}`;
-};
-
-const getCurrentDate = () => {
-  const today = new Date();
-  return today.toISOString().split("T")[0]; // Format: YYYY-MM-DD
-};
-
+import { formatDateForAPI,formatDateForInput,getCurrentDate } from "../utils/TableUtils";
 const Receiveable = () => {
   const { theme } = useContext(Context);
   const [collectionData, setCollectionData] = useState([]);

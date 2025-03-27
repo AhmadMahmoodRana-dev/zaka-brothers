@@ -120,12 +120,154 @@ const Home = () => {
     if (!number) return "0";
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
-  
+
+  const Sale = [
+    {
+      id: 1,
+      name: "Total Sale",
+      saleFunction: formatNumberWithCommas(collectionData?.sale?.TOTAL_SALE),
+    },
+    {
+      id: 2,
+      name: "Cash Sale",
+      saleFunction: formatNumberWithCommas(collectionData?.sale?.CASH_SALE),
+    },
+    {
+      id: 3,
+      name: "Credit Sale",
+      saleFunction: formatNumberWithCommas(collectionData?.sale?.CREDIT_SALE),
+    },
+    {
+      id: 4,
+      name: "Installment Sale",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.sale?.INSTALLMENT_SALE
+      ),
+    },
+  ];
+  const Recovery = [
+    {
+      id: 1,
+      name: "Installment Recovery",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.recovery?.INSTALLMENT_RECOVERY
+      ),
+    },
+    {
+      id: 2,
+      name: "Cash Recovery",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.recovery?.CASH_RECOVERY
+      ),
+    },
+    {
+      id: 3,
+      name: "Credit Recovery",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.recovery?.CREDIT_RECOVERY
+      ),
+    },
+    {
+      id: 4,
+      name: "Installment Advance",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.recovery?.INSTALLMENT_ADVANCE
+      ),
+    },
+    {
+      id: 5,
+      name: "Credit Advance",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.recovery?.CREDIT_ADVANCE
+      ),
+    },
+    {
+      id: 6,
+      name: "Total Advance",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.recovery?.TOTAL_ADVANCE
+      ),
+    },
+    {
+      id: 7,
+      name: "Total Recovery",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.recovery?.TOTAL_RECOVERY
+      ),
+    },
+    {
+      id: 8,
+      name: "Grand Total",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.recovery?.GRAND_TOTAL
+      ),
+    },
+  ];
+
+  const bank_expense = [
+    {
+      id: 1,
+      name: "Cash At Bank",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.bank_expense?.CASH_AT_BANK
+      ),
+    },
+    {
+      id: 2,
+      name: "Cash In Hand",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.bank_expense?.CASH_IN_HAND
+      ),
+    },
+    {
+      id: 3,
+      name: "Total Expense",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.bank_expense?.TOTAL_EXPENSE
+      ),
+    },
+    {
+      id: 4,
+      name: "Purchases",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.bank_expense?.PURCHASES
+      ),
+    },
+    {
+      id: 5,
+      name: "Payments",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.bank_expense?.PAYMENTS
+      ),
+    },
+    {
+      id: 6,
+      name: "Salary Payable",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.bank_expense?.SALARY_PAYABLE
+      ),
+    },
+    {
+      id: 7,
+      name: "Drawing",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.bank_expense?.DRAWING
+      ),
+    },
+    {
+      id: 8,
+      name: "Total Cash",
+      saleFunction: formatNumberWithCommas(
+        collectionData?.bank_expense?.TOTAL_CASH
+      ),
+    },
+  ];
+
   return (
     <div
       className={`w-full ${
         theme === "dark" ? "bg-[#141b2e]" : "bg-white border-l border-gray-200"
-      } h-[92.2vh]`}
+      } min-h-[92.2vh]`}
     >
       <div
         className={`${
@@ -215,472 +357,93 @@ const Home = () => {
         {/* Cards Section */}
         <h1 className="text-xl font-semibold mt-3">Sales</h1>
         <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
-          <div className="tilt-box-wrap min-h-[90px]">
-            <div
-              className={`tilt-box rounded-sm ${
-                theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-              } flex items-center gap-4 px-4`}
-            >
-              <div
-                className={`circle3 ${
-                  isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-                } bg-blue-400 rounded-full flex justify-center items-center`}
-              >
-                <FaCartArrowDown size={24} />
+          {Sale.map((sale) => {
+            return (
+              <div key={sale.id} className="tilt-box-wrap min-h-[90px]">
+                <div
+                  className={`tilt-box rounded-sm ${
+                    theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
+                  } flex items-center gap-4 px-4`}
+                >
+                  <div
+                    className={`circle3 ${
+                      isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
+                    } bg-blue-400 rounded-full flex justify-center items-center`}
+                  >
+                    <FaCartArrowDown size={24} />
+                  </div>
+                  <div className="content">
+                    <h1 className="text-gray-500 uppercase font-semibold">
+                      {sale.name}
+                    </h1>
+                    <h1 className="text-gray-600 font-semibold text-xl">
+                      {sale.saleFunction}
+                    </h1>
+                  </div>
+                </div>
               </div>
-              <div className="content">
-                <h1 className="text-gray-500 uppercase font-semibold">
-                  Total Sales
-                </h1>
-                <h1 className="text-gray-600 font-semibold text-xl">
-                 {formatNumberWithCommas(collectionData?.sale?.TOTAL_SALE)}
-                </h1>
-              </div>
-            </div>
-          </div>
-          <div className="tilt-box-wrap min-h-[90px]">
-            <div
-              className={`tilt-box rounded-sm ${
-                theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-              } flex items-center gap-4 px-4`}
-            >
-              <div
-                className={`circle3 ${
-                  isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-                } bg-blue-400 rounded-full flex justify-center items-center`}
-              >
-                <FaCartArrowDown size={24} />
-              </div>
-              <div className="content">
-                <h1 className="text-gray-500 uppercase font-semibold">
-                  Credit Sale
-                </h1>
-                <h1 className="text-gray-600 font-semibold text-xl">
-                  {formatNumberWithCommas(collectionData?.sale?.CREDIT_SALE)}
-                </h1>
-              </div>
-            </div>
-          </div>
-          <div className="tilt-box-wrap min-h-[90px]">
-            <div
-              className={`tilt-box rounded-sm ${
-                theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-              } flex items-center gap-4 px-4`}
-            >
-              <div
-                className={`circle3 ${
-                  isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-                } bg-blue-400 rounded-full flex justify-center items-center`}
-              >
-                <FaCartArrowDown size={24} />
-              </div>
-              <div className="content">
-                <h1 className="text-gray-500 uppercase font-semibold">
-                  Cash Sales
-                </h1>
-                <h1 className="text-gray-600 font-semibold text-xl">
-                  {formatNumberWithCommas(collectionData?.sale?.CASH_SALE)}
-                </h1>
-              </div>
-            </div>
-          </div>
-          <div className="tilt-box-wrap min-h-[90px]">
-            <div
-              className={`tilt-box rounded-sm ${
-                theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-              } flex items-center gap-4 px-4`}
-            >
-              <div
-                className={`circle3 ${
-                  isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-                } bg-blue-400 rounded-full flex justify-center items-center`}
-              >
-                <FaCartArrowDown size={24} />
-              </div>
-              <div className="content">
-                <h1 className="text-gray-500 uppercase font-semibold">
-                  Installment Sales
-                </h1>
-                <h1 className="text-gray-600 font-semibold text-xl">
-                  {formatNumberWithCommas(collectionData?.sale?.INSTALLMENT_SALE)}
-                </h1>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
         <h1 className="text-xl font-semibold mt-3">Recovery</h1>
         <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
-
-        <div className="tilt-box-wrap min-h-[90px]">
-          <div
-            className={`tilt-box rounded-sm ${
-              theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-            } flex items-center gap-4 px-4`}
-          >
-            <div
-              className={`circle3 ${
-                isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-              } bg-blue-400 rounded-full flex justify-center items-center`}
-            >
-              <FaCartArrowDown size={24} />
-            </div>
-            <div className="content">
-              <h1 className="text-gray-500 uppercase font-semibold text-[.95rem]">
-                Installment Recovery
-              </h1>
-              <h1 className="text-gray-600 font-semibold text-xl">
-                {formatNumberWithCommas(collectionData?.recovery?.INSTALLMENT_RECOVERY)}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="tilt-box-wrap min-h-[90px]">
-          <div
-            className={`tilt-box rounded-sm ${
-              theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-            } flex items-center gap-4 px-4`}
-          >
-            <div
-              className={`circle3 ${
-                isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-              } bg-blue-400 rounded-full flex justify-center items-center`}
-            >
-              <FaCartArrowDown size={24} />
-            </div>
-            <div className="content">
-              <h1 className="text-gray-500 uppercase font-semibold">
-                Cash Recovery
-              </h1>
-              <h1 className="text-gray-600 font-semibold text-xl">
-                {formatNumberWithCommas(collectionData?.recovery?.CASH_RECOVERY)}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="tilt-box-wrap min-h-[90px]">
-          <div
-            className={`tilt-box rounded-sm ${
-              theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-            } flex items-center gap-4 px-4`}
-          >
-            <div
-              className={`circle3 ${
-                isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-              } bg-blue-400 rounded-full flex justify-center items-center`}
-            >
-              <FaCartArrowDown size={24} />
-            </div>
-            <div className="content">
-              <h1 className="text-gray-500 uppercase font-semibold">
-                Credit Recovery
-              </h1>
-              <h1 className="text-gray-600 font-semibold text-xl">
-                {formatNumberWithCommas(collectionData?.recovery?.CREDIT_RECOVERY)}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="tilt-box-wrap min-h-[90px]">
-          <div
-            className={`tilt-box rounded-sm ${
-              theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-            } flex items-center gap-4 px-4`}
-          >
-            <div
-              className={`circle3 ${
-                isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-              } bg-blue-400 rounded-full flex justify-center items-center`}
-            >
-              <FaCartArrowDown size={24} />
-            </div>
-            <div className="content">
-              <h1 className="text-gray-500 uppercase font-semibold">
-                Installment Advance
-              </h1>
-              <h1 className="text-gray-600 font-semibold text-xl">
-                {formatNumberWithCommas(collectionData?.recovery?.INSTALLMENT_ADVANCE)}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="tilt-box-wrap min-h-[90px]">
-          <div
-            className={`tilt-box rounded-sm ${
-              theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-            } flex items-center gap-4 px-4`}
-          >
-            <div
-              className={`circle3 ${
-                isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-              } bg-blue-400 rounded-full flex justify-center items-center`}
-            >
-              <FaCartArrowDown size={24} />
-            </div>
-            <div className="content">
-              <h1 className="text-gray-500 uppercase font-semibold">
-                Credit Advance
-              </h1>
-              <h1 className="text-gray-600 font-semibold text-xl">
-                {formatNumberWithCommas(collectionData?.recovery?.CREDIT_ADVANCE)}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="tilt-box-wrap min-h-[90px]">
-          <div
-            className={`tilt-box rounded-sm ${
-              theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-            } flex items-center gap-4 px-4`}
-          >
-            <div
-              className={`circle3 ${
-                isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-              } bg-blue-400 rounded-full flex justify-center items-center`}
-            >
-              <FaCartArrowDown size={24} />
-            </div>
-            <div className="content">
-              <h1 className="text-gray-500 uppercase font-semibold">
-                Total Advance
-              </h1>
-              <h1 className="text-gray-600 font-semibold text-xl">
-                {formatNumberWithCommas(collectionData?.recovery?.TOTAL_ADVANCE)}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="tilt-box-wrap min-h-[90px]">
-          <div
-            className={`tilt-box rounded-sm ${
-              theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-            } flex items-center gap-4 px-4`}
-          >
-            <div
-              className={`circle3 ${
-                isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-              } bg-blue-400 rounded-full flex justify-center items-center`}
-            >
-              <FaCartArrowDown size={24} />
-            </div>
-            <div className="content">
-              <h1 className="text-gray-500 uppercase font-semibold">
-                Total Recovery
-              </h1>
-              <h1 className="text-gray-600 font-semibold text-xl">
-                {formatNumberWithCommas(collectionData?.recovery?.TOTAL_RECOVERY)}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="tilt-box-wrap min-h-[90px]">
-          <div
-            className={`tilt-box rounded-sm ${
-              theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-            } flex items-center gap-4 px-4`}
-          >
-            <div
-              className={`circle3 ${
-                isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-              } bg-blue-400 rounded-full flex justify-center items-center`}
-            >
-              <FaCartArrowDown size={24} />
-            </div>
-            <div className="content">
-              <h1 className="text-gray-500 uppercase font-semibold">
-                Grand Total
-              </h1>
-              <h1 className="text-gray-600 font-semibold text-xl">
-                {formatNumberWithCommas(collectionData?.recovery?.GRAND_TOTAL)}
-              </h1>
-            </div>
-          </div>
-        </div>
+          {Recovery.map((recovery) => {
+            return (
+              <div className="tilt-box-wrap min-h-[90px]">
+                <div
+                  className={`tilt-box rounded-sm ${
+                    theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
+                  } flex items-center gap-4 px-4`}
+                >
+                  <div
+                    className={`circle3 ${
+                      isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
+                    } bg-blue-400 rounded-full flex justify-center items-center`}
+                  >
+                    <FaCartArrowDown size={24} />
+                  </div>
+                  <div className="content">
+                    <h1 className="text-gray-500 uppercase font-semibold text-[.95rem]">
+                      {recovery.name}
+                    </h1>
+                    <h1 className="text-gray-600 font-semibold text-xl">
+                      {recovery.saleFunction}
+                    </h1>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
         <h1 className="text-xl font-semibold mt-3">Bank Expense</h1>
-      <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
-        <div className="tilt-box-wrap min-h-[90px]">
-          <div
-            className={`tilt-box rounded-sm ${
-              theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-            } flex items-center gap-4 px-4`}
-          >
-            <div
-              className={`circle3 ${
-                isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-              } bg-blue-400 rounded-full flex justify-center items-center`}
-            >
-              <FaCartArrowDown size={24} />
-            </div>
-            <div className="content">
-              <h1 className="text-gray-500 uppercase font-semibold">
-                CASH AT BANK
-              </h1>
-              <h1 className="text-gray-600 font-semibold text-xl">
-                {formatNumberWithCommas(collectionData?.bank_expense?.CASH_AT_BANK)}
-              </h1>
-            </div>
-          </div>
-        </div>
-
-        <div className="tilt-box-wrap min-h-[90px]">
-          <div
-            className={`tilt-box rounded-sm ${
-              theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-            } flex items-center gap-4 px-4`}
-          >
-            <div
-              className={`circle3 ${
-                isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-              } bg-blue-400 rounded-full flex justify-center items-center`}
-            >
-              <FaCartArrowDown size={24} />
-            </div>
-            <div className="content">
-              <h1 className="text-gray-500 uppercase font-semibold">
-                CASH IN HAND
-              </h1>
-              <h1 className="text-gray-600 font-semibold text-xl">
-                {formatNumberWithCommas(collectionData?.bank_expense?.CASH_IN_HAND)}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="tilt-box-wrap min-h-[90px]">
-          <div
-            className={`tilt-box rounded-sm ${
-              theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-            } flex items-center gap-4 px-4`}
-          >
-            <div
-              className={`circle3 ${
-                isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-              } bg-blue-400 rounded-full flex justify-center items-center`}
-            >
-              <FaCartArrowDown size={24} />
-            </div>
-            <div className="content">
-              <h1 className="text-gray-500 uppercase font-semibold">
-                TOTAL EXPENSE
-              </h1>
-              <h1 className="text-gray-600 font-semibold text-xl">
-                {formatNumberWithCommas(collectionData?.bank_expense?.TOTAL_EXPENSE)}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="tilt-box-wrap min-h-[90px]">
-          <div
-            className={`tilt-box rounded-sm ${
-              theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-            } flex items-center gap-4 px-4`}
-          >
-            <div
-              className={`circle3 ${
-                isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-              } bg-blue-400 rounded-full flex justify-center items-center`}
-            >
-              <FaCartArrowDown size={24} />
-            </div>
-            <div className="content">
-              <h1 className="text-gray-500 uppercase font-semibold">
-                PURCHASES
-              </h1>
-              <h1 className="text-gray-600 font-semibold text-xl">
-                {formatNumberWithCommas(collectionData?.bank_expense?.PURCHASES)}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="tilt-box-wrap min-h-[90px]">
-          <div
-            className={`tilt-box rounded-sm ${
-              theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-            } flex items-center gap-4 px-4`}
-          >
-            <div
-              className={`circle3 ${
-                isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-              } bg-blue-400 rounded-full flex justify-center items-center`}
-            >
-              <FaCartArrowDown size={24} />
-            </div>
-            <div className="content">
-              <h1 className="text-gray-500 uppercase font-semibold">
-                PAYMENTS
-              </h1>
-              <h1 className="text-gray-600 font-semibold text-xl">
-                {formatNumberWithCommas(collectionData?.bank_expense?.PAYMENTS)}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="tilt-box-wrap min-h-[90px]">
-          <div
-            className={`tilt-box rounded-sm ${
-              theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-            } flex items-center gap-4 px-4`}
-          >
-            <div
-              className={`circle3 ${
-                isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-              } bg-blue-400 rounded-full flex justify-center items-center`}
-            >
-              <FaCartArrowDown size={24} />
-            </div>
-            <div className="content">
-              <h1 className="text-gray-500 uppercase font-semibold">
-                SALARY PAYABLE
-              </h1>
-              <h1 className="text-gray-600 font-semibold text-xl">
-                {formatNumberWithCommas(collectionData?.bank_expense?.SALARY_PAYABLE)}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="tilt-box-wrap min-h-[90px]">
-          <div
-            className={`tilt-box rounded-sm ${
-              theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-            } flex items-center gap-4 px-4`}
-          >
-            <div
-              className={`circle3 ${
-                isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-              } bg-blue-400 rounded-full flex justify-center items-center`}
-            >
-              <FaCartArrowDown size={24} />
-            </div>
-            <div className="content">
-              <h1 className="text-gray-500 uppercase font-semibold">DRAWING</h1>
-              <h1 className="text-gray-600 font-semibold text-xl">
-                {formatNumberWithCommas(collectionData?.bank_expense?.DRAWING)}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="tilt-box-wrap min-h-[90px]">
-          <div
-            className={`tilt-box rounded-sm ${
-              theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-            } flex items-center gap-4 px-4`}
-          >
-            <div
-              className={`circle3 ${
-                isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-              } bg-blue-400 rounded-full flex justify-center items-center`}
-            >
-              <FaCartArrowDown size={24} />
-            </div>
-            <div className="content">
-              <h1 className="text-gray-500 uppercase font-semibold">
-                TOTAL CASH
-              </h1>
-              <h1 className="text-gray-600 font-semibold text-xl">
-                {formatNumberWithCommas(collectionData?.bank_expense?.TOTAL_CASH)}
-              </h1>
-            </div>
-          </div>
-        </div>
+        <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
+          {bank_expense.map((bank) => {
+            return (
+              <div className="tilt-box-wrap min-h-[90px]">
+                <div
+                  className={`tilt-box rounded-sm ${
+                    theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
+                  } flex items-center gap-4 px-4`}
+                >
+                  <div
+                    className={`circle3 ${
+                      isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
+                    } bg-blue-400 rounded-full flex justify-center items-center`}
+                  >
+                    <FaCartArrowDown size={24} />
+                  </div>
+                  <div className="content">
+                    <h1 className="text-gray-500 uppercase font-semibold">
+                      {bank.name}
+                    </h1>
+                    <h1 className="text-gray-600 font-semibold text-xl">
+                      {bank.saleFunction}
+                    </h1>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

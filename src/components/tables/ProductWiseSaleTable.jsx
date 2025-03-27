@@ -1,10 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext} from "react";
 import { Context } from "../../context/Context";
 
 const ProductWiseSaleTable = ({collectionTableData1}) => {
   const { theme } = useContext(Context);
-
-  
   return (
     <div
       className={`p-4 w-[91%] ${
@@ -16,7 +14,7 @@ const ProductWiseSaleTable = ({collectionTableData1}) => {
           theme === "dark" ? "text-white" : ""
         }`}
       >
-        Sale Data
+        Product Data
       </h1>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-h-[50vh]">
         <table className="w-full text-sm text-left">
