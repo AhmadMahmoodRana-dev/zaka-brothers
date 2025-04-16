@@ -113,7 +113,7 @@ const CashSale = () => {
 
   return (
     <div
-      className={`w-full min-h-[92.2vh] flex flex-col items-center ${
+      className={`w-full min-h-[92.2vh] pb-5 flex flex-col items-center ${
         theme === "dark" ? "top-section" : "bg-white"
       } border-white`}
     >

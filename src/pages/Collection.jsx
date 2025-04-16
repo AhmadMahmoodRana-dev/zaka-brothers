@@ -153,7 +153,7 @@ const Collection = () => {
   };
 
   return (
-    <div className={`w-full min-h-[92.2vh] flex flex-col items-center ${theme === "dark" ? "top-section" : "bg-white"} border-white`}>
+    <div className={`w-full min-h-[92.2vh] pb-5 flex flex-col items-center ${theme === "dark" ? "top-section" : "bg-white"} border-white`}>
       {/* Filter Form */}
       <form onSubmit={handleSubmit} className="mb-6 w-[91%] p-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">

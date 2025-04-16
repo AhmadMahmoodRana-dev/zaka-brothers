@@ -279,7 +279,7 @@ const Home = () => {
         </h1>
 
         {/* Filter Section */}
-        <form onSubmit={handleSubmit} className="mb-6 w-[91%] p-4">
+        <form onSubmit={handleSubmit} className="mb-6 w-[91%] p-4 ">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">Company</label>

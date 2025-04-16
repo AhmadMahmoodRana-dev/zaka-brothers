@@ -6,7 +6,7 @@ const Navbar = () => {
   const { isCollapsed, setIsCollapsed, user, theme, toggleTheme } = useContext(Context);
   
   return (
-    <div className={`w-full h-[60px] border-b border-b-gray-200 ${theme == "dark" ? "navbar" : ""} flex justify-between items-center`}>
+    <div className={`${isCollapsed ? "xl:w-[95.8%] lg:w-[94%] md:w-[91.6%] w-[100%]" : "sm:w-[84.3%] xl:w-[84.3%] lg:w-[76.5%] md:w-[70.6%] w-[100%]" } z-50 fixed h-[60px] border-b bg-white border-b-gray-200 ${theme == "dark" ? "navbar" : ""} flex justify-between items-center`}>
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
         className={`${theme == "dark" ? "hover:bg-red-400" : ""} h-full w-[4%] flex justify-center items-center`}

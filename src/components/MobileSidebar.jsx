@@ -44,7 +44,7 @@ const MobileSidebar = () => {
 
   return (
     <div
-      className={`min-h-screen h-auto bg-[#1d1f33] text-white transition-all duration-300 relative overflow-hidden ${
+      className={`min-h-screen fixed h-auto bg-[#1d1f33] text-white transition-all duration-300 top-0 z-50 overflow-hidden ${
         isCollapsed ? "w-0" : "w-[240px]"
       }`}
     >

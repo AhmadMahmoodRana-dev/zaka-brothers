@@ -4,7 +4,7 @@ import { Context } from "../context/Context";
 import axios from "axios";
 import validationSchema from "../schema/Login.schema";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import LoginImage from "../assets/Login.png";
+import LoginImage from "../assets/logo.png";
 
 const Login = () => {
   const { getUser } = useContext(Context);
@@ -37,14 +37,14 @@ const Login = () => {
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center bg-[#ededed]">
       <div className="w-[40%] min-w-[320px] h-[50%] shadow-2xl flex rounded-2xl">
-        <div className="w-[40%] h-full bg-white">
+        <div className="w-[45%] h-full bg-white flex justify-center items-end">
           <img
-            className="w-[100%] h-[100%] mx-auto mb-12"
+            className="w-[80%] h-[80%] mx-auto mb-12"
             src={LoginImage}
             alt="Login"
           />
         </div>
-        <div className="form bg-white w-[60%] h-full px-4 flex flex-col justify-center">
+        <div className="form bg-white w-[55%] h-full px-4 flex flex-col justify-center">
           <h1 className="text-black font-bold mb-5 xl:text-3xl md:text-xl text-lg italic text-center">
             Login Your Account
           </h1>
