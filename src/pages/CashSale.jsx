@@ -6,6 +6,7 @@ import MainCard from "../components/card/MainCard";
 import CashSaleTable from "../components/tables/CashSaleTable";
 import ProductWiseSaleTable from "../components/tables/ProductWiseSaleTable";
 import { formatDateForAPI, getCurrentDate, formatDateForInput, getFirstDayOfCurrentMonth } from "../utils/TableUtils";
+import Barchart from "../charts/Barchart";
 
 const CashSale = () => {
   const { theme } = useContext(Context);
@@ -213,6 +214,9 @@ const CashSale = () => {
       </div>
       <div className="product_table w-full justify-center flex mt-5">
         <ProductWiseSaleTable collectionTableData1={collectionTableData1} />
+      </div>
+      <div className="product_table w-full justify-center flex mt-5">
+        <Barchart collectionData={collectionData} />
       </div>
     </div>
   );

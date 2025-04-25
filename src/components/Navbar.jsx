@@ -20,7 +20,7 @@ const Navbar = () => {
         onClick={() => setIsCollapsed(!isCollapsed)}
         className={`${
           theme === "dark" ? "hover:bg-red-400" : ""
-        } h-full w-[4%] flex justify-center items-center`}
+        } h-full md:w-[4%] w-[20%] flex justify-center items-center`}
       >
         <RxHamburgerMenu
           color={theme === "dark" ? "white" : "gray"}
