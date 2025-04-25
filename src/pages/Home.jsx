@@ -292,83 +292,84 @@ const Home = () => {
           theme === "dark" ? "top-section" : "bg-white"
         } pb-10 min-h-[92vh] h-auto w-full px-4`}
       >
-        <h1 className="text-white font-semibold text-2xl pt-3">
-          Welcome {user?.user?.user} !
-        </h1>
-
         {/* Filter Section */}
-        <div className="mb-6 w-[91%] p-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">Company</label>
-              <select
-                value={filters.rec_company}
-                onChange={(e) =>
-                  setFilters((prev) => ({
-                    ...prev,
-                    rec_company: e.target.value,
-                  }))
-                }
-                className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
-              >
-                {companies.map((company) => (
-                  <option key={company.COMPANY_ID} value={company.COMPANY_ID}>
-                    {company.COMPANY_NAME}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Branch</label>
-              <select
-                value={filters.branch}
-                onChange={(e) =>
-                  setFilters((prev) => ({ ...prev, branch: e.target.value }))
-                }
-                className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
-              >
-                {branch.map((branch) => (
-                  <option key={branch.BRANCH_ID} value={branch.BRANCH_ID}>
-                    {branch.BRANCH_NAME}
-                  </option>
-                ))}
-              </select>
-            </div>
+        <div className="mb-6 w-[100%] py-3">
+          <div className="w-full px-2  py-3 bg-[#f1f1f1] shadow-lg rounded-md">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Company
+                </label>
+                <select
+                  value={filters.rec_company}
+                  onChange={(e) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      rec_company: e.target.value,
+                    }))
+                  }
+                  className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
+                >
+                  {companies.map((company) => (
+                    <option key={company.COMPANY_ID} value={company.COMPANY_ID}>
+                      {company.COMPANY_NAME}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Branch</label>
+                <select
+                  value={filters.branch}
+                  onChange={(e) =>
+                    setFilters((prev) => ({ ...prev, branch: e.target.value }))
+                  }
+                  className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
+                >
+                  {branch.map((branch) => (
+                    <option key={branch.BRANCH_ID} value={branch.BRANCH_ID}>
+                      {branch.BRANCH_NAME}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Start Date
-              </label>
-              <input
-                type="date"
-                value={formatDateForInput(filters.sdate)}
-                onChange={(e) =>
-                  setFilters((prev) => ({
-                    ...prev,
-                    sdate: formatDateForAPI(e.target.value),
-                  }))
-                }
-                className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Start Date
+                </label>
+                <input
+                  type="date"
+                  value={formatDateForInput(filters.sdate)}
+                  onChange={(e) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      sdate: formatDateForAPI(e.target.value),
+                    }))
+                  }
+                  className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1">End Date</label>
-              <input
-                type="date"
-                value={formatDateForInput(filters.edate)}
-                onChange={(e) =>
-                  setFilters((prev) => ({
-                    ...prev,
-                    edate: formatDateForAPI(e.target.value),
-                  }))
-                }
-                className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
-              />
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  End Date
+                </label>
+                <input
+                  type="date"
+                  value={formatDateForInput(filters.edate)}
+                  onChange={(e) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      edate: formatDateForAPI(e.target.value),
+                    }))
+                  }
+                  className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
             </div>
           </div>
         </div>
-
         {/* Cards Section */}
         <div className="w-full  pb-8 px-4 bg-[#f1f1f1] shadow-lg rounded-md">
           <h1 className="text-xl font-semibold mt-3">Sales</h1>
@@ -382,24 +383,28 @@ const Home = () => {
             ))}
           </div>
         </div>
-        <h1 className="text-xl font-semibold mt-3">Recovery</h1>
-        <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
-          {Recovery.map((recovery) => {
-            return (
-              <HomeSmallCard
-                heading={recovery.name}
-                number={recovery.saleFunction}
-              />
-            );
-          })}
+        <div className="w-full  pb-8 px-4 bg-[#f1f1f1] shadow-lg rounded-md">
+          <h1 className="text-xl font-semibold mt-3">Recovery</h1>
+          <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
+            {Recovery.map((recovery) => {
+              return (
+                <HomeSmallCard
+                  heading={recovery.name}
+                  number={recovery.saleFunction}
+                />
+              );
+            })}
+          </div>
         </div>
-        <h1 className="text-xl font-semibold mt-3">Bank Expense</h1>
-        <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
-          {bank_expense.map((bank) => {
-            return (
-              <HomeSmallCard heading={bank.name} number={bank.saleFunction} />
-            );
-          })}
+        <div className="w-full  pb-8 px-4 bg-[#f1f1f1] shadow-lg rounded-md">
+          <h1 className="text-xl font-semibold mt-3">Bank Expense</h1>
+          <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
+            {bank_expense.map((bank) => {
+              return (
+                <HomeSmallCard heading={bank.name} number={bank.saleFunction} />
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
