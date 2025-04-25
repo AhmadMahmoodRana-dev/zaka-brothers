@@ -397,7 +397,7 @@ const Home = () => {
           </div>
         </div>
         <div className="w-full  pb-8 px-4 bg-[#f1f1f1] shadow-lg rounded-md">
-          <h1 className="text-xl font-semibold mt-3">Bank Expense</h1>
+          <h1 className="text-xl font-semibold mt-3">Bank & Expense</h1>
           <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
             {bank_expense.map((bank) => {
               return (

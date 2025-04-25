@@ -93,7 +93,9 @@ const Receiveable = () => {
       } border-white`}
     >
       {/* Filter Form */}
-      <div className="mb-6 w-[91%] p-4">
+      <div className="mb-6 w-[93%] p-4">
+      <div className="w-full  py-4 px-2 bg-[#f1f1f1] shadow-lg rounded-md">
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium mb-1">Company</label>
@@ -145,10 +147,11 @@ const Receiveable = () => {
           </div>
 
         </div>
+        </div>
       </div>
 
       {/* Collection Table */}
-      <div className="stockTable w-full justify-center flex mt-5">
+      <div className="stockTable w-full justify-center flex">
         <ReceiveTable collectionTableData={collectionData} />
       </div>
     </div>

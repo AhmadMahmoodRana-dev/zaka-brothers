@@ -30,7 +30,7 @@ const MainCard = ({currentMonth,lastMonth,LastDaySale,todaySale,first,second,thi
   const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num);
 
   return (
-    <div className={`w-[30%] ${theme == "dark" ? "card" : "card1"} max-h-[190px] py-5 h-[170px] flex flex-wrap min-w-[305px]`}>
+    <div className={`w-[30%] ${theme == "dark" ? "card" : "card1"} max-h-[190px] py-5 h-[170px] flex flex-wrap min-w-[363px]`}>
       <main className="w-[60%] h-full flex flex-col gap-4">
         {/* Current Month vs Last Month */}
         <div className="flex justify-around">

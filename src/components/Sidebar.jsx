@@ -23,15 +23,15 @@ const Sidebar = () => {
         { name: "Receivable", icon: <LuLayoutDashboard />, link: "/receiveable" },
       ],
     },
-    {
-      name: "Products",
-      icon: <GiReceiveMoney />,
-      subItems: [
-        { name: "Categories", icon: <LuLayoutDashboard />, link: "/categories" },
-        { name: "Variations", icon: <LuLayoutDashboard />, link: "/variations" },
-        { name: "Brands", icon: <LuLayoutDashboard />, link: "/brands" },
-      ],
-    },
+    // {
+    //   name: "Products",
+    //   icon: <GiReceiveMoney />,
+    //   subItems: [
+    //     { name: "Categories", icon: <LuLayoutDashboard />, link: "/categories" },
+    //     { name: "Variations", icon: <LuLayoutDashboard />, link: "/variations" },
+    //     { name: "Brands", icon: <LuLayoutDashboard />, link: "/brands" },
+    //   ],
+    // },
   ];
 
   const toggleSubmenu = (menuName) => {

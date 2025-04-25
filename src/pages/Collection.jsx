@@ -16,6 +16,8 @@ const Collection = () => {
   const [companies, setCompanies] = useState([]);
   const [loader, setLoader] = useState(true);
 
+  console.log(collectionData, "LAST CARD RESPONSE");
+
   // Unified filter state
   const [filters, setFilters] = useState({
     sdate: formatDateForAPI(getFirstDayOfCurrentMonth()),
@@ -93,7 +95,9 @@ const Collection = () => {
       } border-white`}
     >
       {/* Filter Form */}
-      <div className="mb-6 w-[91%] p-4">
+      <div className="mb-6 w-[93%] p-4">
+      <div className="w-full  py-4 px-2 bg-[#f1f1f1] shadow-lg rounded-md">
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium mb-1">Company</label>
@@ -142,42 +146,50 @@ const Collection = () => {
             />
           </div>
         </div>
+        </div>
       </div>
 
       {/* Collection Cards */}
+            <div className="w-[91%]  bg-[#f1f1f1] shadow-lg rounded-md">
+
       <div className="flex gap-5 w-full justify-center items-center flex-wrap my-10 px-3">
         <MainCard
-          first={"Cash Recovery"}
-          second={"Last M Recovery"}
-          third={"Today Recovery"}
-          four={"Last D Recovery"}
-          currentMonth={collectionData?.credit_cash_recovery?.CASH_RECOVERY}
-          lastMonth={collectionData?.credit_cash_recovery?.LAST_CASH_RECOVERY}
-          todaySale={collectionData?.credit_cash_recovery?.CREDIT_RECOVERY}
-          LastDaySale={
-            collectionData?.credit_cash_recovery?.LAST_CREDIT_RECOVERY
-          }
-        />
-        <MainCard
-          first={"Cash Recovery"}
-          second={"Last M Recovery"}
-          third={"Today Recovery"}
-          four={"Last D Recovery"}
-          currentMonth={collectionData?.credit_cash_recovery?.LD_CASH_COLL}
-          lastMonth={collectionData?.credit_cash_recovery?.LD_CASH_COLL_LAST}
-          todaySale={collectionData?.credit_cash_recovery?.LD_CR}
-          LastDaySale={collectionData?.credit_cash_recovery?.LD_CR_LAST}
-        />
-        <MainCard
-          first={"Cash Recovery"}
-          second={"Last M Recovery"}
-          third={"Today Recovery"}
-          four={"Last D Recovery"}
+          first={"Inst.M Recovery"}
+          second={"L.M Inst Recovery"}
+          third={"Inst.TD Recovery"}
+          four={"L.D Inst Recovery"}
           currentMonth={collectionData?.installment_recovery?.COLLECTION}
           lastMonth={collectionData?.installment_recovery?.LAST_COLLECTION}
-          todaySale={collectionData?.installment_recovery?.NET_RECOVERY}
-          LastDaySale={collectionData?.installment_recovery?.LAST_NET_RECOVERY}
+          todaySale={collectionData?.installment_recovery?.LD_COLL}
+          LastDaySale={collectionData?.installment_recovery?.LD_COLL_LAST}
         />
+        <MainCard
+          first={"Credit.M Recovery"}
+          second={"L.M Credit Recovery"}
+          third={"Credit.TD Recovery"}
+          four={"L.D Credit Recovery"}
+          currentMonth={collectionData?.credit_cash_recovery?.CREDIT_RECOVERY}
+          lastMonth={collectionData?.credit_cash_recovery?.LAST_CREDIT_RECOVERY}
+          todaySale={collectionData?.credit_cash_recovery?.LD_CR}
+          LastDaySale={collectionData?.credit_cash_recovery?.LD_CR_LAST}
+          // currentMonth={collectionData?.credit_cash_recovery?.CASH_RECOVERY}
+          // lastMonth={collectionData?.credit_cash_recovery?.LAST_CASH_RECOVERY}
+          // todaySale={collectionData?.credit_cash_recovery?.CREDIT_RECOVERY}
+          // LastDaySale={
+          //   collectionData?.credit_cash_recovery?.LAST_CREDIT_RECOVERY
+          // }
+        />
+        <MainCard
+          first={"Cash.M Recovery"}
+          second={"L.M Cash Recovery"}
+          third={"Cash.TD Recovery"}
+          four={"L.D Cash Recovery"}
+          currentMonth={collectionData?.credit_cash_recovery?.CASH_RECOVERY}
+          lastMonth={collectionData?.credit_cash_recovery?.LAST_CASH_RECOVERY}
+          todaySale={collectionData?.credit_cash_recovery?.LD_CASH_COLL}
+          LastDaySale={collectionData?.credit_cash_recovery?.LD_CASH_COLL_LAST}
+        />
+      </div>
       </div>
 
       {/* Collection Table */}

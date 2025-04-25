@@ -9,14 +9,14 @@ const StockTable = ({collectionTableData}) => {
     <div
       className={`p-4 w-[91%] ${
         theme === "dark" ? "bg-[transparent] shadow-2xl border" : "border"
-      } border-gray-200 rounded-lg`}
+      } border-gray-100 rounded-lg`}
     >
       <h1
         className={`text-2xl font-semibold mb-2 ${
           theme === "dark" ? "text-white" : ""
         }`}
       >
-        Sale Data
+        Stock
       </h1>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-h-[50vh]">
         <table className="w-full text-sm text-left">
@@ -41,16 +41,16 @@ const StockTable = ({collectionTableData}) => {
                 Product Name
               </th>
               <th scope="col" className="px-1 py-3 font-semibold">
-                Total Sale
+                Brand
               </th>
               <th scope="col" className="px-1 py-3 font-semibold">
-                Installment
+                Quantity
               </th>
               <th scope="col" className="px-1 py-3 font-semibold">
-                Credit
+                Rate
               </th>
               <th scope="col" className="px-1 py-3 font-semibold">
-                Cash
+                Ammount
               </th>
             </motion.tr>
           </thead>

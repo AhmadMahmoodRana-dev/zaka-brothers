@@ -36,14 +36,14 @@ const CashSaleTable = ({ collectionTableData }) => {
     <div
       className={`p-4 w-[91%] ${
         theme === "dark" ? "bg-[transparent] shadow-2xl border" : "border"
-      } border-gray-200 rounded-lg`}
+      } border-gray-100 rounded-lg`}
     >
       <h1
         className={`text-2xl font-semibold mb-2 ${
           theme === "dark" ? "text-white" : ""
         }`}
       >
-        Sale Data
+        Sale
       </h1>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-h-[50vh]">
         <table className="w-full text-sm text-left">
