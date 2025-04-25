@@ -1,8 +1,8 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { Context } from "../../context/Context";
-
-const CashSaleTable = ({collectionTableData}) => {
+import { motion } from "framer-motion";
+const CashSaleTable = ({ collectionTableData }) => {
   const { theme } = useContext(Context);
 
   const calculatePercentageChange = (current, previous) => {
@@ -54,7 +54,17 @@ const CashSaleTable = ({collectionTableData}) => {
                 : "text-gray-500 bg-[#e1e1e3]"
             } sticky top-0`}
           >
-            <tr>
+            <motion.tr
+              // key={data?.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className={`${
+                theme == "dark"
+                  ? "border-b border-gray-500 text-[#D1D5DB] odd:bg-[#203c63] even:bg-[#3d406f]"
+                  : "border-b border-gray-200 odd:bg-white even:bg-[#f4f6f8]"
+              }`}
+            >
               <th scope="col" className="px-1 py-3">
                 BRANCH NAME
               </th>
@@ -97,12 +107,15 @@ const CashSaleTable = ({collectionTableData}) => {
               <th scope="col" className="px-1 py-3">
                 Adv.Ratio
               </th>
-            </tr>
+            </motion.tr>
           </thead>
           <tbody>
             {collectionTableData.map((data) => (
-              <tr
+              <motion.tr
                 key={data?.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
                 className={`${
                   theme == "dark"
                     ? "border-b border-gray-500 text-[#D1D5DB] odd:bg-[#203c63] even:bg-[#3d406f]"
@@ -128,7 +141,7 @@ const CashSaleTable = ({collectionTableData}) => {
                 <td className="px-2 py-4">{data?.EX_ADV_I_S ?? 0}</td>
                 <td className="px-2 py-4">{data?.LM_EX_ADV_I_S ?? 0}</td>
                 {renderPercentageChange(data?.EX_ADV_I_S, data?.LM_EX_ADV_I_S)}
-              </tr>
+              </motion.tr>
             ))}
           </tbody>
         </table>
