@@ -2,7 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Context } from "../context/Context";
 import StockTable from "../components/tables/StockTable";
-import { formatDateForAPI,formatDateForInput,getCurrentDate } from "../utils/TableUtils";
+import {
+  formatDateForAPI,
+  formatDateForInput,
+  getCurrentDate,
+} from "../utils/TableUtils";
 const Stock = () => {
   const { theme } = useContext(Context);
   const [collectionData, setCollectionData] = useState([]);
@@ -12,11 +16,11 @@ const Stock = () => {
 
   // Unified filter state
   const [filters, setFilters] = useState({
-    sdate: "01-MAR-2025",
-    edate: "31-MAR-2025",
+    // sdate: "01-MAR-2025",
+    edate: formatDateForAPI(getCurrentDate()),
     rec_company: "1",
     curr_date: formatDateForAPI(getCurrentDate()),
-    branch: ""
+    branch: "",
   });
 
   // Fetch Collection data (Main API)
@@ -25,7 +29,7 @@ const Stock = () => {
     try {
       const { data } = await axios.get(`https://zbl.zaffarsons.com/zbl/stock`, {
         params: {
-          sdate: filters.sdate,
+          // sdate: filters.sdate,
           edate: filters.edate,
           company: filters.rec_company,
           branch: filters.branch,
@@ -50,7 +54,9 @@ const Stock = () => {
   // Fetch Company List for Dropdown
   const fetchDropdownData = async () => {
     try {
-      const { data } = await axios.get("https://zbl.zaffarsons.com/zbl/pre-define");
+      const { data } = await axios.get(
+        "https://zbl.zaffarsons.com/zbl/pre-define"
+      );
       if (Array.isArray(data?.company_list)) {
         setCompanies(data.company_list);
         setBranch(data.branch_list);
@@ -73,24 +79,26 @@ const Stock = () => {
     console.log("Updated Collection Data:", collectionData);
   }, [collectionData]);
 
-  // Handle Filter Submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  useEffect(() => {
     getCollection();
-  };
+  }, [filters]);
 
   return (
-    <div className={`w-full min-h-[92.2vh] flex flex-col items-center ${theme === "dark" ? "top-section" : "bg-white"} border-white`}>
-      
+    <div
+      className={`w-full min-h-[92.2vh] flex flex-col items-center ${
+        theme === "dark" ? "top-section" : "bg-white"
+      } border-white`}
+    >
       {/* Filter Form */}
-      <form onSubmit={handleSubmit} className="mb-6 w-[91%] p-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          
+      <div className="mb-6 w-[91%] p-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium mb-1">Company</label>
             <select
               value={filters.rec_company}
-              onChange={(e) => setFilters({ ...filters, rec_company: e.target.value })}
+              onChange={(e) =>
+                setFilters({ ...filters, rec_company: e.target.value })
+              }
               className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
             >
               {companies.map((company) => (
@@ -105,7 +113,9 @@ const Stock = () => {
             <label className="block text-sm font-medium mb-1">Branch</label>
             <select
               value={filters.branch}
-              onChange={(e) => setFilters({ ...filters, branch: e.target.value })}
+              onChange={(e) =>
+                setFilters({ ...filters, branch: e.target.value })
+              }
               className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
             >
               {branch.map((branch) => (
@@ -121,22 +131,22 @@ const Stock = () => {
             <input
               type="date"
               value={formatDateForInput(filters.edate)}
-              onChange={(e) => setFilters({ ...filters, edate: formatDateForAPI(e.target.value) })}
+              onChange={(e) =>
+                setFilters({
+                  ...filters,
+                  edate: formatDateForAPI(e.target.value),
+                })
+              }
               className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
-
-          <button type="submit" className="mt-6 px-6 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors">
-            Apply Filters
-          </button>
         </div>
-      </form>
+      </div>
 
       {/* Collection Table */}
       <div className="stockTable w-full justify-center flex mt-5">
         <StockTable collectionTableData={collectionData} />
       </div>
-     
     </div>
   );
 };

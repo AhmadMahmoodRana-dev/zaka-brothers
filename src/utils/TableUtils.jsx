@@ -44,3 +44,15 @@ export const getCurrentDate = () => {
   const dd = String(today.getDate()).padStart(2, "0");
   return `${yyyy}-${mm}-${dd}`;
 };
+
+// In TableUtils.js
+export const getFirstDayOfCurrentMonth = () => {
+  const today = new Date();
+  const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+  const yyyy = firstDay.getFullYear();
+  const mm = String(firstDay.getMonth() + 1).padStart(2, '0'); // month is 0-based
+  const dd = String(firstDay.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`; // This format is suitable for input type="date"
+};
+
+

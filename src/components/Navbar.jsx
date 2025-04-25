@@ -2,14 +2,10 @@ import React, { useContext } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { FaBell } from "react-icons/fa";
 import { Context } from "../context/Context";
-import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const { isCollapsed, setIsCollapsed, user, theme, toggleTheme ,logout} = useContext(Context);
-  const navigate = useNavigate();
-
-  
-
+  const { isCollapsed, setIsCollapsed, user, theme, toggleTheme, logout } =
+    useContext(Context);
   return (
     <div
       className={`${
@@ -38,7 +34,11 @@ const Navbar = () => {
             theme === "dark" ? "text-white" : "text-gray-600"
           } font-semibold`}
         >
-          16-02-2025
+          {new Date().toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}{" "}
         </h1>
         <FaBell color={theme === "dark" ? "white" : "gray"} />
         <h1

@@ -42,12 +42,27 @@ const formatDateForInput = (dateString) => {
   return `${year}-${months[month]}-${day}`;
 };
 
+// const getCurrentDate = () => {
+//   const today = new Date();
+//   const yyyy = today.getFullYear();
+//   const mm = String(today.getMonth() + 1).padStart(2, "0");
+//   const dd = String(today.getDate()).padStart(2, "0");
+//   return `${yyyy}-${mm}-${dd}`;
+// };
+
 const getCurrentDate = () => {
   const today = new Date();
   const yyyy = today.getFullYear();
   const mm = String(today.getMonth() + 1).padStart(2, "0");
   const dd = String(today.getDate()).padStart(2, "0");
   return `${yyyy}-${mm}-${dd}`;
+};
+
+const getFirstDateOfCurrentMonth = () => {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  return `${yyyy}-${mm}-01`;
 };
 
 const Home = () => {
@@ -59,8 +74,8 @@ const Home = () => {
 
   // Unified filter state
   const [filters, setFilters] = useState({
-    sdate: "01-MAR-2025",
-    edate: "31-MAR-2025",
+    sdate: formatDateForAPI(getFirstDateOfCurrentMonth()),
+    edate: formatDateForAPI(getCurrentDate()),
     rec_company: "1",
     curr_date: formatDateForAPI(getCurrentDate()),
     branch: "",
@@ -112,10 +127,11 @@ const Home = () => {
   }, []);
 
   // Handle Filter Submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  useEffect(() => {
     getCollection();
-  };
+  }, [filters]);
+  
+
   const formatNumberWithCommas = (number) => {
     if (!number) return "0";
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -279,14 +295,17 @@ const Home = () => {
         </h1>
 
         {/* Filter Section */}
-        <form onSubmit={handleSubmit} className="mb-6 w-[91%] p-4 ">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <div className="mb-6 w-[91%] p-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">Company</label>
               <select
                 value={filters.rec_company}
                 onChange={(e) =>
-                  setFilters({ ...filters, rec_company: e.target.value })
+                  setFilters((prev) => ({
+                    ...prev,
+                    rec_company: e.target.value,
+                  }))
                 }
                 className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
               >
@@ -302,7 +321,7 @@ const Home = () => {
               <select
                 value={filters.branch}
                 onChange={(e) =>
-                  setFilters({ ...filters, branch: e.target.value })
+                  setFilters((prev) => ({ ...prev, branch: e.target.value }))
                 }
                 className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
               >
@@ -322,10 +341,10 @@ const Home = () => {
                 type="date"
                 value={formatDateForInput(filters.sdate)}
                 onChange={(e) =>
-                  setFilters({
-                    ...filters,
+                  setFilters((prev) => ({
+                    ...prev,
                     sdate: formatDateForAPI(e.target.value),
-                  })
+                  }))
                 }
                 className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
               />
@@ -337,22 +356,16 @@ const Home = () => {
                 type="date"
                 value={formatDateForInput(filters.edate)}
                 onChange={(e) =>
-                  setFilters({
-                    ...filters,
+                  setFilters((prev) => ({
+                    ...prev,
                     edate: formatDateForAPI(e.target.value),
-                  })
+                  }))
                 }
                 className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
-            <button
-              type="submit"
-              className="mt-6 px-6 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors"
-            >
-              Apply Filters
-            </button>
           </div>
-        </form>
+        </div>
 
         {/* Cards Section */}
         <h1 className="text-xl font-semibold mt-3">Sales</h1>

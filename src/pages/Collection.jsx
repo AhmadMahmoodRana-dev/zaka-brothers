@@ -3,7 +3,12 @@ import axios from "axios";
 import { Context } from "../context/Context";
 import MainCard from "../components/card/MainCard";
 import CollectionTable from "../components/tables/CollectionTable";
-import { getCurrentDate,formatDateForAPI,formatDateForInput } from "../utils/TableUtils";
+import {
+  getCurrentDate,
+  formatDateForAPI,
+  formatDateForInput,
+  getFirstDayOfCurrentMonth,
+} from "../utils/TableUtils";
 const Collection = () => {
   const { theme } = useContext(Context);
   const [collectionData, setCollectionData] = useState([]);
@@ -13,8 +18,8 @@ const Collection = () => {
 
   // Unified filter state
   const [filters, setFilters] = useState({
-    sdate: "01-MAR-2025",
-    edate: "31-MAR-2025",
+    sdate: formatDateForAPI(getFirstDayOfCurrentMonth()),
+    edate: formatDateForAPI(getCurrentDate()),
     rec_company: "1",
     curr_date: formatDateForAPI(getCurrentDate()),
   });
@@ -23,14 +28,16 @@ const Collection = () => {
   const getCollection = async () => {
     try {
       const { data } = await axios.get(
-        `https://zbl.zaffarsons.com/zbl/Collection`, 
-        { params: { 
-            sdate: filters.sdate, 
-            edate: filters.edate, 
-            company: filters.rec_company, 
-            branch: "", 
-            crr: "" 
-        } }
+        `https://zbl.zaffarsons.com/zbl/Collection`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: "",
+            crr: "",
+          },
+        }
       );
       setCollectionData(data);
       setLoader(false);
@@ -42,7 +49,10 @@ const Collection = () => {
   // Fetch Collection Table Data (Recovery API)
   const getCollectionTableData = async () => {
     try {
-      const { data } = await axios.get("https://zbl.zaffarsons.com/zbl/recovery", { params: filters });
+      const { data } = await axios.get(
+        "https://zbl.zaffarsons.com/zbl/recovery",
+        { params: filters }
+      );
       setCollectionTableData(data);
     } catch (error) {
       console.error("Error fetching collection table data:", error);
@@ -52,7 +62,9 @@ const Collection = () => {
   // Fetch Company List for Dropdown
   const fetchDropdownData = async () => {
     try {
-      const { data } = await axios.get("https://zbl.zaffarsons.com/zbl/pre-define");
+      const { data } = await axios.get(
+        "https://zbl.zaffarsons.com/zbl/pre-define"
+      );
       if (Array.isArray(data?.company_list)) {
         setCompanies(data?.company_list);
       } else {
@@ -69,23 +81,27 @@ const Collection = () => {
     fetchDropdownData();
   }, []);
 
-  // Handle Filter Submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  useEffect(() => {
     getCollection();
     getCollectionTableData();
-  };
+  }, [filters]);
 
   return (
-    <div className={`w-full min-h-[92.2vh] pb-5 flex flex-col items-center ${theme === "dark" ? "top-section" : "bg-white"} border-white`}>
+    <div
+      className={`w-full min-h-[92.2vh] pb-5 flex flex-col items-center ${
+        theme === "dark" ? "top-section" : "bg-white"
+      } border-white`}
+    >
       {/* Filter Form */}
-      <form onSubmit={handleSubmit} className="mb-6 w-[91%] p-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="mb-6 w-[91%] p-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium mb-1">Company</label>
             <select
               value={filters.rec_company}
-              onChange={(e) => setFilters({ ...filters, rec_company: e.target.value })}
+              onChange={(e) =>
+                setFilters({ ...filters, rec_company: e.target.value })
+              }
               className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
             >
               {companies.map((company) => (
@@ -101,7 +117,12 @@ const Collection = () => {
             <input
               type="date"
               value={formatDateForInput(filters.sdate)}
-              onChange={(e) => setFilters({ ...filters, sdate: formatDateForAPI(e.target.value) })}
+              onChange={(e) =>
+                setFilters({
+                  ...filters,
+                  sdate: formatDateForAPI(e.target.value),
+                })
+              }
               className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
@@ -111,19 +132,21 @@ const Collection = () => {
             <input
               type="date"
               value={formatDateForInput(filters.edate)}
-              onChange={(e) => setFilters({ ...filters, edate: formatDateForAPI(e.target.value) })}
+              onChange={(e) =>
+                setFilters({
+                  ...filters,
+                  edate: formatDateForAPI(e.target.value),
+                })
+              }
               className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
-        <button type="submit" className="mt-6 px-6 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors">
-          Apply Filters
-        </button>
         </div>
-      </form>
+      </div>
 
       {/* Collection Cards */}
       <div className="flex gap-5 w-full justify-center items-center flex-wrap my-10 px-3">
-      <MainCard
+        <MainCard
           first={"Cash Recovery"}
           second={"Last M Recovery"}
           third={"Today Recovery"}
