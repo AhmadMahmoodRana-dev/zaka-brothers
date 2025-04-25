@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { FaCartArrowDown } from "react-icons/fa";
 import { Context } from "../context/Context";
 import axios from "axios";
+import HomeSmallCard from "../components/card/HomeSmallCard";
 
 const formatDateForAPI = (dateString) => {
   const months = [
@@ -130,7 +131,6 @@ const Home = () => {
   useEffect(() => {
     getCollection();
   }, [filters]);
-  
 
   const formatNumberWithCommas = (number) => {
     if (!number) return "0";
@@ -282,7 +282,9 @@ const Home = () => {
   return (
     <div
       className={`w-full ${
-        theme === "dark" ? "bg-[#141b2e]" : "bg-white border-l border-gray-200"
+        theme === "dark"
+          ? "bg-[#141b2e]"
+          : "bg-[#f1f1f1] border-l border-gray-200"
       } min-h-[92.2vh]`}
     >
       <div
@@ -368,63 +370,26 @@ const Home = () => {
         </div>
 
         {/* Cards Section */}
-        <h1 className="text-xl font-semibold mt-3">Sales</h1>
-        <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
-          {Sale.map((sale) => {
-            return (
-              <div key={sale.id} className="tilt-box-wrap min-h-[90px]">
-                <div
-                  className={`tilt-box rounded-sm ${
-                    theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-                  } flex items-center gap-4 px-4`}
-                >
-                  <div
-                    className={`circle3 ${
-                      isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-                    } bg-blue-400 rounded-full flex justify-center items-center`}
-                  >
-                    <FaCartArrowDown size={24} />
-                  </div>
-                  <div className="content">
-                    <h1 className="text-gray-500 uppercase font-semibold">
-                      {sale.name}
-                    </h1>
-                    <h1 className="text-gray-600 font-semibold text-xl">
-                      {sale.saleFunction}
-                    </h1>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+        <div className="w-full  pb-8 px-4 bg-[#f1f1f1] shadow-lg rounded-md">
+          <h1 className="text-xl font-semibold mt-3">Sales</h1>
+          <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 mt-4">
+            {Sale.map((sale) => (
+              <HomeSmallCard
+                key={sale.id}
+                heading={sale.name}
+                number={sale.saleFunction}
+              />
+            ))}
+          </div>
         </div>
         <h1 className="text-xl font-semibold mt-3">Recovery</h1>
         <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
           {Recovery.map((recovery) => {
             return (
-              <div className="tilt-box-wrap min-h-[90px]">
-                <div
-                  className={`tilt-box rounded-sm ${
-                    theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-                  } flex items-center gap-4 px-4`}
-                >
-                  <div
-                    className={`circle3 ${
-                      isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-                    } bg-blue-400 rounded-full flex justify-center items-center`}
-                  >
-                    <FaCartArrowDown size={24} />
-                  </div>
-                  <div className="content">
-                    <h1 className="text-gray-500 uppercase font-semibold text-[.95rem]">
-                      {recovery.name}
-                    </h1>
-                    <h1 className="text-gray-600 font-semibold text-xl">
-                      {recovery.saleFunction}
-                    </h1>
-                  </div>
-                </div>
-              </div>
+              <HomeSmallCard
+                heading={recovery.name}
+                number={recovery.saleFunction}
+              />
             );
           })}
         </div>
@@ -432,29 +397,7 @@ const Home = () => {
         <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
           {bank_expense.map((bank) => {
             return (
-              <div className="tilt-box-wrap min-h-[90px]">
-                <div
-                  className={`tilt-box rounded-sm ${
-                    theme === "dark" ? "bg-gray-800" : "border-gray-200 border"
-                  } flex items-center gap-4 px-4`}
-                >
-                  <div
-                    className={`circle3 ${
-                      isCollapsed ? "w-[23%] h-[80%]" : "w-[24%] h-[70%]"
-                    } bg-blue-400 rounded-full flex justify-center items-center`}
-                  >
-                    <FaCartArrowDown size={24} />
-                  </div>
-                  <div className="content">
-                    <h1 className="text-gray-500 uppercase font-semibold">
-                      {bank.name}
-                    </h1>
-                    <h1 className="text-gray-600 font-semibold text-xl">
-                      {bank.saleFunction}
-                    </h1>
-                  </div>
-                </div>
-              </div>
+              <HomeSmallCard heading={bank.name} number={bank.saleFunction} />
             );
           })}
         </div>
