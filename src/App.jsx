@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import PublicRoutes from "./routes/PublicRoutes";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import Home from "./pages/Home";
-import Login from "./pages/login";
+import Login from "./pages/Login";
 import CashSale from "./pages/CashSale";
 import Collection from "./pages/Collection";
 import { Context } from "./context/Context";
