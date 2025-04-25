@@ -1,6 +1,6 @@
 import React, { useContext} from "react";
 import { Context } from "../../context/Context";
-
+import {motion} from "framer-motion"
 const StockTable = ({collectionTableData}) => {
   const { theme } = useContext(Context);
 
@@ -27,28 +27,40 @@ const StockTable = ({collectionTableData}) => {
                 : "text-gray-500 bg-[#e1e1e3]"
             } sticky top-0`}
           >
-            <tr>
-              <th scope="col" className="px-1 py-3">
+            <motion.tr
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className={`${
+                theme == "dark"
+                  ? "border-b border-gray-500 text-[#D1D5DB] bg-[#203c63]"
+                  : "border-b border-gray-200 bg-[#f4f6f8] text-[#7e868c]"
+              }`}
+            >
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Product Name
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Total Sale
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Installment
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Credit
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Cash
               </th>
-            </tr>
+            </motion.tr>
           </thead>
           <tbody>
             {collectionTableData?.map((data) => (
-              <tr
+              <motion.tr
                 key={data?.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
                 className={`${
                   theme == "dark"
                     ? "border-b border-gray-500 text-[#D1D5DB] odd:bg-[#203c63] even:bg-[#3d406f]"
@@ -65,7 +77,7 @@ const StockTable = ({collectionTableData}) => {
                 <td className="px-2 py-4">{data?.QTY ?? 0}</td>
                 <td className="px-2 py-4">{data?.RATE ?? 0}</td>
                 <td className="px-2 py-4">{data?.AMOUNT ?? 0}</td>
-              </tr>
+              </motion.tr>
             ))}
           </tbody>
         </table>

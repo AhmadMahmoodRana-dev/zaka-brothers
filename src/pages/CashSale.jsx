@@ -423,7 +423,7 @@ const CashSale = () => {
 
       {/* Cards */}
       <motion.div
-        className="flex gap-5 w-full justify-center items-center flex-wrap mt-10 px-3"
+        className="flex gap-5 w-full justify-center items-center flex-wrap my-10 px-3"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

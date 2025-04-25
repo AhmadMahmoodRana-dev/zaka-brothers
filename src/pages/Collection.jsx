@@ -1,79 +1,3 @@
-// import React, { useContext, useEffect, useState } from "react";
-// import { Context } from "../context/Context";
-// import MainCard from "../components/card/MainCard";
-// import CollectionTable from "../components/tables/CollectionTable";
-// import axios from "axios";
-
-// const Collection = () => {
-//   const { theme } = useContext(Context);
-//    const [collectionData, setCollectionData] = useState([]);
-//     const [loader, setLoader] = useState(true);
-//   const getCollection = async () => {
-//     try {
-//       const { data } = await axios.get(
-//         `https://zbl.zaffarsons.com/zbl/Collection?sdate=01-FEB-25&edate=25-FEB-25&company=1&branch=`
-//       );
-//       setCollectionData(data);
-//       setLoader(false);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     getCollection();
-//   }, []);
-//   return (
-//     <div
-//       className={`w-full min-h-[92.2vh] h-auto flex flex-col  items-center ${
-//         theme == "dark" ? "top-section" : "bg-white"
-//       }  border-white`}
-//     >
-//       <div className="flex gap-5 w-full h-full justify-center items-center  flex-wrap mt-10 px-3">
-        // <MainCard
-        //   first={"Cash Recovery"}
-        //   second={"Last M Recovery"}
-        //   third={"Today Recovery"}
-        //   four={"Last D Recovery"}
-        //   currentMonth={collectionData?.credit_cash_recovery?.CASH_RECOVERY}
-        //   lastMonth={collectionData?.credit_cash_recovery?.LAST_CASH_RECOVERY}
-        //   todaySale={collectionData?.credit_cash_recovery?.CREDIT_RECOVERY}
-        //   LastDaySale={
-        //     collectionData?.credit_cash_recovery?.LAST_CREDIT_RECOVERY
-        //   }
-        // />
-        // <MainCard
-        //   first={"Cash Recovery"}
-        //   second={"Last M Recovery"}
-        //   third={"Today Recovery"}
-        //   four={"Last D Recovery"}
-        //   currentMonth={collectionData?.credit_cash_recovery?.LD_CASH_COLL}
-        //   lastMonth={collectionData?.credit_cash_recovery?.LD_CASH_COLL_LAST}
-        //   todaySale={collectionData?.credit_cash_recovery?.LD_CR}
-        //   LastDaySale={collectionData?.credit_cash_recovery?.LD_CR_LAST}
-        // />
-        // <MainCard
-        //   first={"Cash Recovery"}
-        //   second={"Last M Recovery"}
-        //   third={"Today Recovery"}
-        //   four={"Last D Recovery"}
-        //   currentMonth={collectionData?.installment_recovery?.COLLECTION}
-        //   lastMonth={collectionData?.installment_recovery?.LAST_COLLECTION}
-        //   todaySale={collectionData?.installment_recovery?.NET_RECOVERY}
-        //   LastDaySale={collectionData?.installment_recovery?.LAST_NET_RECOVERY}
-        // />
-//       </div>
-//       <div className="collection_table w-full justify-center flex mt-5">
-//         <CollectionTable />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Collection;
-
-
-
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Context } from "../context/Context";
@@ -198,7 +122,7 @@ const Collection = () => {
       </form>
 
       {/* Collection Cards */}
-      <div className="flex gap-5 w-full justify-center items-center flex-wrap mt-10 px-3">
+      <div className="flex gap-5 w-full justify-center items-center flex-wrap my-10 px-3">
       <MainCard
           first={"Cash Recovery"}
           second={"Last M Recovery"}

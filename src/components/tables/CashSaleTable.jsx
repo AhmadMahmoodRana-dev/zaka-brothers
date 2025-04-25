@@ -55,56 +55,55 @@ const CashSaleTable = ({ collectionTableData }) => {
             } sticky top-0`}
           >
             <motion.tr
-              // key={data?.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
               className={`${
                 theme == "dark"
-                  ? "border-b border-gray-500 text-[#D1D5DB] odd:bg-[#203c63] even:bg-[#3d406f]"
-                  : "border-b border-gray-200 odd:bg-white even:bg-[#f4f6f8]"
+                  ? "border-b border-gray-500 text-[#D1D5DB] bg-[#203c63]"
+                  : "border-b border-gray-200 bg-[#f4f6f8] text-[#7e868c]"
               }`}
             >
-              <th scope="col" className="px-1 py-3">
-                BRANCH NAME
+              <th scope="col" className="px-1 py-3 font-semibold">
+                Branch Name
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Cash Sale
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Cash Unit
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Opening
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Credit Sale
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Credit Units
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Recoveved
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Balance
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 I.S Sale
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 I.S Adv
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Unit
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Ex.Adv I.S
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Lm.Adv I.S
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Adv.Ratio
               </th>
             </motion.tr>

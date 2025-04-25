@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { Context } from "../../context/Context";
-
+import { motion } from "framer-motion";
 const CollectionTable = ({ collectionTableData }) => {
   const { theme } = useContext(Context);
 
@@ -21,7 +21,11 @@ const CollectionTable = ({ collectionTableData }) => {
     const isPositive = change >= 0;
 
     return (
-      <td className={`px-2 py-4 flex items-center gap-2 ${isPositive ? "text-[#00a76f]" : "text-red-600"}`}>
+      <td
+        className={`px-2 py-4 flex items-center gap-2 ${
+          isPositive ? "text-[#00a76f]" : "text-red-600"
+        }`}
+      >
         {isPositive ? <FaArrowUp /> : <FaArrowDown />}
         <p>{formatNumber(change)}%</p>
       </td>
@@ -29,22 +33,81 @@ const CollectionTable = ({ collectionTableData }) => {
   };
 
   return (
-    <div className={`p-4 w-[91%] ${theme === "dark" ? "bg-[transparent] shadow-2xl border" : "border"} border-gray-200 rounded-lg`}>
-      <h1 className={`text-2xl font-semibold mb-2 ${theme === "dark" ? "text-white" : ""}`}>Collection Data</h1>
+    <div
+      className={`p-4 w-[91%] ${
+        theme === "dark" ? "bg-[transparent] shadow-2xl border" : "border"
+      } border-gray-200 rounded-lg`}
+    >
+      <h1
+        className={`text-2xl font-semibold mb-2 ${
+          theme === "dark" ? "text-white" : ""
+        }`}
+      >
+        Collection Data
+      </h1>
 
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-h-[50vh] min-w-0">
         <table className="w-full text-sm text-left rtl:text-right">
-          <thead className={`text-xs uppercase ${theme === "dark" ? "text-white bg-[#203c63]" : "text-gray-500 bg-[#e1e1e3]"} sticky top-0 z-10`}>
-            <tr>
-              {["BRANCH NAME", "RECEIVABLE", "Collection", "L.m Coll", "Coll.Per", "L.d Coll", "Recovery", "Achieved", "Client", "Covered", "L.m Covered", "Coverage"].map((header) => (
-                <th key={header} scope="col" className="px-2 py-3">{header}</th>
+          <thead
+            className={`text-xs uppercase ${
+              theme === "dark"
+                ? "text-white bg-[#203c63]"
+                : "text-gray-500 bg-[#e1e1e3]"
+            } sticky top-0 z-10`}
+          >
+            <motion.tr
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className={`${
+                theme == "dark"
+                  ? "border-b border-gray-500 text-[#D1D5DB] bg-[#203c63]"
+                  : "border-b border-gray-200 bg-[#f4f6f8] text-[#7e868c]"
+              }`}
+            >
+              {[
+                "BRANCH NAME",
+                "RECEIVABLE",
+                "Collection",
+                "L.m Coll",
+                "Coll.Per",
+                "L.d Coll",
+                "Recovery",
+                "Achieved",
+                "Client",
+                "Covered",
+                "L.m Covered",
+                "Coverage",
+              ].map((header) => (
+                <th
+                  key={header}
+                  scope="col"
+                  className="px-2 py-3 font-semibold"
+                >
+                  {header}
+                </th>
               ))}
-            </tr>
+            </motion.tr>
           </thead>
           <tbody>
             {collectionTableData.map((data) => (
-              <tr key={data?.id} className={`${theme === "dark" ? "border-b border-gray-500 text-[#D1D5DB] odd:bg-[#203c63] even:bg-[#3d406f]" : "border-b border-gray-200 odd:bg-white even:bg-[#f4f6f8]"}`}>
-                <th scope="row" className="px-2 py-4 font-medium whitespace-nowrap">{data?.BRANCH_NAME}</th>
+              <motion.tr
+                key={data?.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className={`${
+                  theme == "dark"
+                    ? "border-b border-gray-500 text-[#D1D5DB] odd:bg-[#203c63] even:bg-[#3d406f]"
+                    : "border-b border-gray-200 odd:bg-white even:bg-[#f4f6f8]"
+                }`}
+              >
+                <th
+                  scope="row"
+                  className="px-2 py-4 font-medium whitespace-nowrap"
+                >
+                  {data?.BRANCH_NAME}
+                </th>
                 <td className="px-2 py-4">{data?.RECEIVEABLE}</td>
                 <td className="px-2 py-4">{data?.COLLECTION}</td>
                 <td className="px-2 py-4">{data?.LM_COLLECTION}</td>
@@ -56,7 +119,7 @@ const CollectionTable = ({ collectionTableData }) => {
                 <td className="px-2 py-4">{data?.COVERED}</td>
                 {renderPercentageChange(data?.COVERED, data?.LM_COVERED)}
                 <td className="px-2 py-4">{data?.COVERAGE}</td>
-              </tr>
+              </motion.tr>
             ))}
           </tbody>
         </table>

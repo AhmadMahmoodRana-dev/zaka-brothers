@@ -1,7 +1,7 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import { Context } from "../../context/Context";
-
-const ProductWiseSaleTable = ({collectionTableData1}) => {
+import { motion } from "framer-motion";
+const ProductWiseSaleTable = ({ collectionTableData1 }) => {
   const { theme } = useContext(Context);
   return (
     <div
@@ -25,28 +25,40 @@ const ProductWiseSaleTable = ({collectionTableData1}) => {
                 : "text-gray-500 bg-[#e1e1e3]"
             } sticky top-0`}
           >
-            <tr>
-              <th scope="col" className="px-1 py-3">
+            <motion.tr
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className={`${
+                theme == "dark"
+                  ? "border-b border-gray-500 text-[#D1D5DB] bg-[#203c63]"
+                  : "border-b border-gray-200 bg-[#f4f6f8] text-[#7e868c]"
+              }`}
+            >
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Product
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Total Sale
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Installment
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Credit
               </th>
-              <th scope="col" className="px-1 py-3">
+              <th scope="col" className="px-1 py-3 font-semibold">
                 Cash
               </th>
-            </tr>
+            </motion.tr>
           </thead>
           <tbody>
             {collectionTableData1.map((data) => (
-              <tr
+              <motion.tr
                 key={data?.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
                 className={`${
                   theme == "dark"
                     ? "border-b border-gray-500 text-[#D1D5DB] odd:bg-[#203c63] even:bg-[#3d406f]"
@@ -63,7 +75,7 @@ const ProductWiseSaleTable = ({collectionTableData1}) => {
                 <td className="px-2 py-4">{data?.INSTALLMENT ?? 0}</td>
                 <td className="px-2 py-4">{data?.CREDIT ?? 0}</td>
                 <td className="px-2 py-4">{data?.CASH ?? 0}</td>
-              </tr>
+              </motion.tr>
             ))}
           </tbody>
         </table>
