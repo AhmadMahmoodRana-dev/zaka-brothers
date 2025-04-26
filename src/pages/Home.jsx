@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FaCartArrowDown } from "react-icons/fa";
+import HomePageDialogBox from "../components/Models/HomePageDialogBox";
 import { Context } from "../context/Context";
 import axios from "axios";
 import HomeSmallCard from "../components/card/HomeSmallCard";
@@ -43,14 +43,6 @@ const formatDateForInput = (dateString) => {
   return `${year}-${months[month]}-${day}`;
 };
 
-// const getCurrentDate = () => {
-//   const today = new Date();
-//   const yyyy = today.getFullYear();
-//   const mm = String(today.getMonth() + 1).padStart(2, "0");
-//   const dd = String(today.getDate()).padStart(2, "0");
-//   return `${yyyy}-${mm}-${dd}`;
-// };
-
 const getCurrentDate = () => {
   const today = new Date();
   const yyyy = today.getFullYear();
@@ -72,6 +64,12 @@ const Home = () => {
   const [companies, setCompanies] = useState([]);
   const [branch, setBranch] = useState([]);
   const [loader, setLoader] = useState(true);
+  const [firstModelData, setFirstModelData] = useState([]);
+  const [secondModelData, setSecondModelData] = useState([]);
+  const [thirdModelData, setThirdModelData] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
+  const [open2, setOpen2] = useState(false);
 
   // Unified filter state
   const [filters, setFilters] = useState({
@@ -105,6 +103,71 @@ const Home = () => {
     }
   };
 
+  // Fetch Collection data (MODELS TABLE)
+  const getModelTable = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/DailySale`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "INSTALLMENT",
+          },
+        }
+      );
+      console.log("GET MODEL TABLE:", data); // Debugging line
+      setFirstModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
+  const getModelTable2 = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/DailySale`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "CASH",
+          },
+        }
+      );
+      console.log("GET MODEL TABLE:", data); // Debugging line
+      setSecondModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
+  const getModelTable3 = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/DailySale`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "CREDIT",
+          },
+        }
+      );
+      console.log("GET MODEL TABLE:", data); // Debugging line
+      setThirdModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
+
   // Fetch Company List for Dropdown
   const fetchDropdownData = async () => {
     try {
@@ -124,12 +187,18 @@ const Home = () => {
 
   useEffect(() => {
     getCollection();
+    getModelTable();
+    getModelTable2();
+    getModelTable3();
     fetchDropdownData();
   }, []);
 
   // Handle Filter Submission
   useEffect(() => {
     getCollection();
+    getModelTable();
+    getModelTable2();
+    getModelTable3();
   }, [filters]);
 
   const formatNumberWithCommas = (number) => {
@@ -142,16 +211,25 @@ const Home = () => {
       id: 1,
       name: "Total Sale",
       saleFunction: formatNumberWithCommas(collectionData?.sale?.TOTAL_SALE),
+      open: () => {
+        setOpen(!open);
+      },
     },
     {
       id: 2,
       name: "Cash Sale",
       saleFunction: formatNumberWithCommas(collectionData?.sale?.CASH_SALE),
+      open: () => {
+        setOpen1(!open1);
+      },
     },
     {
       id: 3,
       name: "Credit Sale",
       saleFunction: formatNumberWithCommas(collectionData?.sale?.CREDIT_SALE),
+      open: () => {
+        setOpen2(!open2);
+      },
     },
     {
       id: 4,
@@ -377,6 +455,7 @@ const Home = () => {
             {Sale.map((sale) => (
               <HomeSmallCard
                 key={sale.id}
+                open={sale.open}
                 heading={sale.name}
                 number={sale.saleFunction}
               />
@@ -407,6 +486,17 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <HomePageDialogBox data={firstModelData} open={open} setOpen={setOpen} />
+      <HomePageDialogBox
+        data={secondModelData}
+        open={open1}
+        setOpen={setOpen1}
+      />
+      <HomePageDialogBox
+        data={thirdModelData}
+        open={open2}
+        setOpen={setOpen2}
+      />
     </div>
   );
 };

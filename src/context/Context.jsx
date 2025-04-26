@@ -6,7 +6,7 @@ export const Context = createContext();
 const getInitialTheme = () => {
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme) return savedTheme;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
+  return window.matchMedia("(prefers-color-scheme: light)").matches
     ? "dark"
     : "light";
 };
