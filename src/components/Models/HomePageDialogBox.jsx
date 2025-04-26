@@ -39,7 +39,7 @@ export default function HomePageDialogBox({ data, open, setOpen }) {
             {/* Close Button */}
             <button
               onClick={() => setOpen(false)}
-              className={`absolute top-4 right-4 z-20 p-1 rounded-full hover:bg-opacity-20 transition-colors ${
+              className={`absolute top- right-0 z-20 p-1 rounded-full hover:bg-opacity-20 transition-colors ${
                 theme === "dark" ? "text-white hover:bg-white" : "text-gray-600 hover:bg-gray-200"
               }`}
             >
