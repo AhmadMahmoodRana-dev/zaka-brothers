@@ -67,9 +67,11 @@ const Home = () => {
   const [firstModelData, setFirstModelData] = useState([]);
   const [secondModelData, setSecondModelData] = useState([]);
   const [thirdModelData, setThirdModelData] = useState([]);
+  const [fourthModelData, setFourthModelData] = useState([]);
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
   const [open2, setOpen2] = useState(false);
+  const [open3, setOpen3] = useState(false);
 
   // Unified filter state
   const [filters, setFilters] = useState({
@@ -114,7 +116,7 @@ const Home = () => {
             edate: filters.edate,
             company: filters.rec_company,
             branch: filters.branch,
-            inst_type: "INSTALLMENT",
+            inst_type: "",
           },
         }
       );
@@ -146,7 +148,7 @@ const Home = () => {
       console.error("Error fetching collection data:", error);
     }
   };
-  const getModelTable3 = async () => {
+  const getModelTable3= async () => {
     try {
       const { data } = await axios.get(
         `https://zbl.zaffarsons.com/zbl/DailySale`,
@@ -162,6 +164,27 @@ const Home = () => {
       );
       console.log("GET MODEL TABLE:", data); // Debugging line
       setThirdModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
+  const getModelTable4 = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/DailySale`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "INSTALLMENT",
+          },
+        }
+      );
+      console.log("GET MODEL TABLE:", data); // Debugging line
+      setFourthModelData(data);
       setLoader(false);
     } catch (error) {
       console.error("Error fetching collection data:", error);
@@ -190,6 +213,7 @@ const Home = () => {
     getModelTable();
     getModelTable2();
     getModelTable3();
+    getModelTable4();
     fetchDropdownData();
   }, []);
 
@@ -198,6 +222,7 @@ const Home = () => {
     getCollection();
     getModelTable();
     getModelTable2();
+    getModelTable4();
     getModelTable3();
   }, [filters]);
 
@@ -237,6 +262,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.sale?.INSTALLMENT_SALE
       ),
+      open: () => {
+        setOpen3(!open3);
+      },
     },
   ];
   const Recovery = [
@@ -496,6 +524,11 @@ const Home = () => {
         data={thirdModelData}
         open={open2}
         setOpen={setOpen2}
+      />
+      <HomePageDialogBox
+        data={fourthModelData}
+        open={open3}
+        setOpen={setOpen3}
       />
     </div>
   );

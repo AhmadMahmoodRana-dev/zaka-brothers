@@ -4,8 +4,7 @@ import { Context } from "../../context/Context";
 import { motion } from "framer-motion";
 
 export default function HomePageDialogBox({ data, open, setOpen }) {
-  const { theme } = useContext(Context);
-  // Sample data structure - replace with your actual data source
+  const { theme,isCollapsed } = useContext(Context);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -25,22 +24,44 @@ export default function HomePageDialogBox({ data, open, setOpen }) {
   };
 
   return (
-    <Dialog open={open} onClose={setOpen} className="relative z-10">
+    <Dialog open={open} onClose={setOpen} className="relative z-10 ">
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
       />
 
-      <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div className={`fixed inset-0 z-10 w-screen overflow-y-auto ${isCollapsed ? "" : "left-[120px]" } `}>
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             transition
-            className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 w-full max-w-4xl data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+            className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 w-full max-w-6xl data-closed:sm:translate-y-0 data-closed:sm:scale-95"
           >
-            <div className="overflow-x-auto">
-            
-              <div className="max-h-[300px] overflow-y-auto">
-                <table className="w-full text-sm text-left">
+            {/* Close Button */}
+            <button
+              onClick={() => setOpen(false)}
+              className={`absolute top-4 right-4 z-20 p-1 rounded-full hover:bg-opacity-20 transition-colors ${
+                theme === "dark" ? "text-white hover:bg-white" : "text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            <div className="overflow-x-auto p-6">
+              <div className="max-h-[70vh] overflow-y-auto">
+                <table className="w-full text-sm text-left min-w-[1000px]">
                   <thead
                     className={`sticky top-0 z-10 ${
                       theme === "dark"
@@ -58,28 +79,28 @@ export default function HomePageDialogBox({ data, open, setOpen }) {
                           : "border-b border-gray-200 text-[#7e868c]"
                       }`}
                     >
-                      <th className="text-center py-3 text-xs font-semibold">
+                      <th className="text-center py-4 text-xs font-semibold px-4">
                         Invoice Date
                       </th>
-                      <th className="text-center py-3 text-xs font-semibold">
+                      <th className="text-center py-4 text-xs font-semibold px-4">
                         Invoice No
                       </th>
-                      <th className="text-center py-3 text-xs font-semibold">
+                      <th className="text-center py-4 text-xs font-semibold px-4">
                         Customer Details
                       </th>
-                      <th className="text-center py-3 text-xs font-semibold">
+                      <th className="text-center py-4 text-xs font-semibold px-4">
                         Item Code
                       </th>
-                      <th className="text-center py-3 text-xs font-semibold">
+                      <th className="text-center py-4 text-xs font-semibold px-4">
                         Description
                       </th>
-                      <th className="text-center py-3 text-xs font-semibold">
+                      <th className="text-center py-4 text-xs font-semibold px-4">
                         Qty
                       </th>
-                      <th className="text-center py-3 text-xs font-semibold">
+                      <th className="text-center py-4 text-xs font-semibold px-4">
                         Rate
                       </th>
-                      <th className="text-center py-3 text-xs font-semibold">
+                      <th className="text-center py-4 text-xs font-semibold px-4">
                         Total Amount
                       </th>
                     </motion.tr>
@@ -97,22 +118,22 @@ export default function HomePageDialogBox({ data, open, setOpen }) {
                             : "border-b border-gray-200 odd:bg-white even:bg-[#f4f6f8]"
                         }`}
                       >
-                        <td className="px-4 py-4 text-xs">
+                        <td className="px-6 py-4 text-xs text-center">
                           {formatDate(data.INVOICE_DATE)}
                         </td>
-                        <td className="px-4 py-4 text-xs">
+                        <td className="px-6 py-4 text-xs text-center">
                           {data.SALES_INVOICE_NO}
                         </td>
-                        <td className="px-4 py-4 text-xs">
+                        <td className="px-6 py-4 text-xs text-center">
                           {data["AC.CUSTOMER_NAME||'-'||AC.MANUAL_CUST_NO"]}
                         </td>
-                        <td className="px-4 py-4 text-xs">{data.ITEM_CODE}</td>
-                        <td className="px-4 py-4 text-xs">{data.ITEM_DESC}</td>
-                        <td className="px-4 py-4 text-xs">{data.SALE_QTY}</td>
-                        <td className="px-4 py-4 text-xs">
+                        <td className="px-6 py-4 text-xs text-center">{data.ITEM_CODE}</td>
+                        <td className="px-6 py-4 text-xs text-center">{data.ITEM_DESC}</td>
+                        <td className="px-6 py-4 text-xs text-center">{data.SALE_QTY}</td>
+                        <td className="px-6 py-4 text-xs text-center">
                           {formatCurrency(data.RATE)}
                         </td>
-                        <td className="px-4 py-4 text-xs font-medium">
+                        <td className="px-6 py-4 text-xs font-medium text-center">
                           {formatCurrency(data.TOTAL_AMOUNT)}
                         </td>
                       </motion.tr>
