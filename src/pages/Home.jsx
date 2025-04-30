@@ -59,7 +59,7 @@ const getFirstDateOfCurrentMonth = () => {
 };
 
 const Home = () => {
-  const { isCollapsed, user, theme } = useContext(Context);
+  const {theme } = useContext(Context);
   const [collectionData, setCollectionData] = useState({});
   const [companies, setCompanies] = useState([]);
   const [branch, setBranch] = useState([]);
@@ -400,7 +400,7 @@ const Home = () => {
       >
         {/* Filter Section */}
         <div className="mb-6 w-[100%] py-3">
-          <div className="w-full px-2  py-3 bg-[#f1f1f1] shadow-lg rounded-md">
+          <div className={`w-full  pb-8 px-4 ${theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"}  shadow-lg rounded-md`}>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">
@@ -477,7 +477,7 @@ const Home = () => {
           </div>
         </div>
         {/* Cards Section */}
-        <div className="w-full  pb-8 px-4 bg-[#f1f1f1] shadow-lg rounded-md">
+        <div className={`w-full  pb-8 px-4 ${theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"}  shadow-lg rounded-md`}>
           <h1 className="text-xl font-semibold mt-3">Sales</h1>
           <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 mt-4">
             {Sale.map((sale) => (
@@ -490,7 +490,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-        <div className="w-full  pb-8 px-4 bg-[#f1f1f1] shadow-lg rounded-md">
+        <div className={`w-full  pb-8 px-4 ${theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"}  shadow-lg rounded-md`}>
           <h1 className="text-xl font-semibold mt-3">Recovery</h1>
           <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
             {Recovery.map((recovery) => {
@@ -503,7 +503,7 @@ const Home = () => {
             })}
           </div>
         </div>
-        <div className="w-full  pb-8 px-4 bg-[#f1f1f1] shadow-lg rounded-md">
+        <div className={`w-full  pb-8 px-4 ${theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"}  shadow-lg rounded-md`}>
           <h1 className="text-xl font-semibold mt-3">Bank & Expense</h1>
           <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
             {bank_expense.map((bank) => {

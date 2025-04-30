@@ -91,7 +91,7 @@ const Stock = () => {
     >
       {/* Filter Form */}
       <div className="mb-6 w-[93%] p-4">
-      <div className="w-full  py-4 px-2 bg-[#f1f1f1] shadow-lg rounded-md">
+      <div className={`w-full  pb-4 px-4 ${theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"}  shadow-lg rounded-md`}>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>

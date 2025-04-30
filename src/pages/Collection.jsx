@@ -96,7 +96,7 @@ const Collection = () => {
     >
       {/* Filter Form */}
       <div className="mb-6 w-[93%] p-4">
-      <div className="w-full  py-4 px-2 bg-[#f1f1f1] shadow-lg rounded-md">
+      <div className={`w-full  pb-4 px-4 ${theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"}  shadow-lg rounded-md`}>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
@@ -150,7 +150,7 @@ const Collection = () => {
       </div>
 
       {/* Collection Cards */}
-            <div className="w-[91%]  bg-[#f1f1f1] shadow-lg rounded-md">
+            <div className={`w-[91%]  pb-8  ${theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"}  shadow-lg rounded-md`}>
 
       <div className="flex gap-5 w-full justify-center items-center flex-wrap my-10 px-3">
         <MainCard
