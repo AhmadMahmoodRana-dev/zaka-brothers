@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  LabelList,
-  ResponsiveContainer
+import {BarChart,Bar,XAxis,YAxis,CartesianGrid,Tooltip,Legend,LabelList,ResponsiveContainer
 } from 'recharts';
 
 const data = [
@@ -29,7 +20,7 @@ const data = [
 
 export default function RecoveryCharts() {
   return (
-    <div className="max-w-7xl mx-auto p-4 space-y-12">
+    <div className="max-w-7xl w-full mx-auto p-4 space-y-12">
       
       {/* Target vs Achieved Chart */}
       <div>

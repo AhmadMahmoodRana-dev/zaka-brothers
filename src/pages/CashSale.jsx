@@ -12,6 +12,7 @@ import {
   getFirstDayOfCurrentMonth,
 } from "../utils/TableUtils";
 import Barchart from "../charts/Barchart";
+import RecoveryCharts from "../charts/RecoveryCharts"
 
 const CashSale = () => {
   const { theme } = useContext(Context);
@@ -245,9 +246,10 @@ const CashSale = () => {
       <div className="product_table w-full justify-center flex mt-5">
         <ProductWiseSaleTable collectionTableData1={collectionTableData1} />
       </div>
-      <div className="product_table w-full justify-center flex mt-5">
-        <Barchart collectionData={collectionData} />
-      </div>
+      {/* <div className="product_table w-full justify-center flex mt-5"> */}
+        {/* <Barchart collectionData={collectionData} /> */}
+        {/* <RecoveryCharts/> */}
+      {/* </div> */}
     </div>
   );
 };
