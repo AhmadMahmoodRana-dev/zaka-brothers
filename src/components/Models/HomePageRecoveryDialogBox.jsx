@@ -3,8 +3,8 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Context } from "../../context/Context";
 import { motion } from "framer-motion";
 
-export default function HomePageDialogBox({ data, open, setOpen }) {
-  const { theme,isCollapsed } = useContext(Context);
+export default function HomePageRecoveryDialogBox({ data, open, setOpen }) {
+  const { theme, isCollapsed } = useContext(Context);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -30,7 +30,11 @@ export default function HomePageDialogBox({ data, open, setOpen }) {
         className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
       />
 
-      <div className={`fixed inset-0 z-10 w-screen overflow-y-auto ${isCollapsed ? "" : "left-[120px]" } `}>
+      <div
+        className={`fixed inset-0 z-10 w-screen overflow-y-auto ${
+          isCollapsed ? "" : "left-[120px]"
+        } `}
+      >
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             transition
@@ -40,7 +44,9 @@ export default function HomePageDialogBox({ data, open, setOpen }) {
             <button
               onClick={() => setOpen(false)}
               className={`absolute top- right-0 z-20 p-1 rounded-full hover:bg-opacity-20 transition-colors ${
-                theme === "dark" ? "text-white hover:bg-white" : "text-gray-600 hover:bg-gray-200"
+                theme === "dark"
+                  ? "text-white hover:bg-white"
+                  : "text-gray-600 hover:bg-gray-200"
               }`}
             >
               <svg
@@ -80,28 +86,22 @@ export default function HomePageDialogBox({ data, open, setOpen }) {
                       }`}
                     >
                       <th className="text-center py-4 text-xs font-semibold px-4">
-                        Invoice Date
+                        RECEIPT_DATE
                       </th>
                       <th className="text-center py-4 text-xs font-semibold px-4">
-                        Invoice No
+                        RECEIPT_NO
                       </th>
                       <th className="text-center py-4 text-xs font-semibold px-4">
-                        Customer Details
+                        MANUAL_RECEIPT_NO
                       </th>
                       <th className="text-center py-4 text-xs font-semibold px-4">
-                        Item Code
+                        CUSTOMER_NAME
                       </th>
                       <th className="text-center py-4 text-xs font-semibold px-4">
-                        Description
+                        BRANCH_NAME
                       </th>
                       <th className="text-center py-4 text-xs font-semibold px-4">
-                        Qty
-                      </th>
-                      <th className="text-center py-4 text-xs font-semibold px-4">
-                        Rate
-                      </th>
-                      <th className="text-center py-4 text-xs font-semibold px-4">
-                        Total Amount
+                        RECEIVED_AMOUNT
                       </th>
                     </motion.tr>
                   </thead>
@@ -119,23 +119,24 @@ export default function HomePageDialogBox({ data, open, setOpen }) {
                         }`}
                       >
                         <td className="px-6 py-4 text-xs text-center">
-                          {formatDate(data?.INVOICE_DATE)}
+                          {formatDate(data?.RECEIPT_DATE)}
                         </td>
                         <td className="px-6 py-4 text-xs text-center">
-                          {data?.SALES_INVOICE_NO}
+                          {data?.RECEIPT_NO}
                         </td>
                         <td className="px-6 py-4 text-xs text-center">
-                          {data["AC.CUSTOMER_NAME||'-'||AC.MANUAL_CUST_NO"]}
+                          {data?.MANUAL_RECEIPT_NO}
                         </td>
-                        <td className="px-6 py-4 text-xs text-center">{data?.ITEM_CODE}</td>
-                        <td className="px-6 py-4 text-xs text-center">{data?.ITEM_DESC}</td>
-                        <td className="px-6 py-4 text-xs text-center">{data?.SALE_QTY}</td>
                         <td className="px-6 py-4 text-xs text-center">
-                          {formatCurrency(data?.RATE)}
+                          {data?.CUSTOMER_NAME}
                         </td>
-                        <td className="px-6 py-4 text-xs font-medium text-center">
-                          {formatCurrency(data?.TOTAL_AMOUNT)}
+                        <td className="px-6 py-4 text-xs text-center">
+                          {data?.BRANCH_NAME}
                         </td>
+                        <td className="px-6 py-4 text-xs text-center">
+                          {data?.RECEIVED_AMOUNT}
+                        </td>
+                        
                       </motion.tr>
                     ))}
                   </tbody>

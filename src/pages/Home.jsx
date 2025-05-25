@@ -3,6 +3,8 @@ import HomePageDialogBox from "../components/Models/HomePageDialogBox";
 import { Context } from "../context/Context";
 import axios from "axios";
 import HomeSmallCard from "../components/card/HomeSmallCard";
+import HomePageRecoveryDialogBox from "../components/Models/HomePageRecoveryDialogBox";
+import HomePageAdvanceDialogBox from "../components/Models/HomePageAdvanceDialogBox";
 
 const formatDateForAPI = (dateString) => {
   const months = [
@@ -59,7 +61,7 @@ const getFirstDateOfCurrentMonth = () => {
 };
 
 const Home = () => {
-  const {theme } = useContext(Context);
+  const { theme } = useContext(Context);
   const [collectionData, setCollectionData] = useState({});
   const [companies, setCompanies] = useState([]);
   const [branch, setBranch] = useState([]);
@@ -72,6 +74,28 @@ const Home = () => {
   const [open1, setOpen1] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
+
+  // #######################################################
+  const [firstRecoveryModelData, setFirstRecoveryModelData] = useState([]);
+  const [secondRecoveryModelData, setSecondRecoveryModelData] = useState([]);
+  const [thirdRecoveryModelData, setThirdRecoveryModelData] = useState([]);
+
+  const [fourthRecoveryModelData, setfourthRecoveryModelData] = useState([]);
+
+  const [recoveryOpen, setRecoveryOpen] = useState(false);
+  const [recoveryOpen1, setRecoveryOpen1] = useState(false);
+  const [recoveryOpen2, setRecoveryOpen2] = useState(false);
+  const [recoveryOpen3, setRecoveryOpen3] = useState(false);
+
+  // #######################################################
+  const [firstAdvanceModelData, setFirstAdvanceModelData] = useState([]);
+  const [secondAdvanceModelData, setSecondAdvanceModelData] = useState([]);
+  const [thirdAdvanceModelData, setThirdAdvanceModelData] = useState([]);
+
+
+  const [advanceOpen, setAdvanceOpen] = useState(false);
+  const [advanceOpen1, setAdvanceOpen1] = useState(false);
+  const [advanceOpen2, setAdvanceOpen2] = useState(false);
 
   // Unified filter state
   const [filters, setFilters] = useState({
@@ -148,7 +172,7 @@ const Home = () => {
       console.error("Error fetching collection data:", error);
     }
   };
-  const getModelTable3= async () => {
+  const getModelTable3 = async () => {
     try {
       const { data } = await axios.get(
         `https://zbl.zaffarsons.com/zbl/DailySale`,
@@ -191,6 +215,150 @@ const Home = () => {
     }
   };
 
+  // ### RECOVERY ###
+  const getRecoverModel = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/db-recovery`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "INSTALLMENT",
+          },
+        }
+      );
+      setFirstRecoveryModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
+  const getRecoverModel1 = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/db-recovery`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "CASH",
+          },
+        }
+      );
+      setSecondRecoveryModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
+  const getRecoverModel2 = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/db-recovery`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "CREDIT",
+          },
+        }
+      );
+      setThirdRecoveryModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
+  const getRecoverModel3 = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/db-recovery`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "",
+          },
+        }
+      );
+      setfourthRecoveryModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
+
+    // ### ADVANCE ###
+  const getAdvanceModel = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/advance-receivable`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "INSTALLMENT",
+          },
+        }
+      );
+      setFirstAdvanceModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
+  const getAdvanceModel1 = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/advance-receivable`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "CREDIT",
+          },
+        }
+      );
+      setSecondAdvanceModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
+  const getAdvanceModel2 = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/advance-receivable`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "",
+          },
+        }
+      );
+      setThirdAdvanceModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
+
   // Fetch Company List for Dropdown
   const fetchDropdownData = async () => {
     try {
@@ -208,15 +376,7 @@ const Home = () => {
     }
   };
 
-  useEffect(() => {
-    getCollection();
-    getModelTable();
-    getModelTable2();
-    getModelTable3();
-    getModelTable4();
-    fetchDropdownData();
-  }, []);
-
+  
   // Handle Filter Submission
   useEffect(() => {
     getCollection();
@@ -224,6 +384,17 @@ const Home = () => {
     getModelTable2();
     getModelTable4();
     getModelTable3();
+    // RECOVERY
+    getRecoverModel();
+    getRecoverModel1();
+    getRecoverModel2();
+    getRecoverModel3();
+    // ADVANCE
+    getAdvanceModel();
+    getAdvanceModel1();
+    getAdvanceModel2();
+  
+    fetchDropdownData();
   }, [filters]);
 
   const formatNumberWithCommas = (number) => {
@@ -274,6 +445,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.recovery?.INSTALLMENT_RECOVERY
       ),
+       open: () => {
+        setRecoveryOpen(!recoveryOpen);
+      },
     },
     {
       id: 2,
@@ -281,6 +455,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.recovery?.CASH_RECOVERY
       ),
+       open: () => {
+        setRecoveryOpen1(!recoveryOpen1);
+      }
     },
     {
       id: 3,
@@ -288,6 +465,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.recovery?.CREDIT_RECOVERY
       ),
+       open: () => {
+        setRecoveryOpen2(!recoveryOpen2);
+      }
     },
     {
       id: 4,
@@ -295,6 +475,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.recovery?.INSTALLMENT_ADVANCE
       ),
+      open: () => {
+        setAdvanceOpen(!advanceOpen);
+      },
     },
     {
       id: 5,
@@ -302,6 +485,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.recovery?.CREDIT_ADVANCE
       ),
+      open: () => {
+        setAdvanceOpen1(!advanceOpen1);
+      },
     },
     {
       id: 6,
@@ -309,6 +495,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.recovery?.TOTAL_ADVANCE
       ),
+      open: () => {
+        setAdvanceOpen2(!advanceOpen2);
+      },
     },
     {
       id: 7,
@@ -316,6 +505,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.recovery?.TOTAL_RECOVERY
       ),
+       open: () => {
+        setRecoveryOpen3(!recoveryOpen3);
+      }
     },
     {
       id: 8,
@@ -400,7 +592,11 @@ const Home = () => {
       >
         {/* Filter Section */}
         <div className="mb-6 w-[100%] py-3">
-          <div className={`w-full  pb-8 px-4 ${theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"}  shadow-lg rounded-md`}>
+          <div
+            className={`w-full  pb-8 px-4 ${
+              theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"
+            }  shadow-lg rounded-md`}
+          >
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">
@@ -477,7 +673,11 @@ const Home = () => {
           </div>
         </div>
         {/* Cards Section */}
-        <div className={`w-full  pb-8 px-4 ${theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"}  shadow-lg rounded-md`}>
+        <div
+          className={`w-full  pb-8 px-4 ${
+            theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"
+          }  shadow-lg rounded-md`}
+        >
           <h1 className="text-xl font-semibold mt-3">Sales</h1>
           <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 mt-4">
             {Sale.map((sale) => (
@@ -490,12 +690,18 @@ const Home = () => {
             ))}
           </div>
         </div>
-        <div className={`w-full  pb-8 px-4 ${theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"}  shadow-lg rounded-md`}>
+        <div
+          className={`w-full  pb-8 px-4 ${
+            theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"
+          }  shadow-lg rounded-md`}
+        >
           <h1 className="text-xl font-semibold mt-3">Recovery</h1>
           <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
-            {Recovery.map((recovery) => {
+            {Recovery.map((recovery, i) => {
               return (
                 <HomeSmallCard
+                  key={i}
+                  open={recovery.open}
                   heading={recovery.name}
                   number={recovery.saleFunction}
                 />
@@ -503,7 +709,11 @@ const Home = () => {
             })}
           </div>
         </div>
-        <div className={`w-full  pb-8 px-4 ${theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"}  shadow-lg rounded-md`}>
+        <div
+          className={`w-full  pb-8 px-4 ${
+            theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"
+          }  shadow-lg rounded-md`}
+        >
           <h1 className="text-xl font-semibold mt-3">Bank & Expense</h1>
           <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
             {bank_expense.map((bank) => {
@@ -529,6 +739,41 @@ const Home = () => {
         data={fourthModelData}
         open={open3}
         setOpen={setOpen3}
+      />
+      <HomePageRecoveryDialogBox
+        data={firstRecoveryModelData}
+        open={recoveryOpen}
+        setOpen={setRecoveryOpen}
+      />
+      <HomePageRecoveryDialogBox
+        data={secondRecoveryModelData}
+        open={recoveryOpen1}
+        setOpen={setRecoveryOpen1}
+      />
+      <HomePageRecoveryDialogBox
+        data={thirdRecoveryModelData}
+        open={recoveryOpen2}
+        setOpen={setRecoveryOpen2}
+      />
+      <HomePageRecoveryDialogBox
+        data={fourthRecoveryModelData}
+        open={recoveryOpen3}
+        setOpen={setRecoveryOpen3}
+      />
+      <HomePageAdvanceDialogBox
+        data={firstAdvanceModelData}
+        open={advanceOpen}
+        setOpen={setAdvanceOpen}
+      />
+      <HomePageAdvanceDialogBox
+        data={secondAdvanceModelData}
+        open={advanceOpen1}
+        setOpen={setAdvanceOpen1}
+      />
+      <HomePageAdvanceDialogBox
+        data={thirdAdvanceModelData}
+        open={advanceOpen2}
+        setOpen={setAdvanceOpen2}
       />
     </div>
   );
