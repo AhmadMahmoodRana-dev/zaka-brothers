@@ -5,6 +5,8 @@ import axios from "axios";
 import HomeSmallCard from "../components/card/HomeSmallCard";
 import HomePageRecoveryDialogBox from "../components/Models/HomePageRecoveryDialogBox";
 import HomePageAdvanceDialogBox from "../components/Models/HomePageAdvanceDialogBox";
+import CashAtBankModel from "../components/Models/CashAtBankModel";
+import ExpenseModel from "../components/Models/ExpenseModel";
 
 const formatDateForAPI = (dateString) => {
   const months = [
@@ -92,10 +94,19 @@ const Home = () => {
   const [secondAdvanceModelData, setSecondAdvanceModelData] = useState([]);
   const [thirdAdvanceModelData, setThirdAdvanceModelData] = useState([]);
 
-
   const [advanceOpen, setAdvanceOpen] = useState(false);
   const [advanceOpen1, setAdvanceOpen1] = useState(false);
   const [advanceOpen2, setAdvanceOpen2] = useState(false);
+
+  // #######################################################
+  const [cashAtBankModelData, setCashAtBankModelData] = useState([]);
+  const [cashBankOpen, setCashBankOpen] = useState(false);
+  // #######################################################
+  const [cashInHandModelData, setCashInHandModelData] = useState([]);
+  const [cashInHandOpen, setCashInHandOpen] = useState(false);
+  // #######################################################
+  const [expenseModelData, setExpenseModelData] = useState([]);
+  const [expenseOpen, setExpenseOpen] = useState(false);
 
   // Unified filter state
   const [filters, setFilters] = useState({
@@ -297,7 +308,7 @@ const Home = () => {
     }
   };
 
-    // ### ADVANCE ###
+  // ### ADVANCE ###
   const getAdvanceModel = async () => {
     try {
       const { data } = await axios.get(
@@ -359,6 +370,71 @@ const Home = () => {
     }
   };
 
+  // #### CASH AT BANK ####
+  const cashAtBank = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/db-cash-at-bank`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "",
+          },
+        }
+      );
+      setCashAtBankModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
+
+  // #### CASH IN HAND ####
+  const cashInHand = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/db-cash-in-hand`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "",
+          },
+        }
+      );
+      setCashInHandModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
+  // #### EXPENSE ####
+  const expense = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/db-expense`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "",
+          },
+        }
+      );
+      setExpenseModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
+
   // Fetch Company List for Dropdown
   const fetchDropdownData = async () => {
     try {
@@ -376,7 +452,6 @@ const Home = () => {
     }
   };
 
-  
   // Handle Filter Submission
   useEffect(() => {
     getCollection();
@@ -393,7 +468,12 @@ const Home = () => {
     getAdvanceModel();
     getAdvanceModel1();
     getAdvanceModel2();
-  
+    // CASH AT BANK
+    cashAtBank();
+    // CASH IN HAND
+    cashInHand();
+    // Expense
+    expense();
     fetchDropdownData();
   }, [filters]);
 
@@ -445,7 +525,7 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.recovery?.INSTALLMENT_RECOVERY
       ),
-       open: () => {
+      open: () => {
         setRecoveryOpen(!recoveryOpen);
       },
     },
@@ -455,9 +535,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.recovery?.CASH_RECOVERY
       ),
-       open: () => {
+      open: () => {
         setRecoveryOpen1(!recoveryOpen1);
-      }
+      },
     },
     {
       id: 3,
@@ -465,9 +545,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.recovery?.CREDIT_RECOVERY
       ),
-       open: () => {
+      open: () => {
         setRecoveryOpen2(!recoveryOpen2);
-      }
+      },
     },
     {
       id: 4,
@@ -505,9 +585,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.recovery?.TOTAL_RECOVERY
       ),
-       open: () => {
+      open: () => {
         setRecoveryOpen3(!recoveryOpen3);
-      }
+      },
     },
     {
       id: 8,
@@ -525,6 +605,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.bank_expense?.CASH_AT_BANK
       ),
+      open: () => {
+        setCashBankOpen(!cashBankOpen);
+      },
     },
     {
       id: 2,
@@ -532,6 +615,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.bank_expense?.CASH_IN_HAND
       ),
+      open: () => {
+        setCashInHandOpen(!cashInHandOpen);
+      },
     },
     {
       id: 3,
@@ -539,6 +625,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.bank_expense?.TOTAL_EXPENSE
       ),
+      open: () => {
+        setExpenseOpen(!expenseOpen);
+      },
     },
     {
       id: 4,
@@ -718,7 +807,7 @@ const Home = () => {
           <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
             {bank_expense.map((bank) => {
               return (
-                <HomeSmallCard heading={bank.name} number={bank.saleFunction} />
+                <HomeSmallCard open={bank.open} heading={bank.name} number={bank.saleFunction} />
               );
             })}
           </div>
@@ -774,6 +863,21 @@ const Home = () => {
         data={thirdAdvanceModelData}
         open={advanceOpen2}
         setOpen={setAdvanceOpen2}
+      />
+      <CashAtBankModel
+        data={cashAtBankModelData}
+        open={cashBankOpen}
+        setOpen={setCashBankOpen}
+      />
+      <CashAtBankModel
+        data={cashInHandModelData}
+        open={cashInHandOpen}
+        setOpen={setCashInHandOpen}
+      />
+      <ExpenseModel
+        data={expenseModelData}
+        open={expenseOpen}
+        setOpen={setExpenseOpen}
       />
     </div>
   );

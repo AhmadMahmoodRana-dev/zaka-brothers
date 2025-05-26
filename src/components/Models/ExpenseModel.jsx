@@ -3,7 +3,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Context } from "../../context/Context";
 import { motion } from "framer-motion";
 
-export default function HomePageAdvanceDialogBox({ data, open, setOpen }) {
+export default function ExpenseModel({ data, open, setOpen }) {
   const { theme, isCollapsed } = useContext(Context);
 
   const formatDate = (dateString) => {
@@ -15,13 +15,27 @@ export default function HomePageAdvanceDialogBox({ data, open, setOpen }) {
     });
   };
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("en-PK", {
-      style: "currency",
-      currency: "PKR",
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
+const formatCurrency = (amount) => {
+  // If it's a string, clean it
+  if (typeof amount === "string") {
+    amount = amount.replace(/,/g, "").trim(); // Remove commas and spaces
+  }
+
+  // Convert to number
+  const numericAmount = Number(amount);
+
+  // Handle invalid numbers
+  if (isNaN(numericAmount)) {
+    return "Invalid amount";
+  }
+
+  return new Intl.NumberFormat("en-PK", {
+    style: "currency",
+    currency: "PKR",
+    maximumFractionDigits: 0,
+  }).format(numericAmount);
+};
+
 
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-10 ">
@@ -86,22 +100,22 @@ export default function HomePageAdvanceDialogBox({ data, open, setOpen }) {
                       }`}
                     >
                       <th className="text-center py-4 text-xs font-semibold px-4">
-                        ADVANCE_DATE
+                        VOUCHER_DATE
                       </th>
                       <th className="text-center py-4 text-xs font-semibold px-4">
-                        ADVANCE_NO
+                        VOUCHER_NO
                       </th>
                       <th className="text-center py-4 text-xs font-semibold px-4">
-                        ADVANCE_RECEIPT_NO
-                      </th>
-                      <th className="text-center py-4 text-xs font-semibold px-4">
-                        CUSTOMER_NAME
+                        VOUCHER_TYPE
                       </th>
                       <th className="text-center py-4 text-xs font-semibold px-4">
                         BRANCH_NAME
                       </th>
                       <th className="text-center py-4 text-xs font-semibold px-4">
-                        ADVANCE_AMOUNT
+                        DESCRIPTION
+                      </th>
+                      <th className="text-center py-4 text-xs font-semibold px-4">
+                        DEBIT
                       </th>
                     </motion.tr>
                   </thead>
@@ -119,24 +133,23 @@ export default function HomePageAdvanceDialogBox({ data, open, setOpen }) {
                         }`}
                       >
                         <td className="px-6 py-4 text-xs text-center">
-                          {formatDate(data?.ADVANCE_DATE)}
+                          {formatDate(data?.VOUCHER_DATE)}
                         </td>
                         <td className="px-6 py-4 text-xs text-center">
-                          {data?.MANUAL_RECEIPT_NO}
+                          {data?.VOUCHER_NO}
                         </td>
                         <td className="px-6 py-4 text-xs text-center">
-                          {data?.MANUAL_RECEIPT_NO}
-                        </td>
-                        <td className="px-6 py-4 text-xs text-center">
-                          {data?.CUSTOMER_NAME}
+                          {data?.VOUCHER_TYPE}
                         </td>
                         <td className="px-6 py-4 text-xs text-center">
                           {data?.BRANCH_NAME}
                         </td>
                         <td className="px-6 py-4 text-xs text-center">
-                          {formatCurrency(data?.ADVANCE_AMOUNT)}
+                          {data?.DESCRIPTION}
                         </td>
-                        
+                        <td className="px-6 py-4 text-xs text-center">
+                          {formatCurrency(data?.DEBIT)}
+                        </td>
                       </motion.tr>
                     ))}
                   </tbody>
