@@ -9,6 +9,7 @@ import CashAtBankModel from "../components/Models/CashAtBankModel";
 import ExpenseModel from "../components/Models/ExpenseModel";
 import PurchaseModel from "../components/Models/PurchaseModel";
 import PaymentModel from "../components/Models/PaymentModel";
+import SalaryPayableModel from "../components/Models/SalaryPayableModel";
 
 const formatDateForAPI = (dateString) => {
   const months = [
@@ -115,6 +116,12 @@ const Home = () => {
   // #######################################################
   const [paymentModelData, setPaymentModelData] = useState([]);
   const [paymentOpen, setPaymentOpen] = useState(false);
+  // #######################################################
+  const [salaryPayableModelData, setSalaryPayableModelData] = useState([]);
+  const [salaryPayableOpen, setSalaryPayableOpen] = useState(false);
+  // #######################################################
+  const [drawingModelData, setDrawingModelData] = useState([]);
+  const [drawingeOpen, setDrawingOpen] = useState(false);
 
   // Unified filter state
   const [filters, setFilters] = useState({
@@ -484,6 +491,48 @@ const Home = () => {
       console.error("Error fetching collection data:", error);
     }
   };
+  // #### SALARY PAYABLE ####
+  const salaryPayable = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/db-salary-payable`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "",
+          },
+        }
+      );
+      setSalaryPayableModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
+  // #### DRAWING ####
+  const drawing = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/db-drawing`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "",
+          },
+        }
+      );
+      setDrawingModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
 
   // Fetch Company List for Dropdown
   const fetchDropdownData = async () => {
@@ -528,6 +577,10 @@ const Home = () => {
     purchase();
     // payment
     payment();
+    // salaryPayable
+    salaryPayable();
+    // drawing
+    drawing();
 
     fetchDropdownData();
   }, [filters]);
@@ -710,6 +763,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.bank_expense?.SALARY_PAYABLE
       ),
+      open:() =>{
+        setSalaryPayableOpen(!salaryPayableOpen);
+      }
     },
     {
       id: 7,
@@ -717,6 +773,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.bank_expense?.DRAWING
       ),
+      open:() =>{
+        setDrawingOpen(!drawingeOpen);
+      }
     },
     {
       id: 8,
@@ -953,6 +1012,16 @@ const Home = () => {
         data={paymentModelData}
         open={paymentOpen}
         setOpen={setPaymentOpen}
+      />
+      <SalaryPayableModel
+        data={salaryPayableModelData}
+        open={salaryPayableOpen}
+        setOpen={setSalaryPayableOpen}
+      />
+      <SalaryPayableModel
+        data={drawingModelData}
+        open={drawingeOpen}
+        setOpen={setDrawingOpen}
       />
       
     </div>
