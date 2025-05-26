@@ -7,6 +7,8 @@ import HomePageRecoveryDialogBox from "../components/Models/HomePageRecoveryDial
 import HomePageAdvanceDialogBox from "../components/Models/HomePageAdvanceDialogBox";
 import CashAtBankModel from "../components/Models/CashAtBankModel";
 import ExpenseModel from "../components/Models/ExpenseModel";
+import PurchaseModel from "../components/Models/PurchaseModel";
+import PaymentModel from "../components/Models/PaymentModel";
 
 const formatDateForAPI = (dateString) => {
   const months = [
@@ -107,6 +109,12 @@ const Home = () => {
   // #######################################################
   const [expenseModelData, setExpenseModelData] = useState([]);
   const [expenseOpen, setExpenseOpen] = useState(false);
+  // #######################################################
+  const [purchaseModelData, setPurchaseModelData] = useState([]);
+  const [purchaseOpen, setPurchaseOpen] = useState(false);
+  // #######################################################
+  const [paymentModelData, setPaymentModelData] = useState([]);
+  const [paymentOpen, setPaymentOpen] = useState(false);
 
   // Unified filter state
   const [filters, setFilters] = useState({
@@ -434,6 +442,48 @@ const Home = () => {
       console.error("Error fetching collection data:", error);
     }
   };
+  // #### PURCHASE ####
+  const purchase = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/db-purchase`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "",
+          },
+        }
+      );
+      setPurchaseModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
+  // #### PAYMENT ####
+  const payment = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://zbl.zaffarsons.com/zbl/db-payments`,
+        {
+          params: {
+            sdate: filters.sdate,
+            edate: filters.edate,
+            company: filters.rec_company,
+            branch: filters.branch,
+            inst_type: "",
+          },
+        }
+      );
+      setPaymentModelData(data);
+      setLoader(false);
+    } catch (error) {
+      console.error("Error fetching collection data:", error);
+    }
+  };
 
   // Fetch Company List for Dropdown
   const fetchDropdownData = async () => {
@@ -474,6 +524,11 @@ const Home = () => {
     cashInHand();
     // Expense
     expense();
+    // Purchase
+    purchase();
+    // payment
+    payment();
+
     fetchDropdownData();
   }, [filters]);
 
@@ -635,6 +690,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.bank_expense?.PURCHASES
       ),
+      open: () => {
+        setPurchaseOpen(!purchaseOpen);
+      },
     },
     {
       id: 5,
@@ -642,6 +700,9 @@ const Home = () => {
       saleFunction: formatNumberWithCommas(
         collectionData?.bank_expense?.PAYMENTS
       ),
+      open: () => {
+        setPaymentOpen(!paymentOpen);
+      },
     },
     {
       id: 6,
@@ -807,7 +868,11 @@ const Home = () => {
           <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-4 h-auto">
             {bank_expense.map((bank) => {
               return (
-                <HomeSmallCard open={bank.open} heading={bank.name} number={bank.saleFunction} />
+                <HomeSmallCard
+                  open={bank.open}
+                  heading={bank.name}
+                  number={bank.saleFunction}
+                />
               );
             })}
           </div>
@@ -879,6 +944,17 @@ const Home = () => {
         open={expenseOpen}
         setOpen={setExpenseOpen}
       />
+      <PurchaseModel
+        data={purchaseModelData}
+        open={purchaseOpen}
+        setOpen={setPurchaseOpen}
+      />
+      <PaymentModel
+        data={paymentModelData}
+        open={paymentOpen}
+        setOpen={setPaymentOpen}
+      />
+      
     </div>
   );
 };

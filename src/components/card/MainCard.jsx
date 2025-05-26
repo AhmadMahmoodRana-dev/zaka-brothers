@@ -30,12 +30,12 @@ const MainCard = ({currentMonth,lastMonth,LastDaySale,todaySale,first,second,thi
   const formatNumber = (num) => new Intl.NumberFormat("en-US").format(num);
 
   return (
-    <div className={`w-[30%] ${theme == "dark" ? "card" : "card1"} max-h-[190px] py-5 h-[170px] flex flex-wrap min-w-[363px]`}>
+    <div className={`w-[30%] ${theme == "dark" ? "card" : "card1"} max-h-[190px] py-5 h-[170px] flex flex-wrap min-w-[325px]`}>
       <main className="w-[60%] h-full flex flex-col gap-4">
         {/* Current Month vs Last Month */}
         <div className="flex justify-around">
           <div className="leading-none w-[60%] min-h-[50px] flex flex-col items-center justify-center">
-            <h1 className={`xl:text-sm text-[.7rem] tracking-wider font-semibold pb-1 ${theme == "dark" ? "" : "text-[#1c252e]"}`}>
+            <h1 className={`xl:text-[.8rem] text-[.7rem] tracking-wider font-semibold pb-1 ${theme == "dark" ? "" : "text-[#1c252e]"}`}>
               {first}
             </h1>
             {loader ? (
@@ -74,7 +74,7 @@ const MainCard = ({currentMonth,lastMonth,LastDaySale,todaySale,first,second,thi
         {/* Today's Sale vs Last Day Sale */}
         <div className="flex justify-around mt-3">
           <div className="leading-none w-[60%] min-h-[50px] flex flex-col items-center justify-center">
-            <h1 className={`xl:text-sm text-[.7rem] tracking-wider font-semibold pb-1 ${theme == "dark" ? "" : "text-[#1c252e]"}`}>
+            <h1 className={`xl:text-[.8rem] text-[.7rem] tracking-wider font-semibold pb-1 ${theme == "dark" ? "" : "text-[#1c252e]"}`}>
               {third}
             </h1>
             {loader ? (
@@ -115,7 +115,7 @@ const MainCard = ({currentMonth,lastMonth,LastDaySale,todaySale,first,second,thi
       <main className="w-[40%] h-full flex flex-col gap-4">
         <div className="flex justify-around min-h-[53px]">
           <div className="leading-none min-w-[90%] flex flex-col items-center justify-center">
-            <h1 className={`xl:text-sm text-[.7rem] tracking-wider font-semibold pb-1 ${theme == "dark" ? "" : "text-[#1c252e]"}`}>
+            <h1 className={`xl:text-[.8rem] text-[.7rem] tracking-wider font-semibold pb-1 ${theme == "dark" ? "" : "text-[#1c252e]"}`}>
               {second}
             </h1>
             {loader ? (
@@ -129,7 +129,7 @@ const MainCard = ({currentMonth,lastMonth,LastDaySale,todaySale,first,second,thi
         </div>
         <div className="flex gap-2 items-center justify-center mt-2">
           <div className="leading-none min-w-[90%] min-h-[50px] flex flex-col items-center justify-center">
-            <h1 className={`xl:text-sm text-[.7rem] tracking-wider font-semibold pb-1 ${theme == "dark" ? "" : "text-[#1c252e]"}`}>{four}</h1>
+            <h1 className={`xl:text-[.8rem] text-[.7rem] tracking-wider font-semibold pb-1 ${theme == "dark" ? "" : "text-[#1c252e]"}`}>{four}</h1>
             {loader ? (
               <Loader />
             ) : (

@@ -201,7 +201,7 @@ const CashSale = () => {
       <div className={`w-[91%]  pb-8 px-4 ${theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"}  shadow-lg rounded-md`}>
 
       <motion.div
-        className="flex gap-5 w-full justify-center items-center flex-wrap my-5 "
+        className="flex gap-4 w-full justify-center items-center flex-wrap my-5 "
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

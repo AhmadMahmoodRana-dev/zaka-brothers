@@ -3,7 +3,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Context } from "../../context/Context";
 import { motion } from "framer-motion";
 
-export default function ExpenseModel({ data, open, setOpen }) {
+export default function PurchaseModel({ data, open, setOpen }) {
   const { theme, isCollapsed } = useContext(Context);
 
   const formatDate = (dateString) => {
@@ -52,7 +52,7 @@ const formatCurrency = (amount) => {
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             transition
-            className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 w-[79%] max-w-6xl data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+            className="relative transform overflow-hidden rounded-lg w-[79%] bg-white text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8  max-w-6xl data-closed:sm:translate-y-0 data-closed:sm:scale-95"
           >
             {/* Close Button */}
             <button
@@ -100,22 +100,19 @@ const formatCurrency = (amount) => {
                       }`}
                     >
                       <th className="text-center py-4 text-xs font-semibold px-4">
-                        VOUCHER_DATE
+                        INVOICE_DATE
                       </th>
                       <th className="text-center py-4 text-xs font-semibold px-4">
-                        VOUCHER_NO
-                      </th>
-                      <th className="text-center py-4 text-xs font-semibold px-4">
-                        VOUCHER_TYPE
+                        INVOICE_NO
                       </th>
                       <th className="text-center py-4 text-xs font-semibold px-4">
                         BRANCH_NAME
                       </th>
                       <th className="text-center py-4 text-xs font-semibold px-4">
-                        DESCRIPTION
+                        VENDOR_NAME
                       </th>
                       <th className="text-center py-4 text-xs font-semibold px-4">
-                        DEBIT
+                        AMOUNT
                       </th>
                     </motion.tr>
                   </thead>
@@ -133,23 +130,21 @@ const formatCurrency = (amount) => {
                         }`}
                       >
                         <td className="px-6 py-4 text-xs text-center">
-                          {formatDate(data?.VOUCHER_DATE)}
+                          {formatDate(data?.INVOICE_DATE)}
                         </td>
                         <td className="px-6 py-4 text-xs text-center">
-                          {data?.VOUCHER_NO}
-                        </td>
-                        <td className="px-6 py-4 text-xs text-center">
-                          {data?.VOUCHER_TYPE}
+                          {data?.INVOICE_NO}
                         </td>
                         <td className="px-6 py-4 text-xs text-center">
                           {data?.BRANCH_NAME}
                         </td>
                         <td className="px-6 py-4 text-xs text-center">
-                          {data?.DESCRIPTION}
+                          {data?.VENDOR_NAME}
                         </td>
                         <td className="px-6 py-4 text-xs text-center">
-                          {formatCurrency(data?.DEBIT)}
+                          {formatCurrency(data?.AMOUNT)}
                         </td>
+                        
                       </motion.tr>
                     ))}
                   </tbody>
