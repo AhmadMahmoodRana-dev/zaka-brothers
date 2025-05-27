@@ -22,6 +22,7 @@ const Sidebar = () => {
         { name: "Stock", icon: <LuLayoutDashboard />, link: "/stock" },
         { name: "Receivable", icon: <LuLayoutDashboard />, link: "/receiveable" },
         { name: "Bank Position", icon: <LuLayoutDashboard />, link: "/bank-posititon" },
+        { name: "Payable", icon: <LuLayoutDashboard />, link: "/payable" },
       ],
     },
     // {

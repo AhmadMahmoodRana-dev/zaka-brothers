@@ -10,6 +10,7 @@ import { Context } from "./context/Context";
 import Stock from "./pages/Stock";
 import Receiveable from "./pages/Receiveable";
 import BankPosition from "./pages/BankPosition";
+import Payable from "./pages/Payable";
 export default function App() {
   const { theme } = useContext(Context);
   const phoneNumber = "923015988221";
@@ -45,6 +46,7 @@ export default function App() {
           <Route path="/stock" element={<Stock />} />
           <Route path="/receiveable" element={<Receiveable />} />
           <Route path="/bank-posititon" element={<BankPosition />} />
+          <Route path="/payable" element={<Payable />} />
         </Route>
       </Routes>
     </div>

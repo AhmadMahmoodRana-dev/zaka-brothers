@@ -7,15 +7,14 @@ import {
   formatDateForInput,
   getFirstDayOfCurrentMonth,
 } from "../utils/TableUtils";
-import BankPositionTable from "../components/tables/BankPositionTable";
+import PayableTable from "../components/tables/PayableTable";
 
 
-const BankPosition = () => {
+const Payable = () => {
   const { theme } = useContext(Context);
   const [collectionTableData1, setCollectionTableData1] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [branch, setBranch] = useState([]);
-  const [loader, setLoader] = useState(true);
 
   const [filters, setFilters] = useState({
     sdate: formatDateForAPI(getFirstDayOfCurrentMonth()),
@@ -29,7 +28,7 @@ const BankPosition = () => {
   const getCollectionTableData1 = async () => {
     try {
       const { data } = await axios.get(
-        "https://zbl.zaffarsons.com/zbl/bankPostion",
+        "https://zbl.zaffarsons.com/zbl/payable",
         {
           params: {
             sdate: filters.sdate,
@@ -154,11 +153,11 @@ const BankPosition = () => {
       {/* Tables */}
      
       <div className="product_table w-full justify-center flex mt-5">
-        <BankPositionTable collectionTableData={collectionTableData1} />
+        <PayableTable collectionTableData={collectionTableData1} />
       </div>
   
     </div>
   );
 };
 
-export default BankPosition;
+export default Payable;
