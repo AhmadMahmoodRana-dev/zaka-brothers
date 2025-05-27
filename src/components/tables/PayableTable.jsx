@@ -36,7 +36,7 @@ const formatCurrency = (amount) => {
           theme === "dark" ? "text-white" : ""
         }`}
       >
-        Bank Position
+        Payable
       </h1>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-h-[50vh]">
         <table className="w-full text-sm text-left">
