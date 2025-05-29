@@ -247,8 +247,8 @@ const CashSale = () => {
         <ProductWiseSaleTable collectionTableData1={collectionTableData1} />
       </div>
       {/* <div className="product_table w-full justify-center flex mt-5"> */}
-        {/* <Barchart collectionData={collectionData} /> */}
-        {/* <RecoveryCharts/> */}
+        <Barchart collectionData={collectionData} />
+        <RecoveryCharts/>
       {/* </div> */}
     </div>
   );

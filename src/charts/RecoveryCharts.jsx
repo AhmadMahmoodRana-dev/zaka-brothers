@@ -1,63 +1,69 @@
-import React from 'react';
-import {BarChart,Bar,XAxis,YAxis,CartesianGrid,Tooltip,Legend,LabelList,ResponsiveContainer
-} from 'recharts';
+import React from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  LabelList,
+  ResponsiveContainer,
+} from "recharts";
 
-const data = [
-  { month: 'Feb_24', target: 90, achieved: 78, recovery: 1100 },
-  { month: 'Mar_24', target: 90, achieved: 81, recovery: 1100 },
-  { month: 'Apr_24', target: 90, achieved: 78, recovery: 1100 },
-  { month: 'May_24', target: 95, achieved: 74, recovery: 1100 },
-  { month: 'Jun_24', target: 95, achieved: 73, recovery: 1200 },
-  { month: 'Jul_24', target: 95, achieved: 69, recovery: 1100 },
-  { month: 'Aug_24', target: 95, achieved: 67, recovery: 995 },
-  { month: 'Sep_24', target: 95, achieved: 67, recovery: 933 },
-  { month: 'Oct_24', target: 95, achieved: 69, recovery: 982 },
-  { month: 'Nov_24', target: 90, achieved: 65, recovery: 867 },
-  { month: 'Dec_24', target: 100, achieved: 66, recovery: 884 },
-  { month: 'Jan_25', target: 100, achieved: 67, recovery: 871 },
-  { month: 'Feb_25', target: 100, achieved: 61, recovery: 794 },
-];
-
-export default function RecoveryCharts() {
+export default function RecoveryCharts({ chartData }) {
   return (
-    <div className="max-w-7xl w-full mx-auto p-4 space-y-12">
-      
-      {/* Target vs Achieved Chart */}
-      <div>
-        <h2 className="text-xl font-semibold mb-4">Target vs Achieved (%)</h2>
-        <ResponsiveContainer width="100%" height={320}>
-          <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis unit="%" />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="target" fill="#004d40" name="Target">
-              <LabelList dataKey="target" position="top" formatter={(v) => `${v}%`} />
-            </Bar>
-            <Bar dataKey="achieved" fill="#00bcd4" name="Achieved">
-              <LabelList dataKey="achieved" position="top" formatter={(v) => `${v}%`} />
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-
+    <div className="w-[91%] h-[400px] my-10">
       {/* Recovery Chart */}
       <div>
-        <h2 className="text-xl font-semibold mb-4">Recovery (in K)</h2>
-        <ResponsiveContainer width="100%" height={280}>
-          <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis unit="K" />
-            <Tooltip />
-            <Bar dataKey="recovery" fill="#00bcd4" name="Recovery">
-              <LabelList dataKey="recovery" position="top" formatter={(v) => `${(v / 1000).toFixed(1)}M`} />
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+        <h2 className="text-xl font-semibold mb-4">Recovery (in Millions)</h2>
+        {chartData?.length > 0 ? (
+          <ResponsiveContainer width="100%" height={280}>
+            <BarChart data={chartData}>
+               <CartesianGrid
+            strokeDasharray="3 3"
+            stroke={"#E5E7EB"}
+          />
+          <XAxis
+            dataKey="name"
+            tick={{ fill:"#374151" }}
+            stroke={"#374151"}
+          />
+          <YAxis
+            tick={{ fill:"#374151" }}
+            stroke={"#374151"}
+          />
+          <Tooltip
+            contentStyle={{
+              backgroundColor:"#FFF",
+              borderColor:"#E5E7EB",
+              borderRadius: "8px",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+            }}
+            itemStyle={{ color:"#374151" }}
+          />
+          <Legend
+            wrapperStyle={{ paddingTop: "20px" }}
+            formatter={(value) => (
+              <span style={{ color:"#374151" }}>
+                {value}
+              </span>
+            )}
+          />
 
+              <Bar
+                dataKey="Recovery_In_Millions"
+                fill="red"
+                name="Recovery_In_Millions"
+                            radius={[4, 4, 0, 0]}
+
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        ) : (
+          <p className="text-center text-gray-500">No data available</p>
+        )}
+      </div>
     </div>
   );
 }

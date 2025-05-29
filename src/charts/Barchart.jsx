@@ -12,25 +12,8 @@ import {
 import { Context } from "../context/Context";
 
 const Barchart = ({ collectionData }) => {
-    const { theme } = useContext(Context);
-  
-  const chartData = [
-    {
-      name: "Cash Sales",
-      Current: collectionData[0]?.CASH_SALE,
-      Last: collectionData[0]?.LAST_CASH_SALE,
-    },
-    {
-      name: "Installment",
-      Current: collectionData[0]?.INSTALLMENT_SALE,
-      Last: collectionData[0]?.LAST_INST_SALE,
-    },
-    {
-      name: "Credit",
-      Current: collectionData[0]?.CREDIT_SALE,
-      Last: collectionData[0]?.LAST_CREDIT_SALE,
-    },
-  ];
+  const { theme } = useContext(Context);
+
   return (
     <div className="w-[91%] h-[400px] my-10">
       <h2
@@ -42,7 +25,7 @@ const Barchart = ({ collectionData }) => {
       </h2>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
-          data={chartData}
+          data={collectionData}
           margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
         >
           <CartesianGrid
@@ -76,15 +59,15 @@ const Barchart = ({ collectionData }) => {
             )}
           />
           <Bar
-            dataKey="Current"
-            fill={theme === "dark" ? "#3B82F6" : "#2563EB"}
-            name="Current Month"
+            dataKey="Target"
+            fill={theme === "dark" ? "#F59E0B" : "#FBBF24"}
+            name="Target"
             radius={[4, 4, 0, 0]}
           />
           <Bar
-            dataKey="Last"
+            dataKey="Achieved"
             fill={theme === "dark" ? "#10B981" : "#059669"}
-            name="Last Month"
+            name="Achieved"
             radius={[4, 4, 0, 0]}
           />
         </BarChart>
