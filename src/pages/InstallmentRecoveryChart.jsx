@@ -62,11 +62,12 @@ const InstallmentRecoveryChart = () => {
     }
   };
 
-  const formatChartData = chartData.map((item) => ({
-    name: item.MONTH_LABEL,
-    Target: item.TARGET_AMOUNT,
-    Achieved: item.RECOVERY_AMOUNT,
-  }));
+ const formatChartData = chartData.map((item) => ({
+  name: item.MONTH_LABEL,
+  Target: +(item.TARGET_AMOUNT / 1_000_000).toFixed(1),   // 13.3 (number)
+  Achieved: +(item.RECOVERY_AMOUNT / 1_000_000).toFixed(1), // 10.4 (number)
+}));
+
   // In Collection.js (parent component)
   const formatChartData1 = chartData.map((item) => ({
     MONTH_LABEL: item.MONTH_LABEL,

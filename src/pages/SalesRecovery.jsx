@@ -68,8 +68,9 @@ const SalesRecovery = () => {
     // Format the data for Sales chart (Target vs Installment Sales)
   const salesData = chartData.map((item) => ({
     name: item.MONTH_LABEL,
-    Target: item.TARGET_AMOUNT,
-    Achieved: item.INSTALLMENT_AMOUNT,
+    Target: +(item.TARGET_AMOUNT / 1_000_000).toFixed(1),   // 13.3 (number)
+    Achieved: +(item.INSTALLMENT_AMOUNT / 1_000_000).toFixed(1)
+  ,
   }))
 
   const formatChartData1 = chartData.map((item) => ({

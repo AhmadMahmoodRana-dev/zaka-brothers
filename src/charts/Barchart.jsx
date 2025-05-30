@@ -37,19 +37,23 @@ const Barchart = ({ collectionData }) => {
             tick={{ fill: theme === "dark" ? "#FFF" : "#374151" }}
             stroke={theme === "dark" ? "#6B7280" : "#374151"}
           />
-          <YAxis
-            tick={{ fill: theme === "dark" ? "#FFF" : "#374151" }}
-            stroke={theme === "dark" ? "#6B7280" : "#374151"}
-          />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: theme === "dark" ? "#1F2937" : "#FFF",
-              borderColor: theme === "dark" ? "#374151" : "#E5E7EB",
-              borderRadius: "8px",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-            }}
-            itemStyle={{ color: theme === "dark" ? "#FFF" : "#374151" }}
-          />
+        <YAxis
+  tick={{ fill: theme === "dark" ? "#FFF" : "#374151" }}
+  stroke={theme === "dark" ? "#6B7280" : "#374151"}
+  tickFormatter={(value) => `${value}M`}
+/>
+         <Tooltip
+  contentStyle={{
+    backgroundColor: theme === "dark" ? "#1F2937" : "#FFF",
+    borderColor: theme === "dark" ? "#374151" : "#E5E7EB",
+    borderRadius: "8px",
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+  }}
+  itemStyle={{ color: theme === "dark" ? "#FFF" : "#374151" }}
+  formatter={(value, name) => [`${value}M`, name]}
+/>
+
+
           <Legend
             wrapperStyle={{ paddingTop: "20px" }}
             formatter={(value) => (

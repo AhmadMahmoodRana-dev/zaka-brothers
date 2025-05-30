@@ -14,8 +14,6 @@ import { Context } from "../context/Context";
 const SaleBarchart = ({ salesData }) => {
   const { theme } = useContext(Context);
 
-;
-
   return (
     <div className="w-[91%] h-[400px] my-10">
       <h2
@@ -44,13 +42,6 @@ const SaleBarchart = ({ salesData }) => {
             stroke={theme === "dark" ? "#6B7280" : "#374151"}
           />
           <Tooltip
-            formatter={(value) =>
-              new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "PKR",
-                maximumFractionDigits: 0,
-              }).format(value)
-            }
             contentStyle={{
               backgroundColor: theme === "dark" ? "#1F2937" : "#FFF",
               borderColor: theme === "dark" ? "#374151" : "#E5E7EB",
@@ -58,6 +49,7 @@ const SaleBarchart = ({ salesData }) => {
               boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
             }}
             itemStyle={{ color: theme === "dark" ? "#FFF" : "#374151" }}
+            formatter={(value, name) => [`${value}M`, name]}
           />
           <Legend
             wrapperStyle={{ paddingTop: "20px" }}
