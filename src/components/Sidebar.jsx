@@ -23,6 +23,8 @@ const Sidebar = () => {
         { name: "Receivable", icon: <LuLayoutDashboard />, link: "/receiveable" },
         { name: "Bank Position", icon: <LuLayoutDashboard />, link: "/bank-posititon" },
         { name: "Payable", icon: <LuLayoutDashboard />, link: "/payable" },
+        { name: "Sales Recovery", icon: <LuLayoutDashboard />, link: "/sales-recovery" },
+        { name: "Installment Recovery", icon: <LuLayoutDashboard />, link: "/install-recovery" },
       ],
     },
     // {

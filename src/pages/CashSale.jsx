@@ -11,10 +11,6 @@ import {
   formatDateForInput,
   getFirstDayOfCurrentMonth,
 } from "../utils/TableUtils";
-import Barchart from "../charts/Barchart";
-import RecoveryCharts from "../charts/RecoveryCharts"
-import SaleBarchart from "../charts/SaleBarchart";
-import SalesRecoveryChart from "../charts/SalesRecoveryChart";
 
 const CashSale = () => {
   const { theme } = useContext(Context);
@@ -24,7 +20,6 @@ const CashSale = () => {
   const [companies, setCompanies] = useState([]);
   const [branch, setBranch] = useState([]);
   const [loader, setLoader] = useState(true);
-  const [chartData, setChartData] = useState([]);
 
   const [filters, setFilters] = useState({
     sdate: formatDateForAPI(getFirstDayOfCurrentMonth()),
@@ -108,40 +103,7 @@ const CashSale = () => {
     }
   };
 
- // Fetch CHART data
-  const getChartData = async () => {
-    try {
-      const { data } = await axios.get(
-        `https://zbl.zaffarsons.com/zbl/SalePerformance`,
-        {
-          params: {
-            // sdate: filters.sdate,
-            // edate: filters.edate,
-            company: filters.rec_company,
-            branch: "",
-            // crr: "",
-          },
-        }
-      );
-      setChartData(data);
-      setLoader(false);
-    } catch (error) {
-      console.error("Error fetching collection data:", error);
-    }
-  };
-
-
-    // Format the data for Sales chart (Target vs Installment Sales)
-  const salesData = chartData.map((item) => ({
-    name: item.MONTH_LABEL,
-    Target: item.TARGET_AMOUNT,
-    Achieved: item.INSTALLMENT_AMOUNT,
-  }))
-
-  const formatChartData1 = chartData.map((item) => ({
-  MONTH_LABEL: item.MONTH_LABEL,
-    SALE_LESS_ADVANCE_MILLION: parseFloat(item.SALE_LESS_ADVANCE_MILLION.replace("M", ""))
-}));
+ 
 
 
 
@@ -152,14 +114,12 @@ const CashSale = () => {
     getCollectionTableData();
     getCollectionTableData1();
     fetchDropdownData();
-    getChartData()
   }, []);
 
   useEffect(() => {
     getCollection();
     getCollectionTableData();
     getCollectionTableData1();
-    getChartData()
   }, [filters]);
 
   return (
@@ -290,10 +250,7 @@ const CashSale = () => {
       <div className="product_table w-full justify-center flex mt-5">
         <ProductWiseSaleTable collectionTableData1={collectionTableData1} />
       </div>
-      {/* <div className="product_table w-full justify-center flex mt-5"> */}
-        <SaleBarchart  salesData={salesData} />
-        <SalesRecoveryChart chartData={formatChartData1}/>
-      {/* </div> */}
+     
     </div>
   );
 };

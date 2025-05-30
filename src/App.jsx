@@ -11,6 +11,8 @@ import Stock from "./pages/Stock";
 import Receiveable from "./pages/Receiveable";
 import BankPosition from "./pages/BankPosition";
 import Payable from "./pages/Payable";
+import InstallmentRecoveryChart from "./pages/InstallmentRecoveryChart";
+import SalesRecoveryChart from "./pages/SalesRecovery";
 export default function App() {
   const { theme } = useContext(Context);
   const phoneNumber = "923015988221";
@@ -47,6 +49,8 @@ export default function App() {
           <Route path="/receiveable" element={<Receiveable />} />
           <Route path="/bank-posititon" element={<BankPosition />} />
           <Route path="/payable" element={<Payable />} />
+          <Route path="/install-recovery" element={<InstallmentRecoveryChart />} />
+          <Route path="/sales-recovery" element={<SalesRecoveryChart />} />
         </Route>
       </Routes>
     </div>
