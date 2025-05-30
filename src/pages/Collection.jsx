@@ -106,10 +106,11 @@ const Collection = () => {
     Target: item.TARGET_AMOUNT,
     Achieved: item.RECOVERY_AMOUNT,
   }));
-  const formatChartData1 = chartData.map((item) => ({
-    name: item.MONTH_LABEL,
-    Recovery_In_Millions: item.RECOVERY_IN_MILLION,
-  }));
+ // In Collection.js (parent component)
+const formatChartData1 = chartData.map((item) => ({
+  MONTH_LABEL: item.MONTH_LABEL,
+    RECOVERY_IN_MILLION: parseFloat(item.RECOVERY_IN_MILLION.replace("M", ""))
+}));
 
   useEffect(() => {
     getCollection();
