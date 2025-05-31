@@ -136,9 +136,33 @@ export default function HomePageRecoveryDialogBox({ data, open, setOpen }) {
                         <td className="px-6 py-4 text-xs text-center">
                           {data?.RECEIVED_AMOUNT}
                         </td>
-                        
                       </motion.tr>
                     ))}
+
+                    {/* Total Row */}
+                    <tr
+                      className={`font-semibold ${
+                        theme == "dark"
+                          ? "border-t border-gray-500 text-[#D1D5DB] bg-[#182f4d]"
+                          : "border-t border-gray-300 bg-gray-100 text-gray-700"
+                      }`}
+                    >
+                      <td
+                        colSpan={5}
+                        className="px-6 py-4 text-xs text-right font-bold"
+                      >
+                        Total:
+                      </td>
+                      <td className="px-6 py-4 text-xs text-center font-bold">
+                        {formatCurrency(
+                          data?.reduce(
+                            (acc, item) =>
+                              acc + (Number(item?.RECEIVED_AMOUNT) || 0),
+                            0
+                          )
+                        )}
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

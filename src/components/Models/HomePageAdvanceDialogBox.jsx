@@ -23,6 +23,11 @@ export default function HomePageAdvanceDialogBox({ data, open, setOpen }) {
     }).format(amount);
   };
 
+  const totalAdvanceAmount = data?.reduce(
+    (sum, item) => sum + Number(item?.ADVANCE_AMOUNT || 0),
+    0
+  );
+
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-10 ">
       <DialogBackdrop
@@ -136,9 +141,22 @@ export default function HomePageAdvanceDialogBox({ data, open, setOpen }) {
                         <td className="px-6 py-4 text-xs text-center">
                           {formatCurrency(data?.ADVANCE_AMOUNT)}
                         </td>
-                        
                       </motion.tr>
                     ))}
+                    <tr
+                      className={`font-semibold ${
+                        theme == "dark"
+                          ? "text-white bg-[#2a4365] border-t border-gray-500"
+                          : "text-gray-700 bg-[#eaeaea] border-t border-gray-300"
+                      }`}
+                    >
+                      <td colSpan={5} className="px-6 py-4 text-xs text-center">
+                        Total
+                      </td>
+                      <td className="px-6 py-4 text-xs text-center">
+                        {formatCurrency(totalAdvanceAmount)}
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
