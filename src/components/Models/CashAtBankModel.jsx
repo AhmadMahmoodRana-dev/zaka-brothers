@@ -15,27 +15,35 @@ export default function CashAtBankModel({ data, open, setOpen }) {
     });
   };
 
-const formatCurrency = (amount) => {
-  // If it's a string, clean it
-  if (typeof amount === "string") {
-    amount = amount.replace(/,/g, "").trim(); // Remove commas and spaces
-  }
+  const formatCurrency = (amount) => {
+    // If it's a string, clean it
+    if (typeof amount === "string") {
+      amount = amount.replace(/,/g, "").trim(); // Remove commas and spaces
+    }
 
-  // Convert to number
-  const numericAmount = Number(amount);
+    // Convert to number
+    const numericAmount = Number(amount);
 
-  // Handle invalid numbers
-  if (isNaN(numericAmount)) {
-    return "Invalid amount";
-  }
+    // Handle invalid numbers
+    if (isNaN(numericAmount)) {
+      return "Invalid amount";
+    }
 
-  return new Intl.NumberFormat("en-PK", {
-    style: "currency",
-    currency: "PKR",
-    maximumFractionDigits: 0,
-  }).format(numericAmount);
-};
-
+    return new Intl.NumberFormat("en-PK", {
+      style: "currency",
+      currency: "PKR",
+      maximumFractionDigits: 0,
+    }).format(numericAmount);
+  };
+  const totals = data?.reduce(
+    (acc, curr) => {
+      acc.debit += Number(curr?.DEBIT?.toString().replace(/,/g, "")) || 0;
+      acc.credit += Number(curr?.CREDIT?.toString().replace(/,/g, "")) || 0;
+      acc.balance += Number(curr?.BALANCE?.toString().replace(/,/g, "")) || 0;
+      return acc;
+    },
+    { debit: 0, credit: 0, balance: 0 }
+  );
 
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-10 ">
@@ -168,9 +176,31 @@ const formatCurrency = (amount) => {
                         <td className="px-6 py-4 text-xs text-center">
                           {formatCurrency(data?.BALANCE)}
                         </td>
-                        
                       </motion.tr>
                     ))}
+                    <tr
+                      className={`font-semibold ${
+                        theme === "dark"
+                          ? "bg-[#152033] text-white"
+                          : "bg-gray-200 text-gray-800"
+                      }`}
+                    >
+                      <td
+                        colSpan={6}
+                        className="px-6 py-4 text-xs text-center text-sm font-bold"
+                      >
+                        Total
+                      </td>
+                      <td className="px-6 py-4 text-xs text-center">
+                        {formatCurrency(totals.debit)}
+                      </td>
+                      <td className="px-6 py-4 text-xs text-center">
+                        {formatCurrency(totals.credit)}
+                      </td>
+                      <td className="px-6 py-4 text-xs text-center">
+                        {formatCurrency(totals.balance)}
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
