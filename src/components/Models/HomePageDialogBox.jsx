@@ -4,7 +4,7 @@ import { Context } from "../../context/Context";
 import { motion } from "framer-motion";
 
 export default function HomePageDialogBox({ data, open, setOpen }) {
-  const { theme,isCollapsed } = useContext(Context);
+  const { theme, isCollapsed } = useContext(Context);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -30,7 +30,11 @@ export default function HomePageDialogBox({ data, open, setOpen }) {
         className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
       />
 
-      <div className={`fixed inset-0 z-10 w-screen overflow-y-auto ${isCollapsed ? "" : "left-[120px]" } `}>
+      <div
+        className={`fixed inset-0 z-10 w-screen overflow-y-auto ${
+          isCollapsed ? "" : "left-[120px]"
+        } `}
+      >
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             transition
@@ -40,7 +44,9 @@ export default function HomePageDialogBox({ data, open, setOpen }) {
             <button
               onClick={() => setOpen(false)}
               className={`absolute top- right-0 z-20 p-1 rounded-full hover:bg-opacity-20 transition-colors ${
-                theme === "dark" ? "text-white hover:bg-white" : "text-gray-600 hover:bg-gray-200"
+                theme === "dark"
+                  ? "text-white hover:bg-white"
+                  : "text-gray-600 hover:bg-gray-200"
               }`}
             >
               <svg
@@ -127,9 +133,15 @@ export default function HomePageDialogBox({ data, open, setOpen }) {
                         <td className="px-6 py-4 text-xs text-center">
                           {data["AC.CUSTOMER_NAME||'-'||AC.MANUAL_CUST_NO"]}
                         </td>
-                        <td className="px-6 py-4 text-xs text-center">{data?.ITEM_CODE}</td>
-                        <td className="px-6 py-4 text-xs text-center">{data?.ITEM_DESC}</td>
-                        <td className="px-6 py-4 text-xs text-center">{data?.SALE_QTY}</td>
+                        <td className="px-6 py-4 text-xs text-center">
+                          {data?.ITEM_CODE}
+                        </td>
+                        <td className="px-6 py-4 text-xs text-center">
+                          {data?.ITEM_DESC}
+                        </td>
+                        <td className="px-6 py-4 text-xs text-center">
+                          {data?.SALE_QTY}
+                        </td>
                         <td className="px-6 py-4 text-xs text-center">
                           {formatCurrency(data?.RATE)}
                         </td>
@@ -138,6 +150,26 @@ export default function HomePageDialogBox({ data, open, setOpen }) {
                         </td>
                       </motion.tr>
                     ))}
+                    {/* Total Row */}
+                    <tr
+                      className={`${
+                        theme === "dark"
+                          ? "bg-[#1e2f4b] text-white"
+                          : "bg-gray-100 text-gray-700"
+                      } font-semibold`}
+                    >
+                      <td colSpan={7} className="px-6 py-4 text-right text-xs">
+                        Total:
+                      </td>
+                      <td className="px-6 py-4 text-xs text-center">
+                        {formatCurrency(
+                          data?.reduce(
+                            (acc, curr) => acc + (curr?.TOTAL_AMOUNT || 0),
+                            0
+                          )
+                        )}
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

@@ -152,6 +152,26 @@ const formatCurrency = (amount) => {
                         </td>
                       </motion.tr>
                     ))}
+                    {/* Total Row */}
+                    <tr
+                      className={`${
+                        theme === "dark"
+                          ? "bg-[#1e2f4b] text-white"
+                          : "bg-gray-100 text-gray-700"
+                      } font-semibold`}
+                    >
+                      <td colSpan={5} className="px-6 py-4 text-right text-xs">
+                        Total:
+                      </td>
+                      <td className="px-6 py-4 text-xs text-center">
+                        {formatCurrency(
+                          data?.reduce(
+                            (acc, curr) => acc + (curr?.DEBIT || 0),
+                            0
+                          )
+                        )}
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

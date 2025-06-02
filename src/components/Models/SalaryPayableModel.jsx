@@ -3,7 +3,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Context } from "../../context/Context";
 import { motion } from "framer-motion";
 
-export default function SalaryPayableModel({ data, open, setOpen }) {
+export default function  SalaryPayableModel({ data, open, setOpen }) {
   const { theme, isCollapsed } = useContext(Context);
 
   const formatDate = (dateString) => {
@@ -153,6 +153,26 @@ const formatCurrency = (amount) => {
                         
                       </motion.tr>
                     ))}
+                     {/* Total Row */}
+                    <tr
+                      className={`${
+                        theme === "dark"
+                          ? "bg-[#1e2f4b] text-white"
+                          : "bg-gray-100 text-gray-700"
+                      } font-semibold`}
+                    >
+                      <td colSpan={5} className="px-6 py-4 text-right text-xs">
+                        Total:
+                      </td>
+                      <td className="px-6 py-4 text-xs text-center">
+                        {formatCurrency(
+                          data?.reduce(
+                            (acc, curr) => acc + (curr?.DEBIT || 0),
+                            0
+                          )
+                        )}
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
