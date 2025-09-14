@@ -31,7 +31,7 @@ const CashSale = () => {
 
   const getCollection = async () => {
     try {
-      const { data } = await axios.get(`https://zbl.zaffarsons.com/zbl/Sales`, {
+      const { data } = await axios.get(`https://zbl.erprz.com/zbl/Sales`, {
         params: {
           sdate: filters.sdate,
           edate: filters.edate,
@@ -50,7 +50,7 @@ const CashSale = () => {
   const getCollectionTableData = async () => {
     try {
       const { data } = await axios.get(
-        "https://zbl.zaffarsons.com/zbl/sale_detail",
+        "https://zbl.erprz.com/zbl/sale_detail",
         {
           params: {
             sdate: filters.sdate,
@@ -70,7 +70,7 @@ const CashSale = () => {
   const getCollectionTableData1 = async () => {
     try {
       const { data } = await axios.get(
-        "https://zbl.zaffarsons.com/zbl/product_sale",
+        "https://zbl.erprz.com/zbl/product_sale",
         {
           params: {
             sdate: filters.sdate,
@@ -90,7 +90,7 @@ const CashSale = () => {
   const fetchDropdownData = async () => {
     try {
       const { data } = await axios.get(
-        "https://zbl.zaffarsons.com/zbl/pre-define"
+        "https://zbl.erprz.com/zbl/pre-define"
       );
       if (Array.isArray(data?.company_list)) {
         setCompanies(data?.company_list);

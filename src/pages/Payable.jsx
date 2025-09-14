@@ -28,7 +28,7 @@ const Payable = () => {
   const getCollectionTableData1 = async () => {
     try {
       const { data } = await axios.get(
-        "https://zbl.zaffarsons.com/zbl/payable",
+        "https://zbl.erprz.com/zbl/payable",
         {
           params: {
             sdate: filters.sdate,
@@ -48,7 +48,7 @@ const Payable = () => {
   const fetchDropdownData = async () => {
     try {
       const { data } = await axios.get(
-        "https://zbl.zaffarsons.com/zbl/pre-define"
+        "https://zbl.erprz.com/zbl/pre-define"
       );
       if (Array.isArray(data?.company_list)) {
         setCompanies(data?.company_list);

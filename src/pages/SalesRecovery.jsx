@@ -498,7 +498,7 @@ const branches = [
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `https://zbl.zaffarsons.com/zbl/RecoveryPerformance?company=${company}&branch=${branch}`
+          `https://zbl.erprz.com/zbl/RecoveryPerformance?company=${company}&branch=${branch}`
         );
 
         const formatted = res.data.map((item) => ({

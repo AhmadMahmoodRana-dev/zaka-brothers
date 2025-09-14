@@ -30,7 +30,7 @@ const Collection = () => {
   const getCollection = async () => {
     try {
       const { data } = await axios.get(
-        `https://zbl.zaffarsons.com/zbl/Collection`,
+        `https://zbl.erprz.com/zbl/Collection`,
         {
           params: {
             sdate: filters.sdate,
@@ -53,7 +53,7 @@ const Collection = () => {
   const getCollectionTableData = async () => {
     try {
       const { data } = await axios.get(
-        "https://zbl.zaffarsons.com/zbl/recovery",
+        "https://zbl.erprz.com/zbl/recovery",
         { params: filters }
       );
       setCollectionTableData(data);
@@ -66,7 +66,7 @@ const Collection = () => {
   const fetchDropdownData = async () => {
     try {
       const { data } = await axios.get(
-        "https://zbl.zaffarsons.com/zbl/pre-define"
+        "https://zbl.erprz.com/zbl/pre-define"
       );
       if (Array.isArray(data?.company_list)) {
         setCompanies(data?.company_list);

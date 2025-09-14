@@ -18,7 +18,7 @@ const Login = () => {
   const handleSubmit = async (values) => {
     try {
       const { data } = await axios.post(
-        "https://zbl.zaffarsons.com/zbl/login",
+        "https://zbl.erprz.com/zbl/login",
         {
           username: values.userName,
           password: values.password,

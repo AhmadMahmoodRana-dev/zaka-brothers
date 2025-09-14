@@ -434,7 +434,7 @@ const branches = [
 
   const fetchData = (company, branch) => {
     axios
-      .get(`https://zbl.zaffarsons.com/zbl/SalePerformance?company=${company}&branch=${branch}`)
+      .get(`https://zbl.erprz.com/zbl/SalePerformance?company=${company}&branch=${branch}`)
       .then((res) => {
         const formatted = res.data.map((item) => ({
           month: item.MONTH_LABEL,

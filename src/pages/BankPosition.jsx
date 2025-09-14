@@ -29,7 +29,7 @@ const BankPosition = () => {
   const getCollectionTableData1 = async () => {
     try {
       const { data } = await axios.get(
-        "https://zbl.zaffarsons.com/zbl/bankPostion",
+        "https://zbl.erprz.com/zbl/bankPostion",
         {
           params: {
             sdate: filters.sdate,
@@ -49,7 +49,7 @@ const BankPosition = () => {
   const fetchDropdownData = async () => {
     try {
       const { data } = await axios.get(
-        "https://zbl.zaffarsons.com/zbl/pre-define"
+        "https://zbl.erprz.com/zbl/pre-define"
       );
       if (Array.isArray(data?.company_list)) {
         setCompanies(data?.company_list);

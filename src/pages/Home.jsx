@@ -1188,33 +1188,33 @@ const Home = () => {
   // API call configurations
   const apiConfigurations = useCallback(() => ([
     // Main dashboard
-    { url: 'https://zbl.zaffarsons.com/zbl/dashboad', params: { crr: "" }, setter: setCollectionData },
+    { url: 'https://zbl.erprz.com/zbl/dashboad', params: { crr: "" }, setter: setCollectionData },
     
     // Daily Sales
-    { url: 'https://zbl.zaffarsons.com/zbl/DailySale', params: { inst_type: "" }, setter: setFirstModelData },
-    { url: 'https://zbl.zaffarsons.com/zbl/DailySale', params: { inst_type: "CASH" }, setter: setSecondModelData },
-    { url: 'https://zbl.zaffarsons.com/zbl/DailySale', params: { inst_type: "CREDIT" }, setter: setThirdModelData },
-    { url: 'https://zbl.zaffarsons.com/zbl/DailySale', params: { inst_type: "INSTALLMENT" }, setter: setFourthModelData },
-    
+    { url: 'https://zbl.erprz.com/zbl/DailySale', params: { inst_type: "" }, setter: setFirstModelData },
+    { url: 'https://zbl.erprz.com/zbl/DailySale', params: { inst_type: "CASH" }, setter: setSecondModelData },
+    { url: 'https://zbl.erprz.com/zbl/DailySale', params: { inst_type: "CREDIT" }, setter: setThirdModelData },
+    { url: 'https://zbl.erprz.com/zbl/DailySale', params: { inst_type: "INSTALLMENT" }, setter: setFourthModelData },
+
     // Recovery
-    { url: 'https://zbl.zaffarsons.com/zbl/db-recovery', params: { inst_type: "INSTALLMENT" }, setter: setFirstRecoveryModelData },
-    { url: 'https://zbl.zaffarsons.com/zbl/db-recovery', params: { inst_type: "CASH" }, setter: setSecondRecoveryModelData },
-    { url: 'https://zbl.zaffarsons.com/zbl/db-recovery', params: { inst_type: "CREDIT" }, setter: setThirdRecoveryModelData },
-    { url: 'https://zbl.zaffarsons.com/zbl/db-recovery', params: { inst_type: "" }, setter: setfourthRecoveryModelData },
+    { url: 'https://zbl.erprz.com/zbl/db-recovery', params: { inst_type: "INSTALLMENT" }, setter: setFirstRecoveryModelData },
+    { url: 'https://zbl.erprz.com/zbl/db-recovery', params: { inst_type: "CASH" }, setter: setSecondRecoveryModelData },
+    { url: 'https://zbl.erprz.com/zbl/db-recovery', params: { inst_type: "CREDIT" }, setter: setThirdRecoveryModelData },
+    { url: 'https://zbl.erprz.com/zbl/db-recovery', params: { inst_type: "" }, setter: setfourthRecoveryModelData },
     
     // Advance
-    { url: 'https://zbl.zaffarsons.com/zbl/advance-receivable', params: { inst_type: "INSTALLMENT" }, setter: setFirstAdvanceModelData },
-    { url: 'https://zbl.zaffarsons.com/zbl/advance-receivable', params: { inst_type: "CREDIT" }, setter: setSecondAdvanceModelData },
-    { url: 'https://zbl.zaffarsons.com/zbl/advance-receivable', params: { inst_type: "" }, setter: setThirdAdvanceModelData },
+    { url: 'https://zbl.erprz.com/zbl/advance-receivable', params: { inst_type: "INSTALLMENT" }, setter: setFirstAdvanceModelData },
+    { url: 'https://zbl.erprz.com/zbl/advance-receivable', params: { inst_type: "CREDIT" }, setter: setSecondAdvanceModelData },
+    { url: 'https://zbl.erprz.com/zbl/advance-receivable', params: { inst_type: "" }, setter: setThirdAdvanceModelData },
     
     // Other endpoints
     { url: 'https://zbl.zaffarsons.com/zbl/db-cash-at-bank', setter: setCashAtBankModelData },
-    { url: 'https://zbl.zaffarsons.com/zbl/db-cash-in-hand', setter: setCashInHandModelData },
-    { url: 'https://zbl.zaffarsons.com/zbl/db-expense', setter: setExpenseModelData },
-    { url: 'https://zbl.zaffarsons.com/zbl/db-purchase', setter: setPurchaseModelData },
-    { url: 'https://zbl.zaffarsons.com/zbl/db-payments', setter: setPaymentModelData },
-    { url: 'https://zbl.zaffarsons.com/zbl/db-salary-payable', setter: setSalaryPayableModelData },
-    { url: 'https://zbl.zaffarsons.com/zbl/db-drawing', setter: setDrawingModelData },
+    { url: 'https://zbl.erprz.com/zbl/db-cash-in-hand', setter: setCashInHandModelData },
+    { url: 'https://zbl.erprz.com/zbl/db-expense', setter: setExpenseModelData },
+    { url: 'https://zbl.erprz.com/zbl/db-purchase', setter: setPurchaseModelData },
+    { url: 'https://zbl.erprz.com/zbl/db-payments', setter: setPaymentModelData },
+    { url: 'https://zbl.erprz.com/zbl/db-salary-payable', setter: setSalaryPayableModelData },
+    { url: 'https://zbl.erprz.com/zbl/db-drawing', setter: setDrawingModelData },
   ]), []);
 
   // Fetch all data
@@ -1235,7 +1235,7 @@ const Home = () => {
   // Fetch dropdown data
   const fetchDropdownData = useCallback(async () => {
     try {
-      const { data } = await axios.get("https://zbl.zaffarsons.com/zbl/pre-define");
+      const { data } = await axios.get("https://zbl.erprz.com/zbl/pre-define");
       if (data?.company_list) {
         setCompanies(data.company_list);
         setBranch(data.branch_list);

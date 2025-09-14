@@ -27,7 +27,7 @@ const Stock = () => {
   const getCollection = async () => {
     setLoader(true);
     try {
-      const { data } = await axios.get(`https://zbl.zaffarsons.com/zbl/stock`, {
+      const { data } = await axios.get(`https://zbl.erprz.com/zbl/stock`, {
         params: {
           // sdate: filters.sdate,
           edate: filters.edate,
@@ -55,7 +55,7 @@ const Stock = () => {
   const fetchDropdownData = async () => {
     try {
       const { data } = await axios.get(
-        "https://zbl.zaffarsons.com/zbl/pre-define"
+        "https://zbl.erprz.com/zbl/pre-define"
       );
       if (Array.isArray(data?.company_list)) {
         setCompanies(data.company_list);

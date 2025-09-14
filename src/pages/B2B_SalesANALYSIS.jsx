@@ -40,7 +40,7 @@ const SalesChart = () => {
   const monthOptions = getLast12Months();
 
   const fetchData = () => {
-    const url = `https://zbl.zaffarsons.com/zbl/cashvscredit?company=${company}&branch=&month=${month}`;
+    const url = `https://zbl.erprz.com/zbl/cashvscredit?company=${company}&branch=&month=${month}`;
     axios.get(url)
       .then(res => {
         const transformedData = res.data.map(item => ({

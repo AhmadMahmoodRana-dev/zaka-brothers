@@ -28,7 +28,7 @@ const Receiveable = () => {
     setLoader(true);
     try {
       const { data } = await axios.get(
-        `https://zbl.zaffarsons.com/zbl/receivable`,
+        `https://zbl.erprz.com/zbl/receivable`,
         {
           params: {
             sdate: filters.sdate,
@@ -58,7 +58,7 @@ const Receiveable = () => {
   const fetchDropdownData = async () => {
     try {
       const { data } = await axios.get(
-        "https://zbl.zaffarsons.com/zbl/pre-define"
+        "https://zbl.erprz.com/zbl/pre-define"
       );
       if (Array.isArray(data?.company_list)) {
         setCompanies(data.company_list);
