@@ -33,6 +33,14 @@ const ContextProvider = (props) => {
 
   const logout = () => {
     localStorage.removeItem("userData");
+     localStorage.removeItem("branch_list");
+      localStorage.removeItem("company_list");
+       localStorage.removeItem("store_list");
+       localStorage.removeItem("cost_center_list");
+       localStorage.removeItem("user");
+       localStorage.removeItem("selectedBranch");
+       localStorage.removeItem("selectedCompany");
+       localStorage.removeItem("selectedStore");
     setUser(null);
     navigate("/login"); // ⬅️ Instantly redirect to login
   };
