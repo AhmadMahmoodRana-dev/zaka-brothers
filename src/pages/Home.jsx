@@ -3066,7 +3066,7 @@ const Loader = () => (
       <div className={`${theme === "dark" ? "top-section" : "bg-white"} pb-10 min-h-[92vh] h-auto w-full px-4`}>
         {/* Filter Section */}
         <div className="mb-6 w-full py-3">
-          <div className={`w-full pb-8 px-6 ${theme === "dark" ? "bg-[#2a3e67]" : "bg-white"} shadow-lg rounded-xl border ${theme === "dark" ? "border-gray-700" : "border-gray-200"}`}>
+          <div className={`w-full pb-8 px-3 ${theme === "dark" ? "bg-[#2a3e67]" : "bg-white"} shadow-lg rounded-xl border ${theme === "dark" ? "border-gray-700" : "border-gray-200"}`}>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
                 Dashboard Filters
