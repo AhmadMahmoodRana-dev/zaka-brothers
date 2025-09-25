@@ -3050,15 +3050,25 @@ const fetchDropdownData = useCallback(async () => {
     },
   ];
 
-  // Loader component
-const Loader = () => (
-  <div className="fixed inset-0 bg-white bg-opacity-30 dark:bg-gray-900 dark:bg-opacity-40 flex items-center justify-center z-50">
-    <div className="bg-white dark:bg-gray-800 rounded-lg p-6 flex flex-col items-center shadow-xl">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-3"></div>
-      <p className="text-gray-700 dark:text-gray-300">Loading data...</p>
-    </div>
-  </div>
-);
+
+  if (loader) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+
+//   // Loader component
+// const Loader = () => (
+//   <div className="fixed inset-0 bg-white bg-opacity-30 dark:bg-gray-900 dark:bg-opacity-40 flex items-center justify-center z-50">
+//     <div className="bg-white dark:bg-gray-800 rounded-lg p-6 flex flex-col items-center shadow-xl">
+//       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-3"></div>
+//       <p className="text-gray-700 dark:text-gray-300">Loading data...</p>
+//     </div>
+//   </div>
+// );
   return (
     <div className={`w-full ${theme === "dark" ? "bg-[#141b2e]" : "bg-[#f1f1f1]"} min-h-[92.2vh]`}>
       {loader && <Loader />}
@@ -3067,7 +3077,7 @@ const Loader = () => (
         {/* Filter Section */}
         <div className="mb-6 w-full py-3">
           <div className={`w-full pb-8 px-3 ${theme === "dark" ? "bg-[#2a3e67]" : "bg-white"} shadow-lg rounded-xl border ${theme === "dark" ? "border-gray-700" : "border-gray-200"}`}>
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-6 mt-3">
               <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
                 Dashboard Filters
               </h2>
