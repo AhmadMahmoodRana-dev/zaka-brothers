@@ -397,7 +397,7 @@
 
 // export default CreditVsCashChart;
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   BarChart,
   Bar,
@@ -413,26 +413,161 @@ import axios from "axios";
 
 const InstallmentSaleChart = () => {
   const [data, setData] = useState([]);
-  const [company, setCompany] = useState("1");
-  const [branch, setBranch] = useState(" ");
+  const [companies, setCompanies] = useState([]);
+  const [branch, setBranch] = useState([]);
+  const [loader, setLoader] = useState(false);
+  const [dropdownLoader, setDropdownLoader] = useState(true);
+  const [summaryData, setSummaryData] = useState({
+    avgTarget: 0,
+    avgAchieved: 0,
+    totalRecovery: 0
+  });
 
+  // Get logged-in company and branch from localStorage
+  const selectedCompany = localStorage.getItem("selectedCompany");
+  const selectedBranch = localStorage.getItem("selectedBranch");
 
-const branches = [
-  { label: 'ALL', value: '' },
-  { label: 'FSD Ghulam Abad', value: '21' },
-  { label: 'FSD Jaranwala Road', value: '20' },
-  { label: 'Manga Mandi', value: '04' },
-  { label: 'Miltary Accounts/GT', value: '02' },
-  { label: 'Ravi Rayan', value: '18' },
-  { label: 'Rising Star', value: '31' },
-  { label: 'SHAHKAM', value: '36' },
-  { label: 'Sharaq Pur', value: '07' },
-  { label: 'SSC', value: '37' },
-  { label: 'Sunder Sharif', value: '03' },
-];
+  const [filters, setFilters] = useState({
+    company: selectedCompany || "1",
+    branch: selectedBranch || "",
+  });
 
+  // Calculate summary statistics
+  const calculateSummary = useCallback((chartData) => {
+    if (!chartData || chartData.length === 0) {
+      return { avgTarget: 0, avgAchieved: 0, totalRecovery: 0 };
+    }
 
-  const fetchData = (company, branch) => {
+    const totalTarget = chartData.reduce((sum, item) => sum + (item.target || 0), 0);
+    const totalActual = chartData.reduce((sum, item) => sum + (item.actual || 0), 0);
+    const avgTargetPercent = totalTarget > 0 ? (totalActual / totalTarget) * 100 : 0;
+    const avgAchievedPercent = Math.min(avgTargetPercent, 100); // Cap at 100%
+    const totalRecovery = totalActual;
+
+    return {
+      avgTarget: Math.round(avgTargetPercent),
+      avgAchieved: Math.round(avgAchievedPercent),
+      totalRecovery: totalRecovery
+    };
+  }, []);
+
+  // Fetch Company and Branch List for Dropdown
+  const fetchDropdownData = useCallback(async () => {
+    try {
+      setDropdownLoader(true);
+      const storedCompanies = localStorage.getItem('company_list');
+      const storedBranches = localStorage.getItem('branch_list');
+      
+      if (storedCompanies && storedBranches) {
+        const companiesData = JSON.parse(storedCompanies);
+        const branchesData = JSON.parse(storedBranches);
+        
+        let transformedCompanies = [];
+        let transformedBranches = [];
+        
+        if (Array.isArray(companiesData)) {
+          transformedCompanies = companiesData.map(company => ({
+            COMPANY_ID: company.id?.toString() || company.COMPANY_ID?.toString(),
+            COMPANY_NAME: company.name || company.COMPANY_NAME
+          }));
+        } else if (companiesData.company_list) {
+          transformedCompanies = companiesData.company_list.map(company => ({
+            COMPANY_ID: company.COMPANY_ID?.toString(),
+            COMPANY_NAME: company.COMPANY_NAME
+          }));
+        }
+        
+        if (Array.isArray(branchesData)) {
+          transformedBranches = branchesData.map(branchItem => ({
+            BRANCH_ID: branchItem.id?.toString() || branchItem.BRANCH_ID?.toString(),
+            BRANCH_NAME: branchItem.name || branchItem.BRANCH_NAME,
+            COMPANY_ID: branchItem.company_id?.toString() || branchItem.COMPANY_ID?.toString()
+          }));
+        } else if (branchesData.branch_list) {
+          transformedBranches = branchesData.branch_list.map(branchItem => ({
+            BRANCH_ID: branchItem.BRANCH_ID?.toString(),
+            BRANCH_NAME: branchItem.BRANCH_NAME,
+            COMPANY_ID: branchItem.COMPANY_ID?.toString()
+          }));
+        }
+        
+        setCompanies(transformedCompanies);
+        setBranch(transformedBranches);
+        
+        if (transformedCompanies.length > 0) {
+          const loggedInCompanyExists = transformedCompanies.some(
+            company => company.COMPANY_ID === selectedCompany
+          );
+          
+          if (loggedInCompanyExists && selectedCompany) {
+            setFilters(prev => ({
+              ...prev,
+              company: selectedCompany,
+              branch: selectedBranch || ""
+            }));
+          } else {
+            setFilters(prev => ({
+              ...prev,
+              company: transformedCompanies[0].COMPANY_ID || "1"
+            }));
+          }
+        }
+      } else {
+        try {
+          const { data } = await axios.get(
+            "https://zbl.erprz.com/zbl/pre-define"
+          );
+          
+          if (data?.company_list && Array.isArray(data.company_list)) {
+            const apiCompanies = data.company_list.map(company => ({
+              COMPANY_ID: company.COMPANY_ID?.toString(),
+              COMPANY_NAME: company.COMPANY_NAME
+            }));
+            
+            const apiBranches = data.branch_list.map(branchItem => ({
+              BRANCH_ID: branchItem.BRANCH_ID?.toString(),
+              BRANCH_NAME: branchItem.BRANCH_NAME,
+              COMPANY_ID: branchItem.COMPANY_ID?.toString()
+            }));
+            
+            setCompanies(apiCompanies);
+            setBranch(apiBranches);
+            
+            localStorage.setItem('company_list', JSON.stringify(apiCompanies));
+            localStorage.setItem('branch_list', JSON.stringify(apiBranches));
+            
+            if (apiCompanies.length > 0) {
+              const loggedInCompanyExists = apiCompanies.some(
+                company => company.COMPANY_ID === selectedCompany
+              );
+              
+              if (loggedInCompanyExists && selectedCompany) {
+                setFilters(prev => ({
+                  ...prev,
+                  company: selectedCompany,
+                  branch: selectedBranch || ""
+                }));
+              } else {
+                setFilters(prev => ({
+                  ...prev,
+                  company: apiCompanies[0].COMPANY_ID 
+                }));
+              }
+            }
+          }
+        } catch (apiError) {
+          console.error("Error fetching dropdown data from API:", apiError);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching dropdown data:", error);
+    } finally {
+      setDropdownLoader(false);
+    }
+  }, [selectedCompany, selectedBranch]);
+
+  const fetchData = useCallback((company, branch) => {
+    setLoader(true);
     axios
       .get(`https://zbl.erprz.com/zbl/SalePerformance?company=${company}&branch=${branch}`)
       .then((res) => {
@@ -442,15 +577,32 @@ const branches = [
           actual: Number(item.SALE_LESS_ADVANCE),
         }));
         setData(formatted);
+        setSummaryData(calculateSummary(formatted));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        setData([]);
+        setSummaryData({ avgTarget: 0, avgAchieved: 0, totalRecovery: 0 });
+      })
+      .finally(() => {
+        setLoader(false);
       });
-  };
+  }, [calculateSummary]);
 
   useEffect(() => {
-    fetchData(company, branch);
-  }, [company, branch]);
+    fetchDropdownData();
+  }, [fetchDropdownData]);
+
+  useEffect(() => {
+    if (filters.company) {
+      fetchData(filters.company, filters.branch);
+    }
+  }, [filters, fetchData]);
+
+  // Filter branches based on selected company
+  const filteredBranches = branch.filter(
+    (br) => br.COMPANY_ID === filters.company
+  );
 
   const formatToKMB = (num) => {
     if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(1)}M`;
@@ -458,69 +610,297 @@ const branches = [
     return num;
   };
 
-  return (
-    <div className="w-full h-[600px] bg-gray-50 p-4 rounded-xl shadow">
-      {/* Title and dropdowns in one row */}
-      <div className="flex flex-wrap justify-between items-center mb-6">
-        
+  const handleCompanyChange = (e) => {
+    setFilters({
+      company: e.target.value,
+      branch: ""
+    });
+  };
 
-        <div className="flex gap-4">
-          <select
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-            className="p-2 border rounded w-65"
-          >
-            <option value="1">ZAKA BROTHERS (PVT) LTD.</option>
-            <option value="11">Faisalabad Trading Company</option>
-            {/* Add more companies as needed */}
-          </select>
+  const handleBranchChange = (e) => {
+    setFilters(prev => ({
+      ...prev,
+      branch: e.target.value
+    }));
+  };
 
-         <select
-  value={branch}
-  onChange={(e) => setBranch(e.target.value)}
-  className="p-2 border rounded w-50"
->
-  {branches.map((b) => (
-    <option key={b.value} value={b.value}>
-      {b.label}
-    </option>
-  ))}
-</select>
-
+  // Custom tooltip component
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
+          <p className="font-semibold text-gray-800 mb-2">{label}</p>
+          {payload.map((entry, index) => (
+            <p key={index} className="text-sm" style={{ color: entry.color }}>
+              {entry.name}: <span className="font-semibold">{formatToKMB(entry.value)}</span>
+            </p>
+          ))}
         </div>
-        <h2 className="text-2xl font-bold text-center w-full md:w-auto mb-4 md:mb-0 mr-75">
-  Installment Sale Performance{branch && ` - ${branches.find(b => b.value === branch)?.label || ''}`}
-</h2>
-        {/* <h2 className="text-2xl font-bold text-center w-full md:w-auto mb-4 md:mb-0 mr-130">
-          Installment Sale Performance
-        </h2> */}
+      );
+    }
+    return null;
+  };
+
+  // Custom label component for bars
+  const CustomLabel = (props) => {
+    const { x, y, width, value, formatter } = props;
+    if (!value) return null;
+    
+    return (
+      <text
+        x={x + width / 2}
+        y={y - 8}
+        fill="#374151"
+        textAnchor="middle"
+        fontSize="12"
+        fontWeight="600"
+      >
+        {formatter ? formatter(value) : formatToKMB(value)}
+      </text>
+    );
+  };
+
+  // Get selected branch name for display
+  const selectedBranchName = filteredBranches.find(b => b.BRANCH_ID === filters.branch)?.BRANCH_NAME || 'All Branches';
+
+  return (
+    <div className="w-full bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+      {/* Header Section */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8 gap-4">
+        <div className="flex-1">
+          <h1 className="text-2xl font-bold text-gray-800 mb-2">
+            Installment Sale Performance
+          </h1>
+          <p className="text-gray-600">
+            {filters.branch ? `Branch: ${selectedBranchName}` : "All Branches Overview"}
+          </p>
+        </div>
+        
+        {/* Filters */}
+        <div className="flex flex-col sm:flex-row gap-4">
+          {dropdownLoader ? (
+            <>
+              <div className="w-64 p-3 border border-gray-200 rounded-xl bg-gray-50 flex items-center justify-center">
+                <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500 mr-2"></div>
+                <span className="text-gray-500 text-sm">Loading companies...</span>
+              </div>
+              <div className="w-48 p-3 border border-gray-200 rounded-xl bg-gray-50 flex items-center justify-center">
+                <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500 mr-2"></div>
+                <span className="text-gray-500 text-sm">Loading branches...</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="relative">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Company
+                </label>
+                <select
+                  value={filters.company}
+                  onChange={handleCompanyChange}
+                  className="w-64 p-3 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 appearance-none cursor-pointer"
+                >
+                  {companies.length > 0 ? (
+                    companies.map((company) => (
+                      <option key={company.COMPANY_ID} value={company.COMPANY_ID}>
+                        {company.COMPANY_NAME}
+                      </option>
+                    ))
+                  ) : (
+                    <option value="1">ZAKA BROTHERS (PVT) LTD.</option>
+                  )}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 top-6 flex items-center px-3 text-gray-700">
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+
+              <div className="relative">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Branch
+                </label>
+                <select
+                  value={filters.branch}
+                  onChange={handleBranchChange}
+                  className="w-48 p-3 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 appearance-none cursor-pointer"
+                >
+                  <option value="">All Branches</option>
+                  {filteredBranches.length > 0 ? (
+                    filteredBranches.map((branchItem) => (
+                      <option key={branchItem.BRANCH_ID} value={branchItem.BRANCH_ID}>
+                        {branchItem.BRANCH_NAME}
+                      </option>
+                    ))
+                  ) : (
+                    <option value="">No branches available</option>
+                  )}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 top-6 flex items-center px-3 text-gray-700">
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
       </div>
 
-      {/* <p className="text-center text-blue-500 text-lg mb-4">Performance Overview</p> */}
-<p className="text-center text-blue-500 text-lg mb-4">
-  {data.length > 0
-    ? `Performance Overview (${data[0].month} to ${data[data.length - 1].month})`
-    : "Performance Overview"}
-</p>
-      <ResponsiveContainer width="100%" height="80%">
-        <BarChart
-          data={data}
-          margin={{ top: 20, right: 30, left: 0, bottom: 30 }}
-          barGap={8}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis tickFormatter={formatToKMB} />
-          <Tooltip formatter={(value) => formatToKMB(value)} />
-          <Legend />
-          <Bar dataKey="target" name="Target Amount" fill="#013220">
-            <LabelList dataKey="target" position="top" formatter={formatToKMB} />
-          </Bar>
-          <Bar dataKey="actual" name="Installment Amount" fill="#ffc107">
-            <LabelList dataKey="actual" position="top" formatter={formatToKMB} />
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-2xl border border-green-200 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-green-600 text-sm font-semibold mb-1">Average Target %</p>
+              <p className="text-3xl font-bold text-green-800">{summaryData.avgTarget}%</p>
+            </div>
+            <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+          </div>
+          <div className="mt-4 w-full bg-green-200 rounded-full h-2">
+            <div 
+              className="bg-green-600 h-2 rounded-full transition-all duration-500" 
+              style={{ width: `${Math.min(summaryData.avgTarget, 100)}%` }}
+            ></div>
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl border border-blue-200 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-blue-600 text-sm font-semibold mb-1">Average Achieved %</p>
+              <p className="text-3xl font-bold text-blue-800">{summaryData.avgAchieved}%</p>
+            </div>
+            <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+            </div>
+          </div>
+          <div className="mt-4 w-full bg-blue-200 rounded-full h-2">
+            <div 
+              className="bg-blue-600 h-2 rounded-full transition-all duration-500" 
+              style={{ width: `${Math.min(summaryData.avgAchieved, 100)}%` }}
+            ></div>
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-br from-cyan-50 to-cyan-100 p-6 rounded-2xl border border-cyan-200 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-cyan-600 text-sm font-semibold mb-1">Total Recovery Amount</p>
+              <p className="text-3xl font-bold text-cyan-800">{formatToKMB(summaryData.totalRecovery)}</p>
+            </div>
+            <div className="w-12 h-12 bg-cyan-500 rounded-xl flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+              </svg>
+            </div>
+          </div>
+          <p className="text-cyan-700 text-xs mt-2">Cumulative installment recovery</p>
+        </div>
+      </div>
+
+      {/* Chart Section */}
+      <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+        <p className="text-center text-blue-600 text-lg font-semibold mb-6">
+          {data.length > 0
+            ? `Performance Overview (${data[0].month} to ${data[data.length - 1].month})`
+            : "Performance Overview"}
+        </p>
+
+        {loader ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="text-center">
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
+              <p className="text-gray-600 font-medium">Loading chart data...</p>
+              <p className="text-gray-400 text-sm">Please wait while we fetch the latest performance data</p>
+            </div>
+          </div>
+        ) : data.length > 0 ? (
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart
+              data={data}
+              margin={{ top: 20, right: 30, left: 20, bottom: 30 }}
+              barGap={8}
+              barCategoryGap="20%"
+            >
+              <CartesianGrid 
+                strokeDasharray="3 3" 
+                stroke="#f0f0f0" 
+                vertical={false}
+              />
+              <XAxis 
+                dataKey="month" 
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: '#6b7280', fontSize: 12 }}
+                padding={{ left: 10, right: 10 }}
+              />
+              <YAxis 
+                tickFormatter={formatToKMB}
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: '#6b7280', fontSize: 12 }}
+                width={60}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend 
+                verticalAlign="top"
+                height={36}
+                iconSize={12}
+                iconType="circle"
+                wrapperStyle={{
+                  paddingBottom: '20px',
+                  fontSize: '14px'
+                }}
+              />
+              <Bar 
+                dataKey="target" 
+                name="Target Amount" 
+                fill="#059669"
+                radius={[4, 4, 0, 0]}
+                maxBarSize={40}
+              >
+                <LabelList 
+                  dataKey="target" 
+                  content={<CustomLabel formatter={formatToKMB} />} 
+                />
+              </Bar>
+              <Bar 
+                dataKey="actual" 
+                name="Installment Amount" 
+                fill="#2563eb"
+                radius={[4, 4, 0, 0]}
+                maxBarSize={40}
+              >
+                <LabelList 
+                  dataKey="actual" 
+                  content={<CustomLabel formatter={formatToKMB} />} 
+                />
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="flex justify-center items-center h-64">
+            <div className="text-center text-gray-500">
+              <svg className="w-20 h-20 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <p className="text-lg font-semibold mb-2">No data available</p>
+              <p className="text-sm max-w-md mx-auto">
+                We couldn't find any performance data for the selected company and branch combination. 
+                Try selecting different filters to see the chart data.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
