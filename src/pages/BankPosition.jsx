@@ -383,22 +383,51 @@ const BankPosition = () => {
 
   return (
     <div
-      className={`w-full min-h-[92.2vh] pb-5 flex flex-col items-center ${
-        theme === "dark" ? "top-section" : "bg-white"
-      } border-white`}
+      className={`w-full min-h-[92.2vh] pb-5 flex flex-col items-center transition-all duration-300 ${
+        theme === "dark" 
+          ? "bg-gradient-to-br from-gray-900 to-gray-800 text-white" 
+          : "bg-gradient-to-br from-gray-50 to-blue-50 text-gray-800"
+      }`}
     >
-      {/* Filter Form */}
-      <div className="mb-6 w-[91%] py-2">
-        <div className={`w-full pb-4 px-4 ${theme == "dark" ? "bg-[#2a3e67]" : "bg-[#f1f1f1"} shadow-lg rounded-md`}>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">Company</label>
+      {/* Header Section */}
+      <div className="w-full bg-gradient-to-r from-blue-600 to-purple-600 py-6 shadow-lg">
+        <div className="w-[91%] mx-auto">
+          <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">Bank Position</h1>
+          <p className="text-blue-100 text-sm md:text-base">
+            Monitor and analyze your bank account positions and transactions
+          </p>
+        </div>
+      </div>
+
+      {/* Filter Section */}
+      <div className="w-[91%] -mt-4 relative z-10">
+        <div className={`
+          w-full py-6 px-6 shadow-2xl rounded-2xl border backdrop-blur-sm transition-all duration-300
+          ${theme === "dark" 
+            ? "bg-gradient-to-br from-gray-800 to-gray-700 border-gray-600" 
+            : "bg-white/95 border-gray-200"
+          }
+        `}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {/* Company Select */}
+            <div className="space-y-2">
+              <label className={`block text-sm font-semibold transition-colors ${
+                theme === "dark" ? "text-blue-300" : "text-blue-700"
+              }`}>
+                Company
+              </label>
               <select
                 value={filters.rec_company}
                 onChange={(e) =>
                   setFilters({ ...filters, rec_company: e.target.value, branch: "" })
                 }
-                className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
+                className={`
+                  w-full p-3 rounded-xl border-2 transition-all duration-200 focus:ring-4 focus:ring-opacity-50
+                  ${theme === "dark" 
+                    ? "bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500/50" 
+                    : "bg-white border-gray-300 text-gray-800 focus:border-blue-500 focus:ring-blue-500/30"
+                  }
+                `}
               >
                 {companies.length > 0 ? (
                   companies.map((company) => (
@@ -407,19 +436,30 @@ const BankPosition = () => {
                     </option>
                   ))
                 ) : (
-                  <option value="">Loading...</option>
+                  <option value="">Loading companies...</option>
                 )}
               </select>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1">Branch</label>
+            {/* Branch Select */}
+            <div className="space-y-2">
+              <label className={`block text-sm font-semibold transition-colors ${
+                theme === "dark" ? "text-blue-300" : "text-blue-700"
+              }`}>
+                Branch
+              </label>
               <select
                 value={filters.branch}
                 onChange={(e) =>
                   setFilters({ ...filters, branch: e.target.value })
                 }
-                className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
+                className={`
+                  w-full p-3 rounded-xl border-2 transition-all duration-200 focus:ring-4 focus:ring-opacity-50
+                  ${theme === "dark" 
+                    ? "bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500/50" 
+                    : "bg-white border-gray-300 text-gray-800 focus:border-blue-500 focus:ring-blue-500/30"
+                  }
+                `}
               >
                 <option value="">All Branches</option>
                 {filteredBranches.length > 0 ? (
@@ -434,8 +474,11 @@ const BankPosition = () => {
               </select>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1">
+            {/* Start Date */}
+            <div className="space-y-2">
+              <label className={`block text-sm font-semibold transition-colors ${
+                theme === "dark" ? "text-blue-300" : "text-blue-700"
+              }`}>
                 Start Date
               </label>
               <input
@@ -447,12 +490,23 @@ const BankPosition = () => {
                     sdate: formatDateForAPI(e.target.value),
                   })
                 }
-                className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
+                className={`
+                  w-full p-3 rounded-xl border-2 transition-all duration-200 focus:ring-4 focus:ring-opacity-50
+                  ${theme === "dark" 
+                    ? "bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500/50" 
+                    : "bg-white border-gray-300 text-gray-800 focus:border-blue-500 focus:ring-blue-500/30"
+                  }
+                `}
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1">End Date</label>
+            {/* End Date */}
+            <div className="space-y-2">
+              <label className={`block text-sm font-semibold transition-colors ${
+                theme === "dark" ? "text-blue-300" : "text-blue-700"
+              }`}>
+                End Date
+              </label>
               <input
                 type="date"
                 value={formatDateForInput(filters.edate)}
@@ -462,22 +516,87 @@ const BankPosition = () => {
                     edate: formatDateForAPI(e.target.value),
                   })
                 }
-                className="w-full p-2 rounded border focus:ring-blue-500 focus:border-blue-500"
+                className={`
+                  w-full p-3 rounded-xl border-2 transition-all duration-200 focus:ring-4 focus:ring-opacity-50
+                  ${theme === "dark" 
+                    ? "bg-gray-700 border-gray-600 text-white focus:border-blue-500 focus:ring-blue-500/50" 
+                    : "bg-white border-gray-300 text-gray-800 focus:border-blue-500 focus:ring-blue-500/30"
+                  }
+                `}
               />
             </div>
+          </div>
+
+          {/* Active Filters Display */}
+          <div className="mt-4 flex flex-wrap gap-2">
+            <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+              theme === "dark" ? "bg-blue-600 text-blue-100" : "bg-blue-100 text-blue-700"
+            }`}>
+              Company: {companies.find(c => c.COMPANY_ID === filters.rec_company)?.COMPANY_NAME || 'N/A'}
+            </span>
+            <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+              theme === "dark" ? "bg-purple-600 text-purple-100" : "bg-purple-100 text-purple-700"
+            }`}>
+              Branch: {filteredBranches.find(b => b.BRANCH_ID === filters.branch)?.BRANCH_NAME || 'All'}
+            </span>
+            <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+              theme === "dark" ? "bg-green-600 text-green-100" : "bg-green-100 text-green-700"
+            }`}>
+              Period: {formatDateForInput(filters.sdate)} to {formatDateForInput(filters.edate)}
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Tables */}
-      <div className="product_table w-full justify-center flex mt-5">
+      {/* Content Section */}
+      <div className="w-[91%] mt-8">
         {loader ? (
-          <div className="text-center py-8">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-            <p className="mt-2 text-gray-600">Loading bank position data...</p>
+          <div className="flex flex-col items-center justify-center py-16">
+            <div className={`
+              relative inline-flex
+              ${theme === "dark" ? "text-blue-400" : "text-blue-600"}
+            `}>
+              <div className="w-12 h-12 border-4 rounded-full animate-spin border-current border-t-transparent"></div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 border-2 rounded-full animate-ping border-current opacity-20"></div>
+            </div>
+            <p className={`mt-4 text-lg font-medium transition-colors ${
+              theme === "dark" ? "text-gray-300" : "text-gray-600"
+            }`}>
+              Loading bank position data...
+            </p>
+            <p className={`mt-2 text-sm transition-colors ${
+              theme === "dark" ? "text-gray-400" : "text-gray-500"
+            }`}>
+              Please wait while we fetch the latest information
+            </p>
           </div>
         ) : (
-          <BankPositionTable collectionTableData={collectionTableData1} />
+          <div className={`
+            rounded-2xl shadow-xl overflow-hidden border transition-all duration-300
+            ${theme === "dark" 
+              ? "bg-gray-800 border-gray-700" 
+              : "bg-white border-gray-200"
+            }
+          `}>
+            <div className={`
+              px-6 py-4 border-b transition-colors
+              ${theme === "dark" ? "border-gray-700 bg-gray-750" : "border-gray-200 bg-gray-50"}
+            `}>
+              <h2 className={`
+                text-xl font-bold transition-colors
+                ${theme === "dark" ? "text-white" : "text-gray-800"}
+              `}>
+                Bank Position Overview
+              </h2>
+              <p className={`
+                text-sm transition-colors mt-1
+                ${theme === "dark" ? "text-gray-400" : "text-gray-600"}
+              `}>
+                Real-time view of your banking transactions and balances
+              </p>
+            </div>
+            <BankPositionTable collectionTableData={collectionTableData1} />
+          </div>
         )}
       </div>
     </div>
