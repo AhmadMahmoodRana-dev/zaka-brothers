@@ -31,8 +31,10 @@ const Sidebar = () => {
         { name: "Bank Position", icon: "🏦", link: "/bank-posititon" },
         { name: "Payable", icon: "📤", link: "/payable" },
         { name: "Recovery Analysis", icon: "🔍", link: "/sales-recovery" },
+        { name: "Balance Summary", icon: "💼", link: "/balance-summary" },
         { name: "Installment Analysis", icon: "📅", link: "/install-recovery" },
         { name: "B2B Sales Analysis", icon: "👥", link: "/b2b-sales-analysis" },
+        
       ],
     },
   ];

@@ -341,7 +341,9 @@ const MobileSidebar = () => {
         { name: "Payable", icon: "📤", link: "/payable" },
         { name: "Recovery Analysis", icon: "🔍", link: "/sales-recovery" },
         { name: "Installment Analysis", icon: "📅", link: "/install-recovery" },
+        { name: "Balance Summary", icon: "💼", link: "/balance-summary" },
         { name: "B2B Sales Analysis", icon: "👥", link: "/b2b-sales-analysis" },
+        
       ],
     },
   ];

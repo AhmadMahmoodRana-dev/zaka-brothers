@@ -14,6 +14,7 @@ import Payable from "./pages/Payable";
 import InstallmentRecoveryChart from "./pages/InstallmentRecoveryChart";
 import SalesRecoveryChart from "./pages/SalesRecovery";
 import B2B_SalesANALYSIS from "./pages/B2B_SalesANALYSIS";
+import BalanceSummary from "./pages/BalanceSummary";
 export default function App() {
   const { theme } = useContext(Context);
   const phoneNumber = "923015988221";
@@ -53,6 +54,7 @@ export default function App() {
           <Route path="/install-recovery" element={<InstallmentRecoveryChart />} />
           <Route path="/sales-recovery" element={<SalesRecoveryChart />} />
           <Route path="/b2b-sales-analysis" element={<B2B_SalesANALYSIS />} />
+          <Route path="/balance-summary" element={<BalanceSummary />} />
 
 
         </Route>
